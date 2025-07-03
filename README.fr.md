@@ -1,7 +1,8 @@
-# Traduction automatique de Markdown avec GenAI
+# Continuous Markdown Translations using GenAI
 
 Cette action utilise les modèles GitHub et remark pour traduire progressivement des documents markdown dans votre dépôt.
 
+* [Blog post](https://microsoft.github.io/genaiscript/blog/continuous-translations/)
 * [French](./README.fr.md)
 * [Spanish](./README.es.md)
 
