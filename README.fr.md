@@ -70,7 +70,8 @@ jobs:
         with:
           path: .genaiscript/cache/**
           key: continous-translation-${{ github.run_id }}
-          restore-keys: continous-translation-
+          restore-keys: |
+            continous-translation-
       - uses: pelikhan/action-continuous-translation@v0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
