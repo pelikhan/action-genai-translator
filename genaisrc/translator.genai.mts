@@ -15,7 +15,7 @@ script({
     accept: ".md,.mdx",
     files: "README.md",
     parameters: {
-        to: {
+        lang: {
             type: "string",
             default: "fr",
             description: "The iso-code target language for translation.",
@@ -60,11 +60,11 @@ export default async function main() {
     const dbge = host.logger(`script:text`);
     const dbgm = host.logger(`script:mdx`);
     const { force } = vars as {
-        to: string;
+        lang: string;
         force: boolean;
     };
 
-    const tos = vars.to
+    const tos = vars.lang
         .split(",")
         .map((s) => s.trim())
         .filter(Boolean);

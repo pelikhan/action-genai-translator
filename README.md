@@ -32,21 +32,19 @@ Add the following to your step in your workflow file:
 ```yaml
 uses: pelikhan/action-genai-markdown-translator@main
 with:
-
+  lang: fr,es
 ```
 
 ## Example
 
-Save this file in your `.github/workflows/` directory as `action.yml`:
+Save this file in your `.github/workflows/` directory as `genai-translator.yml`:
 
 ```yaml
 name: Action-Genai-Markdown-Translator
 on:
     push:
 permissions:
-    contents: read
-    # issues: write
-    # pull-requests: write
+    contents: write
     models: read
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
@@ -58,7 +56,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: pelikhan/action-genai-markdown-translator@main
         with:
-
+          lang: fr,es
 ```
 
 ## Development
@@ -97,18 +95,6 @@ npm run docker:build
 To run the action locally in Docker (build it first), use:
 ```bash
 npm run docker:start
-```
-
-To run the action using [act](https://nektosact.com/), first install the act CLI:
-
-```bash
-npm run act:install
-```
-
-Then, you can run the action with:
-
-```bash
-npm run act
 ```
 
 ## Upgrade

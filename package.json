@@ -1,4 +1,5 @@
 {
+  "name": "action-genai-translator",
   "private": true,
   "version": "0.0.0",
   "description": "This action uses GitHub Models and remark to translate markdown document incrementally in your repository.",
@@ -20,10 +21,10 @@
     "lint": "npx --yes prettier --write genaisrc/",
     "fix": "genaiscript scripts fix",
     "typecheck": "genaiscript scripts compile",
-    "configure": "genaiscript configure action action --interactive",
+    "configure": "genaiscript configure action translator",
     "test": "echo 'No tests defined.'",
-    "dev": "genaiscript run action",
-    "start": "genaiscript run action --github-workspace --no-run-trace --no-output-trace",
+    "dev": "genaiscript run translator",
+    "start": "genaiscript run translator --github-workspace --no-run-trace --no-output-trace",
     "release": "sh release.sh"
   }
 }

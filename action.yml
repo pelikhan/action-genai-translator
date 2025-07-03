@@ -1,7 +1,8 @@
 name: action-genai-markdown-translator
-description: Automatic Markdown Translations using GenAI
+description: This action uses GitHub Models and remark to translate markdown
+  document incrementally in your repository.
 inputs:
-  to:
+  lang:
     description: The iso-code target language for translation.
     required: false
     default: fr
