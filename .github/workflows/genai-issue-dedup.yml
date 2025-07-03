@@ -1,4 +1,4 @@
-name: GenAI Issue Labeller
+name: GenAI Issue Deduplication
 on:
   issues:
     types: [opened, edited]
@@ -6,7 +6,7 @@ permissions:
   issues: write
   contents: read
 jobs:
-  label:
+  dedup:
     runs-on: ubuntu-latest
     steps:
-      - uses: pelikhan/action-genai-issue-labeller@v0
+      - uses: pelikhan/action-genai-issue-dedup@v0
