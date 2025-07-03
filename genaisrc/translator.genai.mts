@@ -28,6 +28,17 @@ script({
       default: "fr,es",
       description: "The iso-code target language for translation.",
     },
+    starlightDir: {
+      type: "string",
+      description:
+        "Root directory for the Astro Starlight documentation. Must specify starlightBase as well.",
+    },
+    starlightBase: {
+      type: "string",
+      default: "genaiscript",
+      description:
+        "Base path for the Astro Starlight documentation. Used to patch links in translations. Must specify startlightDir as well.",
+    },
     force: {
       type: "boolean",
       default: false,
@@ -41,9 +52,6 @@ const HASH_LENGTH = 20;
 const maxPromptPerFile = 5;
 const minTranslationsThreshold = 0.9;
 const nodeTypes = ["text", "paragraph", "heading", "yaml"];
-const starlightDir = "docs/src/content/docs";
-const starlightBase = "genaiscript";
-const startlightBaseRx = new RegExp(`^/${starlightBase}/`);
 const MARKER_START = "┌";
 const MARKER_END = "└";
 type NodeType = Text | Paragraph | Heading | Yaml;
@@ -100,10 +108,27 @@ export default async function main() {
   const dbgt = host.logger(`script:tree`);
   const dbge = host.logger(`script:text`);
   const dbgm = host.logger(`script:mdx`);
-  const { force } = vars as {
+  const parameters = vars as {
     lang: string;
     force: boolean;
+    starlightDir?: string;
+    starlightBase?: string;
   };
+  const { force } = parameters;
+
+  const starlightDir = parameters.starlightDir
+    ? `${parameters.starlightDir}/src/content/docs`
+    : undefined;
+  dbg(`starlightDir: %s`, starlightDir);
+  const starlightBase = parameters.starlightBase;
+  dbg(`starlightBase: %s`, starlightBase);
+  if (!!starlightDir !== !!starlightBase)
+    throw new Error(
+      `Both starlightDir and starlightBase must be defined or undefined together.`
+    );
+  const startlightBaseRx = starlightBase
+    ? new RegExp(`^/${starlightBase}/`)
+    : undefined;
 
   const tos = vars.lang
     .split(",")
@@ -115,12 +140,12 @@ export default async function main() {
     .filter((f) => ignorer([f]).length)
     .filter(
       ({ filename }) =>
-        !tos.some((to) => filename.includes(`/${to.toLowerCase()}/`)),
+        !tos.some((to) => filename.includes(`/${to.toLowerCase()}/`))
     );
   if (!files.length) cancel("No files selected.");
   dbg(
     `files: %O`,
-    files.map((f) => f.filename),
+    files.map((f) => f.filename)
   );
 
   const { visit, parse, stringify, SKIP } = await mdast();
@@ -164,7 +189,8 @@ export default async function main() {
       output.heading(3, `${filename}`);
 
       try {
-        const starlight = filename.startsWith(starlightDir);
+        const starlight = starlightDir && filename.startsWith(starlightDir);
+        dbg(`starlight: %s`, starlight);
         const translationFn = starlight
           ? filename.replace(starlightDir, join(starlightDir, to.toLowerCase()))
           : path.changeext(filename, `.${to.toLowerCase()}.md`);
@@ -228,14 +254,18 @@ export default async function main() {
               ) {
                 dbg(`text node: %s`, nhash);
                 // compress long hash into LLM friendly short hash
-                const llmHash = `T${Object.keys(llmHashes).length.toString().padStart(3, "0")}`;
+                const llmHash = `T${Object.keys(llmHashes)
+                  .length.toString()
+                  .padStart(3, "0")}`;
                 llmHashes[llmHash] = nhash;
                 llmHashTodos.add(llmHash);
                 node.value = `┌${llmHash}┐${node.value}└${llmHash}┘`;
               }
             } else if (node.type === "paragraph" || node.type === "heading") {
               dbg(`paragraph/heading node: %s`, nhash);
-              const llmHash = `P${Object.keys(llmHashes).length.toString().padStart(3, "0")}`;
+              const llmHash = `P${Object.keys(llmHashes)
+                .length.toString()
+                .padStart(3, "0")}`;
               llmHashes[llmHash] = nhash;
               llmHashTodos.add(llmHash);
               node.children.unshift({
@@ -260,7 +290,9 @@ export default async function main() {
                         dbg(`yaml hero.action: %s -> %s`, nhash, tr);
                         if (!tr) action.text = tr;
                         else {
-                          const llmHash = `T${Object.keys(llmHashes).length.toString().padStart(3, "0")}`;
+                          const llmHash = `T${Object.keys(llmHashes)
+                            .length.toString()
+                            .padStart(3, "0")}`;
                           llmHashes[llmHash] = nhash;
                           llmHashTodos.add(llmHash);
                           action.text = `┌${llmHash}┐${action.text}└${llmHash}┘`;
@@ -278,7 +310,9 @@ export default async function main() {
                   const tr = translationCache[nhash];
                   if (tr) data.excerpt = tr;
                   else {
-                    const llmHash = `T${Object.keys(llmHashes).length.toString().padStart(3, "0")}`;
+                    const llmHash = `T${Object.keys(llmHashes)
+                      .length.toString()
+                      .padStart(3, "0")}`;
                     llmHashes[llmHash] = nhash;
                     llmHashTodos.add(llmHash);
                     data.excerpt = `┌${llmHash}┐${data.excerpt}└${llmHash}┘`;
@@ -289,7 +323,9 @@ export default async function main() {
                   const tr = translationCache[nhash];
                   if (tr) data.title = tr;
                   else {
-                    const llmHash = `T${Object.keys(llmHashes).length.toString().padStart(3, "0")}`;
+                    const llmHash = `T${Object.keys(llmHashes)
+                      .length.toString()
+                      .padStart(3, "0")}`;
                     llmHashes[llmHash] = nhash;
                     llmHashTodos.add(llmHash);
                     data.title = `┌${llmHash}┐${data.title}└${llmHash}┘`;
@@ -300,7 +336,9 @@ export default async function main() {
                   const tr = translationCache[nhash];
                   if (tr) data.title = tr;
                   else {
-                    const llmHash = `D${Object.keys(llmHashes).length.toString().padStart(3, "0")}`;
+                    const llmHash = `D${Object.keys(llmHashes)
+                      .length.toString()
+                      .padStart(3, "0")}`;
                     llmHashes[llmHash] = nhash;
                     llmHashTodos.add(llmHash);
                     data.description = `┌${llmHash}┐${data.description}└${llmHash}┘`;
@@ -330,7 +368,9 @@ export default async function main() {
               const tr = translationCache[nhash];
               if (tr) title = tr;
               else {
-                const llmHash = `T${Object.keys(llmHashes).length.toString().padStart(3, "0")}`;
+                const llmHash = `T${Object.keys(llmHashes)
+                  .length.toString()
+                  .padStart(3, "0")}`;
                 llmHashes[llmHash] = nhash;
                 llmHashTodos.add(llmHash);
                 title = `┌${llmHash}┐${title}└${llmHash}┘`;
@@ -426,7 +466,7 @@ export default async function main() {
               system: [],
               cache: true,
               label: `translating ${filename} (${llmHashTodos.size} nodes)`,
-            },
+            }
           );
 
           if (error) {
@@ -479,7 +519,7 @@ export default async function main() {
                     if (typeof action.link === "string") {
                       action.link = action.link.replace(
                         startlightBaseRx,
-                        `/${starlightBase}/${to.toLowerCase()}/`,
+                        `/${starlightBase}/${to.toLowerCase()}/`
                       );
                       dbg(`yaml hero action link: %s`, action.link);
                     }
@@ -638,7 +678,7 @@ export default async function main() {
           });
           const diffLinks = xor(
             Array.from(originalLinks),
-            Array.from(translatedLinks),
+            Array.from(translatedLinks)
           );
           if (diffLinks.length) {
             output.warn(`some links have changed`);
@@ -652,9 +692,14 @@ export default async function main() {
             (ctx) => {
               ctx.$`You are an expert at judging the quality of translations. 
           Your task is to determine the quality of the translation of a Markdown document from English to ${lang} (${to}).
-          The original document is in ${ctx.def("ORIGINAL", content)}, and the translated document is provided in ${ctx.def("TRANSLATED", contentTranslated, { lineNumbers: true })} (line numbers were added).`.role(
-                "system",
-              );
+          The original document is in ${ctx.def(
+            "ORIGINAL",
+            content
+          )}, and the translated document is provided in ${ctx.def(
+                "TRANSLATED",
+                contentTranslated,
+                { lineNumbers: true }
+              )} (line numbers were added).`.role("system");
             },
             {
               ok: `Translation is faithful to the original document and conveys the same meaning.`,
@@ -666,12 +711,12 @@ export default async function main() {
               cache: true,
               system: ["system.annotations"],
               systemSafety: false,
-            },
+            }
           );
 
           output.resultItem(
             res.label === "ok",
-            `Translation quality: ${res.label}`,
+            `Translation quality: ${res.label}`
           );
           if (res.label !== "ok") {
             output.fence(res.answer);
@@ -687,7 +732,7 @@ export default async function main() {
         await workspace.writeText(translationFn, contentTranslated);
         await workspace.writeText(
           translationCacheFilename,
-          JSON.stringify(translationCache, null, 2),
+          JSON.stringify(translationCache, null, 2)
         );
       } catch (error) {
         output.error(error);
