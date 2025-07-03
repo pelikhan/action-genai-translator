@@ -20,9 +20,21 @@ This action uses [GenAIScript](https://microsoft.github.io/genaiscript/) to prog
 ## Inputs
 
 - `lang`: The iso-code target language for translation. (default: `fr`)
-- `force`: Force translation even if the file has already been translated.
 - `files`: Files to process, separated by semi columns. Default is `README.md`.
+- `instructions`: Extra instructions for the LLM to use when translating.
+- `instructions_file`: Path to a file containing extra instructions for the LLM to use when translating.
+- `starlight_dir`: root folder of the Astro Starlight documentation.
+- `starlight_base`: base alias for the Starlight documentation.
+
+## Diagnostics
+
+- `force`: Force translation even if the file has already been translated.
 - `debug`: Enable debug logging (https://microsoft.github.io/genaiscript/reference/scripts/logging/).
+
+### LLM configuration
+
+- `github_token`: GitHub token with `models: read` permission at least (https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions). (default: `${{ secrets.GITHUB_TOKEN }}`)
+
 - `openai_api_key`: OpenAI API key (default: `${{ secrets.OPENAI_API_KEY }}`)
 - `openai_api_base`: OpenAI API base URL (default: `${{ env.OPENAI_API_BASE }}`)
 - `azure_openai_api_endpoint`: Azure OpenAI endpoint. In the Azure Portal, open your Azure OpenAI resource, Keys and Endpoints, copy Endpoint. (default: `${{ env.AZURE_OPENAI_API_ENDPOINT }}`)
@@ -30,7 +42,6 @@ This action uses [GenAIScript](https://microsoft.github.io/genaiscript/) to prog
 - `azure_openai_subscription_id`: Azure OpenAI subscription ID to list available deployments (Microsoft Entra only). (default: `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}`)
 - `azure_openai_api_version`: Azure OpenAI API version. (default: `${{ env.AZURE_OPENAI_API_VERSION }}`)
 - `azure_openai_api_credentials`: Azure OpenAI API credentials type. Leave as 'default' unless you have a special Azure setup. (default: `${{ env.AZURE_OPENAI_API_CREDENTIALS }}`)
-- `github_token`: GitHub token with `models: read` permission at least (https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions). (default: `${{ secrets.GITHUB_TOKEN }}`)
 
 ## Outputs
 
@@ -85,6 +96,13 @@ jobs:
           commit_message: "[cai] translated docs"
           commit_user_name: "genaiscript"
 ```
+
+## Astro Starlight
+
+The plugin supports translations Astro Starlight markdown or MDX files
+for a site using a **rooted** default locale and a **base** alias for the documentation.
+
+Configure the `starlight_dir` and `starlight_base` inputs to point to the root folder of your Astro Starlight documentation and the base alias for the documentation, respectively.
 
 ## Development
 
