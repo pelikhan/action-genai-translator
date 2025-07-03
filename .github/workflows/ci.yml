@@ -30,8 +30,8 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: .genaiscript/cache/**
-          key: genaiscript-${{ github.run_id }}
-          restore-keys: genaiscript-
+          key: continous-translation-${{ github.run_id }}
+          restore-keys: continous-translation-
       - uses: ./
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
