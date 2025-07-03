@@ -1,4 +1,4 @@
-# Traducción continua usando GenAI
+# Traducción continua
 
 Esta acción traduce de manera incremental documentos Markdown utilizando [GitHub Models](https://github.com/models).
 
@@ -41,7 +41,7 @@ Esta acción utiliza [GenAIScript](https://microsoft.github.io/genaiscript/) par
 Agrega lo siguiente a tu paso en tu archivo de flujo de trabajo:
 
 ```yaml
-uses: pelikhan/action-continuous-translation@main
+uses: pelikhan/action-continuous-translation@v0
 with:
   github_token: ${{ secrets.GITHUB_TOKEN }}
   lang: fr,es
@@ -54,7 +54,10 @@ Guarda este archivo en tu directorio `.github/workflows/` como `continuous-trans
 ```yaml
 name: Continuous Translation
 on:
+  workflow_dispatch:
   push:
+    branches:
+      - main
 permissions:
   contents: write
   models: read
@@ -66,6 +69,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: .genaiscript/cache/**
+          key: continuous-translation-${{ github.run_id }}
+          restore-keys: |
+            continuous-translation-
       - uses: pelikhan/action-continuous-translation@v0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

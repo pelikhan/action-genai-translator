@@ -464,7 +464,7 @@ export default async function main() {
         translated = structuredClone(root);
 
         // apply translations
-        let missingTranslations = 0;
+        let unresolvedTranslations = 0;
         visit(translated, nodeTypes, (node) => {
           if (node.type === "yaml") {
             const data = parsers.YAML(node.value);
@@ -488,7 +488,7 @@ export default async function main() {
                       const tr = translationCache[nhash];
                       dbg(`yaml hero.action: %s -> %s`, nhash, tr);
                       if (tr) action.text = tr;
-                      else missingTranslations++;
+                      else unresolvedTranslations++;
                     }
                     if (action?.image?.file) {
                       action.image.file = patchFn(action.image.file);
@@ -506,21 +506,21 @@ export default async function main() {
                 const tr = translationCache[nhash];
                 dbg(`yaml excerpt: %s -> %s`, nhash, tr);
                 if (tr) data.excerpt = tr;
-                else missingTranslations++;
+                else unresolvedTranslations++;
               }
               if (typeof data.title === "string") {
                 const nhash = hashNode(data.title);
                 const tr = translationCache[nhash];
                 dbg(`yaml title: %s -> %s`, nhash, tr);
                 if (tr) data.title = tr;
-                else missingTranslations++;
+                else unresolvedTranslations++;
               }
               if (typeof data.description === "string") {
                 const nhash = hashNode(data.description);
                 const tr = translationCache[nhash];
                 dbg(`yaml description: %s -> %s`, nhash, tr);
                 if (tr) data.description = tr;
-                else missingTranslations++;
+                else unresolvedTranslations++;
               }
               node.value = YAML.stringify(data);
               return SKIP;
@@ -547,7 +547,7 @@ export default async function main() {
               } else {
                 dbg(`untranslated node type: %s`, node.type);
               }
-            } else missingTranslations++;
+            } else unresolvedTranslations++;
           }
         });
 
@@ -583,7 +583,7 @@ export default async function main() {
               if (tr) {
                 dbg(`translate title: %s -> %s`, hash, tr);
                 attribute.value = tr;
-              } else missingTranslations++;
+              } else unresolvedTranslations++;
             }
           }
         });
@@ -595,10 +595,10 @@ export default async function main() {
           }
         });
 
-        output.itemValue(`missing translations`, missingTranslations);
+        output.itemValue(`unresolved translations`, unresolvedTranslations);
         const nTranslations = Object.keys(llmHashes).length;
         if (
-          (nTranslations - missingTranslations) / nTranslations <
+          (nTranslations - unresolvedTranslations) / nTranslations <
           minTranslationsThreshold
         ) {
           output.warn(`not enough translations, skipping file.`);
