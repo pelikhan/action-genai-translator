@@ -29,7 +29,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
         with:
-          path: .genaiscript/cache/**
+          path: |
+            .genaiscript/cache/**
+            /genaiscript/action/.genaiscript/cache/**
           key: continous-translation-${{ github.run_id }}
           restore-keys: continous-translation-
       - uses: ./
