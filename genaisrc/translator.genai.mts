@@ -17,7 +17,7 @@ script({
     parameters: {
         lang: {
             type: "string",
-            default: "fr",
+            default: "fr,es",
             description: "The iso-code target language for translation.",
         },
         force: {
@@ -39,6 +39,37 @@ const MARKER_END = "└";
 type NodeType = Text | Paragraph | Heading | Yaml;
 const langs = {
     fr: "French",
+    es: "Spanish",
+    de: "German",
+    it: "Italian",
+    pt: "Portuguese",
+    ru: "Russian",
+    zh: "Chinese",
+    ja: "Japanese",
+    ko: "Korean",
+    ar: "Arabic",
+    hi: "Hindi",
+    tr: "Turkish",
+    nl: "Dutch",
+    pl: "Polish",
+    sv: "Swedish",
+    no: "Norwegian",
+    fi: "Finnish",
+    da: "Danish",
+    cs: "Czech",
+    hu: "Hungarian",
+    ro: "Romanian",
+    th: "Thai",
+    vi: "Vietnamese",
+    id: "Indonesian",
+    ms: "Malay",
+    he: "Hebrew",
+    bg: "Bulgarian",
+    uk: "Ukrainian",
+    el: "Greek",
+    sk: "Slovak",
+    sl: "Slovenian",
+    hr: "Croatian",
 };
 
 const isUri = (str: string): URL => {

@@ -2,6 +2,9 @@
         
 This action uses GitHub Models and remark to translate markdown document incrementally in your repository.
 
+- [French](./README.fr.md)
+- [Spanish](./README.es.md)
+
 ## Inputs
 
 - `to`: The iso-code target language for translation. (default: `fr`)
