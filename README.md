@@ -72,8 +72,8 @@ jobs:
           lang: fr,es
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          file_pattern: "translations/*.json **.md* docs/translations/*.json"
-          commit_message: "[genai] translated docs"
+          file_pattern: "translations/*.json **.md* translations/*.json"
+          commit_message: "[cai] translated docs"
           commit_user_name: "genaiscript"
 ```
 
