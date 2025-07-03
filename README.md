@@ -55,6 +55,8 @@ Save this file in your `.github/workflows/` directory as `continuous-translation
 name: Continuous Translation
 on:
   push:
+    branches:
+      - main
 permissions:
   contents: write
   models: read
