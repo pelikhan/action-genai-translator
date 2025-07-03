@@ -3,7 +3,7 @@ description: This action uses GitHub Models and remark to translate markdown
   document incrementally in your repository.
 inputs:
   lang:
-    description: The iso-code target language for translation.
+    description: The ISO code(s) of the target language(s) for translation (comma-separated values).
     required: false
     default: fr,es
   instructions:
