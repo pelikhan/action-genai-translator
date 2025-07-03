@@ -54,6 +54,7 @@ Save this file in your `.github/workflows/` directory as `continuous-translation
 ```yaml
 name: Continuous Translation
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
