@@ -1,16 +1,27 @@
-# Continuous Markdown Translations using GenAI
+# Continuous Translations using GenAI
 
-Cette action utilise les modèles GitHub et remark pour traduire progressivement des documents markdown dans votre dépôt.
+This action uses translate incrementally markdown document using [GitHub Models](https://github.com/models).
 
 * [Blog post](https://microsoft.github.io/genaiscript/blog/continuous-translations/)
 * [French](./README.fr.md)
 * [Spanish](./README.es.md)
 
+## How it work?
+
+This action uses [GenAIScript](https://microsoft.github.io/genaiscript/) to programmatically analyze and translate markdown documents. The translation process works as follows:
+
+* parse markdown file to AST (abstract syntax tree)
+* visit tree and lookup existing translation or mark node that needs translation
+* run LLM inference to collect new translations
+* inject new translations in document and validate quality
+* save translations to file cache
+* commit changes
+
 ## Entrées
 
 * `lang`: The iso-code target language for translation. (default: `fr`)
 * `force` : Force la traduction même si le fichier a déjà été traduit.
-* `files` : Fichiers à traiter, séparés par des points-virgules (;). .md, .mdx
+* `files`: Files to process, separated by semi columns. Default is `README.md`.
 * `debug` : Active la journalisation de débogage ([https://microsoft.github.io/genaiscript/reference/scripts/logging/](https://microsoft.github.io/genaiscript/reference/scripts/logging/)).
 * `openai_api_key` : Clé API OpenAI (par défaut : `${{ secrets.OPENAI_API_KEY }}`)
 * `openai_api_base` : URL de base de l'API OpenAI (par défaut : `${{ env.OPENAI_API_BASE }}`)
@@ -19,10 +30,6 @@ Cette action utilise les modèles GitHub et remark pour traduire progressivement
 * `azure_openai_subscription_id` : ID d'abonnement Azure OpenAI pour lister les déploiements disponibles (Microsoft Entra uniquement). (par défaut : `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}`)
 * `azure_openai_api_version` : Version de l'API Azure OpenAI. (par défaut : `${{ env.AZURE_OPENAI_API_VERSION }}`)
 * `azure_openai_api_credentials` : Type d'identifiants pour l'API Azure OpenAI. Laisser sur 'default' sauf si vous avez une configuration Azure spéciale. (par défaut : `${{ env.AZURE_OPENAI_API_CREDENTIALS }}`)
-* `azure_ai_inference_api_key` : Clé d'inférence Azure AI (par défaut : `${{ secrets.AZURE_AI_INFERENCE_API_KEY }}`)
-* `azure_ai_inference_api_endpoint` : Point de terminaison Azure Serverless OpenAI (par défaut : `${{ env.AZURE_AI_INFERENCE_API_ENDPOINT }}`)
-* `azure_ai_inference_api_version` : Version de l'API Azure Serverless OpenAI (par défaut : `${{ env.AZURE_AI_INFERENCE_API_VERSION }}`)
-* `azure_ai_inference_api_credentials` : Type d'identifiants pour l'API Azure Serverless OpenAI (par défaut : `${{ env.AZURE_AI_INFERENCE_API_CREDENTIALS }}`)
 * `github_token` : Jeton GitHub avec au moins la permission `models: read` ([https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions)). (par défaut : `${{ secrets.GITHUB_TOKEN }}`)
 
 ## Sorties
@@ -63,6 +70,11 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           lang: fr,es
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          file_pattern: "translations/*.json **.md* translations/*.json"
+          commit_message: "[cai] translated docs"
+          commit_user_name: "genaiscript"
 ```
 
 ## Développement
