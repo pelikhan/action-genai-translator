@@ -70,5 +70,21 @@
   "4B9C7011723363C0C594": "regenerar",
   "7DD80E22E0E9329F928A": "Actualización",
   "B8C9D646EE579CEA8E97": "La versión de GenAIScript está fijada en el archivo ",
-  "2397323C5AA9A931A372": "Lanzamiento"
+  "2397323C5AA9A931A372": "Lanzamiento",
+  "F4AE501D96B7954146B7": "Traducciones continuas usando GenAI",
+  "C6268D5B1D6EC794BCAD": "Esta acción traduce incrementalmente documentos markdown usando ",
+  "4775595F588067D0799A": "Modelos de GitHub",
+  "EAD3ACA230305D54A07D": "Publicación del blog",
+  "91E23FE7BB6C4E72D1DF": "Francés",
+  "C83F16AA401F994BC81E": "Español",
+  "D7F77DB20CEEF35E21A4": "¿Cómo funciona?",
+  "7A654CB93072A49AD083": "Esta acción usa ",
+  "6D2BDB8D81EA13EF0AE0": "GenAIScript",
+  "CB2B7635DEF25158081A": "recorrer el árbol y buscar traducciones existentes o marcar los nodos que necesitan traducción",
+  "780E7ED8138A179249AD": "ejecutar inferencia LLM para recopilar nuevas traducciones",
+  "8672CB69084D69B4E208": "inyectar las nuevas traducciones en el documento y validar su calidad",
+  "076EA4CE74DC76F2077B": "guardar las traducciones en la caché de archivos",
+  "03148452C0FE3399557A": "confirmar los cambios",
+  "D122151A4A482F3DF742": "Guarda este archivo en tu ",
+  "F7877C8DF19A030ABBFC": "directorio como "
 }

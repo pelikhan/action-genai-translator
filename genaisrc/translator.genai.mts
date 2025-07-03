@@ -660,6 +660,7 @@ export default async function main() {
             {
               label: `judge translation ${to} ${basename(filename)}`,
               explanations: true,
+              cache: true,
               system: ["system.annotations"],
               systemSafety: false,
             },

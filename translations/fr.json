@@ -76,5 +76,19 @@
   "0D37E08E9C29FEC9502E": "commettre les modifications",
   "16903505D9CC5247222E": "`lang` : Le code iso de la langue cible pour la traduction. (par défaut : `fr`)",
   "34D15D93A050708F9BDC": "`files` : Fichiers à traiter, séparés par des points-virgules. Par défaut : `README.md`.",
-  "E764AA9D4572AA516499": "Enregistrez ce fichier dans votre répertoire `.github/workflows/` sous le nom `continuous-translation.yml` :"
+  "E764AA9D4572AA516499": "Enregistrez ce fichier dans votre répertoire `.github/workflows/` sous le nom `continuous-translation.yml` :",
+  "F4AE501D96B7954146B7": "Traductions continues avec GenAI",
+  "C6268D5B1D6EC794BCAD": "Cette action traduit de façon incrémentale un document markdown en utilisant ",
+  "4775595F588067D0799A": "Modèles GitHub",
+  "EAD3ACA230305D54A07D": "Article de blog",
+  "91E23FE7BB6C4E72D1DF": "Français",
+  "C83F16AA401F994BC81E": "Espagnol",
+  "D7F77DB20CEEF35E21A4": "Comment ça fonctionne ?",
+  "7A654CB93072A49AD083": "Cette action utilise ",
+  "6D2BDB8D81EA13EF0AE0": "GenAIScript",
+  "CB2B7635DEF25158081A": "parcourt l'arbre et recherche une traduction existante ou marque les nœuds nécessitant une traduction",
+  "780E7ED8138A179249AD": "exécute une inférence LLM pour collecter de nouvelles traductions",
+  "8672CB69084D69B4E208": "injecte les nouvelles traductions dans le document et valide la qualité",
+  "076EA4CE74DC76F2077B": "enregistre les traductions dans le cache de fichiers",
+  "03148452C0FE3399557A": "effectue le commit des modifications"
 }
