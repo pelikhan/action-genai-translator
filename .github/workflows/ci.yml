@@ -33,7 +33,8 @@ jobs:
             .genaiscript/cache/**
             /genaiscript/action/.genaiscript/cache/**
           key: continous-translation-${{ github.run_id }}
-          restore-keys: continous-translation-
+          restore-keys: |
+            continous-translation-
       - uses: ./
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
