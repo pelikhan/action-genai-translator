@@ -340,8 +340,6 @@ Usa barras invertidas para escapar caracteres especiales:
 
 ### Comentarios
 
-TODO: Es necesario poder desactivar MDX.
-
 ### Emojis
 
 \:smile: \:heart: \:thumbsup: \:rocket: \:computer:

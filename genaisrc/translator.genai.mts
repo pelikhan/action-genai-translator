@@ -162,17 +162,6 @@ export default async function main() {
     files.map((f) => f.filename)
   );
 
-  const { visit, parse, stringify, SKIP } = await mdast();
-
-  const hashNode = (node: Node | string) => {
-    if (typeof node === "object") {
-      node = structuredClone(node);
-      visit(node, (node) => delete node.position);
-    }
-    const chunkHash = hash("sha-256", JSON.stringify(node));
-    return chunkHash.slice(0, HASH_LENGTH).toUpperCase();
-  };
-
   for (const to of tos) {
     let lang = langs[to];
     if (!lang) {
@@ -201,6 +190,18 @@ export default async function main() {
     for (const file of files) {
       const { filename } = file;
       output.heading(3, `${filename}`);
+
+      const { visit, parse, stringify, SKIP } = await mdast({
+        mdx: /\.mdx$/i.test(filename),
+      });
+      const hashNode = (node: Node | string) => {
+        if (typeof node === "object") {
+          node = structuredClone(node);
+          visit(node, (node) => delete node.position);
+        }
+        const chunkHash = hash("sha-256", JSON.stringify(node));
+        return chunkHash.slice(0, HASH_LENGTH).toUpperCase();
+      };
 
       try {
         const starlight = starlightDir && filename.startsWith(starlightDir);

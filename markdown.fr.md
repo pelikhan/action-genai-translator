@@ -340,8 +340,6 @@ Utilisez des antislashs pour échapper les caractères spéciaux :
 
 ### Commentaires
 
-TODO : Il doit être possible de désactiver MDX.
-
 ### Émojis
 
 \:smile: \:heart: \:thumbsup: \:rocket: \:computer:

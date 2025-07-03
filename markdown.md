@@ -329,7 +329,7 @@ Use backslashes to escape special characters:
 
 ### Comments
 
-TODO: Need to be able to turn off MDX.
+<!-- This is a comment and will not be rendered in the output -->
 
 ### Emojis
 
