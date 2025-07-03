@@ -54,7 +54,10 @@ Enregistrez ce fichier dans votre répertoire `.github/workflows/` sous le nom `
 ```yaml
 name: Continuous Translation
 on:
+  workflow_dispatch:
   push:
+    branches:
+      - main
 permissions:
   contents: write
   models: read
