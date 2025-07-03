@@ -30,10 +30,6 @@ This action uses [GenAIScript](https://microsoft.github.io/genaiscript/) to prog
 - `azure_openai_subscription_id`: Azure OpenAI subscription ID to list available deployments (Microsoft Entra only). (default: `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}`)
 - `azure_openai_api_version`: Azure OpenAI API version. (default: `${{ env.AZURE_OPENAI_API_VERSION }}`)
 - `azure_openai_api_credentials`: Azure OpenAI API credentials type. Leave as 'default' unless you have a special Azure setup. (default: `${{ env.AZURE_OPENAI_API_CREDENTIALS }}`)
-- `azure_ai_inference_api_key`: Azure AI Inference key (default: `${{ secrets.AZURE_AI_INFERENCE_API_KEY }}`)
-- `azure_ai_inference_api_endpoint`: Azure Serverless OpenAI endpoint (default: `${{ env.AZURE_AI_INFERENCE_API_ENDPOINT }}`)
-- `azure_ai_inference_api_version`: Azure Serverless OpenAI API version (default: `${{ env.AZURE_AI_INFERENCE_API_VERSION }}`)
-- `azure_ai_inference_api_credentials`: Azure Serverless OpenAI API credentials type (default: `${{ env.AZURE_AI_INFERENCE_API_CREDENTIALS }}`)
 - `github_token`: GitHub token with `models: read` permission at least (https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions). (default: `${{ secrets.GITHUB_TOKEN }}`)
 
 ## Outputs
