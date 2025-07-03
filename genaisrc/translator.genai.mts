@@ -21,7 +21,7 @@ script({
   description:
     "This action uses GitHub Models and remark to translate markdown document incrementally in your repository.",
   accept: ".md,.mdx",
-  files: "README.md",
+  files: ["README.md", "markdown.md"],
   parameters: {
     lang: {
       type: "string",
