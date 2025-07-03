@@ -14,15 +14,11 @@
   },
   "scripts": {
     "upgrade": "npx -y npm-check-updates -u && npm install && npm run fix",
-    "docker:build": "docker build -t pelikhan-action-genai-markdown-translator .",
-    "docker:start": "docker run -e GITHUB_TOKEN pelikhan-action-genai-markdown-translator",
-    "act:install": "gh extension install https://github.com/nektos/gh-act",
-    "act": "gh act",
     "lint": "npx --yes prettier --write genaisrc/",
     "fix": "genaiscript scripts fix",
     "typecheck": "genaiscript scripts compile",
     "configure": "genaiscript configure action translator",
-    "test": "echo 'No tests defined.'",
+    "test": "npm run typecheck",
     "dev": "genaiscript run translator",
     "start": "genaiscript run translator --github-workspace --no-run-trace --no-output-trace",
     "release": "sh release.sh"
