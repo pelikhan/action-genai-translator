@@ -33,7 +33,7 @@ Cette action utilise les modèles GitHub et remark pour traduire progressivement
 Ajoutez ce qui suit à votre étape dans votre fichier de workflow :
 
 ```yaml
-uses: pelikhan/action-genai-markdown-translator@main
+uses: pelikhan/action-continuous-translation@main
 with:
   github_token: ${{ secrets.GITHUB_TOKEN }}
   lang: fr,es
@@ -44,7 +44,7 @@ with:
 Enregistrez ce fichier dans votre répertoire `.github/workflows/` sous le nom `genai-translator.yml` :
 
 ```yaml
-name: Action-Genai-Markdown-Translator
+name: Action-continuous-translation
 on:
     push:
 permissions:
@@ -58,7 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pelikhan/action-genai-markdown-translator@main
+      - uses: pelikhan/action-continuous-translation@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           lang: fr,es

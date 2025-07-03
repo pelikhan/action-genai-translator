@@ -1,4 +1,4 @@
-name: action-genai-markdown-translator
+name: action-continuous-translation
 description: This action uses GitHub Models and remark to translate markdown
   document incrementally in your repository.
 inputs:

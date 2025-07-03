@@ -1,5 +1,5 @@
 # Continuous Markdown Translations using GenAI
-        
+
 This action uses GitHub Models and remark to translate markdown document incrementally in your repository.
 
 - [Blog post](https://microsoft.github.io/genaiscript/blog/continuous-translations/)
@@ -15,7 +15,7 @@ This action uses GitHub Models and remark to translate markdown document increme
 - `openai_api_key`: OpenAI API key (default: `${{ secrets.OPENAI_API_KEY }}`)
 - `openai_api_base`: OpenAI API base URL (default: `${{ env.OPENAI_API_BASE }}`)
 - `azure_openai_api_endpoint`: Azure OpenAI endpoint. In the Azure Portal, open your Azure OpenAI resource, Keys and Endpoints, copy Endpoint. (default: `${{ env.AZURE_OPENAI_API_ENDPOINT }}`)
-- `azure_openai_api_key`: Azure OpenAI API key. **You do NOT need this if you are using Microsoft Entra ID. (default: `${{ secrets.AZURE_OPENAI_API_KEY }}`)
+- `azure_openai_api_key`: Azure OpenAI API key. \*\*You do NOT need this if you are using Microsoft Entra ID. (default: `${{ secrets.AZURE_OPENAI_API_KEY }}`)
 - `azure_openai_subscription_id`: Azure OpenAI subscription ID to list available deployments (Microsoft Entra only). (default: `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}`)
 - `azure_openai_api_version`: Azure OpenAI API version. (default: `${{ env.AZURE_OPENAI_API_VERSION }}`)
 - `azure_openai_api_credentials`: Azure OpenAI API credentials type. Leave as 'default' unless you have a special Azure setup. (default: `${{ env.AZURE_OPENAI_API_CREDENTIALS }}`)
@@ -34,7 +34,7 @@ This action uses GitHub Models and remark to translate markdown document increme
 Add the following to your step in your workflow file:
 
 ```yaml
-uses: pelikhan/action-genai-markdown-translator@main
+uses: pelikhan/action-continuous-translation@main
 with:
   github_token: ${{ secrets.GITHUB_TOKEN }}
   lang: fr,es
@@ -42,24 +42,24 @@ with:
 
 ## Example
 
-Save this file in your `.github/workflows/` directory as `genai-translator.yml`:
+Save this file in your `.github/workflows/` directory as `continuous-translation.yml`:
 
 ```yaml
-name: Action-Genai-Markdown-Translator
+name: Continuous Translation
 on:
-    push:
+  push:
 permissions:
-    contents: write
-    models: read
+  contents: write
+  models: read
 concurrency:
-    group: ${{ github.workflow }}-${{ github.ref }}
-    cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
-  action_genai_markdown_translator:
+  continuous_translation:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pelikhan/action-genai-markdown-translator@main
+      - uses: pelikhan/action-continuous-translation@v0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           lang: fr,es
@@ -89,16 +89,19 @@ npm run lint
 ```
 
 To typecheck the scripts, run:
+
 ```bash
 npm run typecheck
 ```
 
 To build the Docker image locally, run:
+
 ```bash
 npm run docker:build
 ```
 
 To run the action locally in Docker (build it first), use:
+
 ```bash
 npm run docker:start
 ```

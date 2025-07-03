@@ -30,7 +30,7 @@ Esta acción utiliza Modelos de GitHub y remark para traducir documentos markdow
 Agrega lo siguiente a tu paso en tu archivo de flujo de trabajo:
 
 ```yaml
-uses: pelikhan/action-genai-markdown-translator@main
+uses: pelikhan/action-continuous-translation@main
 with:
   lang: fr,es
 ```
@@ -40,7 +40,7 @@ with:
 Guarda este archivo en tu directorio `.github/workflows/` como `genai-translator.yml`:
 
 ```yaml
-name: Action-Genai-Markdown-Translator
+name: Action-continuous-translation
 on:
     push:
 permissions:
@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pelikhan/action-genai-markdown-translator@main
+      - uses: pelikhan/action-continuous-translation@main
         with:
           lang: fr,es
 ```
