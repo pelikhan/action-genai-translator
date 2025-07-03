@@ -596,8 +596,11 @@ export default async function main() {
         });
 
         output.itemValue(`missing translations`, missingTranslations);
-        const nTranslations = Object.keys(llmHashes).length
-        if ((nTranslations - missingTranslations) / nTranslations < minTranslationsThreshold) {
+        const nTranslations = Object.keys(llmHashes).length;
+        if (
+          (nTranslations - missingTranslations) / nTranslations <
+          minTranslationsThreshold
+        ) {
           output.warn(`not enough translations, skipping file.`);
           continue;
         }
