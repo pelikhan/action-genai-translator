@@ -53,7 +53,7 @@ git tag -f $MAJOR $NEW_VERSION
 git push origin $MAJOR --force
 
 # Update action.yml with Dockerfile in main
-sed -i "s|image: .*|image: Dockerfile" action.yml
+sed -i "s|image: .*|image: Dockerfile|" action.yml
 git add action.yml
 git commit -m "[chore] revert to Dockerfile in action.yml"
 git push origin HEAD
