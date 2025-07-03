@@ -133,7 +133,7 @@ export default async function main() {
             lang = res.text;
         }
         output.heading(2, `Translating Markdown files to ${lang} (${to})`);
-        const translationCacheFilename = `docs/translations/${to.toLowerCase()}.json`;
+        const translationCacheFilename = `translations/${to.toLowerCase()}.json`;
         dbg(`cache: %s`, translationCacheFilename);
         output.itemValue("cache", translationCacheFilename);
         // hash -> text translation

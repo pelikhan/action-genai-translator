@@ -1,16 +1,27 @@
-# Continuous Markdown Translations using GenAI
+# Continuous Translations using GenAI
 
-This action uses GitHub Models and remark to translate markdown document incrementally in your repository.
+This action uses translate incrementally markdown document using [GitHub Models](https://github.com/models).
 
 - [Blog post](https://microsoft.github.io/genaiscript/blog/continuous-translations/)
 - [French](./README.fr.md)
 - [Spanish](./README.es.md)
 
+## How it work?
+
+This action uses [GenAIScript](https://microsoft.github.io/genaiscript/) to programmatically analyze and translate markdown documents. The translation process works as follows:
+
+- parse markdown file to AST (abstract syntax tree)
+- visit tree and lookup existing translation or mark node that needs translation
+- run LLM inference to collect new translations
+- inject new translations in document and validate quality
+- save translations to file cache
+- commit changes
+
 ## Inputs
 
 - `lang`: The iso-code target language for translation. (default: `fr`)
 - `force`: Force translation even if the file has already been translated.
-- `files`: Files to process, separated by semi columns (;). .md,.mdx
+- `files`: Files to process, separated by semi columns. Default is `README.md`.
 - `debug`: Enable debug logging (https://microsoft.github.io/genaiscript/reference/scripts/logging/).
 - `openai_api_key`: OpenAI API key (default: `${{ secrets.OPENAI_API_KEY }}`)
 - `openai_api_base`: OpenAI API base URL (default: `${{ env.OPENAI_API_BASE }}`)
@@ -63,6 +74,11 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           lang: fr,es
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          file_pattern: "translations/*.json **.md* docs/translations/*.json"
+          commit_message: "[genai] translated docs"
+          commit_user_name: "genaiscript"
 ```
 
 ## Development

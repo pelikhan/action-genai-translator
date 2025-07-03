@@ -32,6 +32,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          file_pattern: "**.md* docs/translations/*.json"
+          file_pattern: "translations/*.json **.md* docs/translations/*.json"
           commit_message: "[genai] translated docs"
           commit_user_name: "genaiscript"
