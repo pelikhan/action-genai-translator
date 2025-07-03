@@ -1,12 +1,27 @@
-# Traducción automática de Markdown usando GenAI
+# Traducción continua usando GenAI
 
-Esta acción utiliza Modelos de GitHub y remark para traducir documentos markdown de forma incremental en tu repositorio.
+Esta acción traduce de manera incremental documentos Markdown utilizando [GitHub Models](https://github.com/models).
+
+* [Entrada de blog](https://microsoft.github.io/genaiscript/blog/continuous-translations/)
+* [Francés](./README.fr.md)
+* [Español](./README.es.md)
+
+## ¿Cómo funciona?
+
+Esta acción utiliza [GenAIScript](https://microsoft.github.io/genaiscript/) para analizar y traducir documentos Markdown de forma programática. El proceso de traducción funciona de la siguiente manera:
+
+* analiza el archivo markdown a AST (árbol de sintaxis abstracta)
+* recorre el árbol y busca traducciones existentes o marca nodos que necesitan traducción
+* ejecuta inferencia LLM para recopilar nuevas traducciones
+* inyecta nuevas traducciones en el documento y valida la calidad
+* guarda las traducciones en el caché de archivos
+* confirma los cambios
 
 ## Entradas
 
-* `to`: El código ISO del idioma de destino para la traducción. (por defecto: `fr`)
+* `lang`: El idioma de destino para la traducción en código ISO. (por defecto: `fr`)
 * `force`: Forzar la traducción incluso si el archivo ya ha sido traducido.
-* `files`: Archivos a procesar, separados por punto y coma (;). .md, .mdx
+* `files`: Archivos a procesar, separados por punto y coma. Por defecto es `README.md`.
 * `debug`: Habilitar el registro de depuración ([https://microsoft.github.io/genaiscript/reference/scripts/logging/](https://microsoft.github.io/genaiscript/reference/scripts/logging/)).
 * `openai_api_key`: Clave API de OpenAI (por defecto: `${{ secrets.OPENAI_API_KEY }}`)
 * `openai_api_base`: URL base de la API de OpenAI (por defecto: `${{ env.OPENAI_API_BASE }}`)
@@ -15,10 +30,6 @@ Esta acción utiliza Modelos de GitHub y remark para traducir documentos markdow
 * `azure_openai_subscription_id`: ID de suscripción de Azure OpenAI para listar los despliegues disponibles (solo Microsoft Entra). (por defecto: `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}`)
 * `azure_openai_api_version`: Versión de la API de Azure OpenAI. (por defecto: `${{ env.AZURE_OPENAI_API_VERSION }}`)
 * `azure_openai_api_credentials`: Tipo de credenciales de la API de Azure OpenAI. Déjalo como 'default' a menos que tengas una configuración especial de Azure. (por defecto: `${{ env.AZURE_OPENAI_API_CREDENTIALS }}`)
-* `azure_ai_inference_api_key`: Clave de inferencia de Azure AI (por defecto: `${{ secrets.AZURE_AI_INFERENCE_API_KEY }}`)
-* `azure_ai_inference_api_endpoint`: Endpoint de Azure Serverless OpenAI (por defecto: `${{ env.AZURE_AI_INFERENCE_API_ENDPOINT }}`)
-* `azure_ai_inference_api_version`: Versión de la API de Azure Serverless OpenAI (por defecto: `${{ env.AZURE_AI_INFERENCE_API_VERSION }}`)
-* `azure_ai_inference_api_credentials`: Tipo de credenciales de la API de Azure Serverless OpenAI (por defecto: `${{ env.AZURE_AI_INFERENCE_API_CREDENTIALS }}`)
 * `github_token`: Token de GitHub con permiso de `models: read` al menos ([https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions)). (por defecto: `${{ secrets.GITHUB_TOKEN }}`)
 
 ## Salidas
@@ -32,31 +43,38 @@ Agrega lo siguiente a tu paso en tu archivo de flujo de trabajo:
 ```yaml
 uses: pelikhan/action-continuous-translation@main
 with:
+  github_token: ${{ secrets.GITHUB_TOKEN }}
   lang: fr,es
 ```
 
 ## Ejemplo
 
-Guarda este archivo en tu directorio `.github/workflows/` como `genai-translator.yml`:
+Guarda este archivo en tu directorio `.github/workflows/` como `continuous-translation.yml`:
 
 ```yaml
-name: Action-continuous-translation
+name: Continuous Translation
 on:
-    push:
+  push:
 permissions:
-    contents: write
-    models: read
+  contents: write
+  models: read
 concurrency:
-    group: ${{ github.workflow }}-${{ github.ref }}
-    cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
-  action_genai_markdown_translator:
+  continuous_translation:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pelikhan/action-continuous-translation@main
+      - uses: pelikhan/action-continuous-translation@v0
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           lang: fr,es
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          file_pattern: "translations/*.json **.md* translations/*.json"
+          commit_message: "[cai] translated docs"
+          commit_user_name: "genaiscript"
 ```
 
 ## Desarrollo

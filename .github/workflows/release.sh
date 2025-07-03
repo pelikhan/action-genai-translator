@@ -52,4 +52,10 @@ gh release create "$NEW_VERSION" --title "$NEW_VERSION" --notes "Patch release $
 git tag -f $MAJOR $NEW_VERSION
 git push origin $MAJOR --force
 
+# Update action.yml with Dockerfile in main
+sed -i "s|image: .*|image: Dockerfile" action.yml
+git add action.yml
+git commit -m "[chore] revert to Dockerfile in action.yml"
+git push origin HEAD
+
 echo "✅ GitHub release $NEW_VERSION created successfully."

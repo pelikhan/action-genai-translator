@@ -60,5 +60,21 @@
   "B8C9D646EE579CEA8E97": "La version de GenAIScript est fixée dans le fichier ",
   "2397323C5AA9A931A372": "Publication",
   "D122151A4A482F3DF742": "Enregistrez ce fichier dans votre ",
-  "F7877C8DF19A030ABBFC": "répertoire "
+  "F7877C8DF19A030ABBFC": "répertoire ",
+  "9F68AA75859A87BBEC9E": "Traductions continues avec GenAI",
+  "987EBC0E5EA9D280C8C3": "Cette action permet de traduire de manière incrémentielle un document markdown en utilisant les [GitHub Models](https://github.com/models).",
+  "A3957BA21CD150B6298E": "[Article de blog](https://microsoft.github.io/genaiscript/blog/continuous-translations/)",
+  "939D7052ECCF5CBD3B33": "[Français](./README.fr.md)",
+  "315C576055397989B5D3": "[Espagnol](./README.es.md)",
+  "34FB2B0AD7788862FBD7": "Comment ça fonctionne ?",
+  "4B7ED8E1BC346C9ACF95": "Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pour analyser et traduire programmeusement des documents markdown. Le processus de traduction fonctionne comme suit :",
+  "13B60E13BABFB358450B": "analyser le fichier markdown en AST (arbre de syntaxe abstraite)",
+  "98EBFF009D7FF9C0BA4C": "parcourir l'arbre et rechercher une traduction existante ou marquer le nœud nécessitant une traduction",
+  "C7ED9E1DAA9D8927703A": "exécuter l'inférence LLM pour collecter de nouvelles traductions",
+  "333AED836446D718052F": "injecter les nouvelles traductions dans le document et valider la qualité",
+  "EAB67F2ED636B698ABFD": "enregistrer les traductions dans le cache de fichiers",
+  "0D37E08E9C29FEC9502E": "commettre les modifications",
+  "16903505D9CC5247222E": "`lang` : Le code iso de la langue cible pour la traduction. (par défaut : `fr`)",
+  "34D15D93A050708F9BDC": "`files` : Fichiers à traiter, séparés par des points-virgules. Par défaut : `README.md`.",
+  "E764AA9D4572AA516499": "Enregistrez ce fichier dans votre répertoire `.github/workflows/` sous le nom `continuous-translation.yml` :"
 }

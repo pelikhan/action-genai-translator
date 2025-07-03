@@ -1,27 +1,27 @@
-# Continuous Translations using GenAI
+# Traductions continues avec GenAI
 
-This action uses translate incrementally markdown document using [GitHub Models](https://github.com/models).
+Cette action permet de traduire de manière incrémentielle un document markdown en utilisant les [GitHub Models](https://github.com/models).
 
-* [Blog post](https://microsoft.github.io/genaiscript/blog/continuous-translations/)
-* [French](./README.fr.md)
-* [Spanish](./README.es.md)
+* [Article de blog](https://microsoft.github.io/genaiscript/blog/continuous-translations/)
+* [Français](./README.fr.md)
+* [Espagnol](./README.es.md)
 
-## How it work?
+## Comment ça fonctionne ?
 
-This action uses [GenAIScript](https://microsoft.github.io/genaiscript/) to programmatically analyze and translate markdown documents. The translation process works as follows:
+Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pour analyser et traduire programmeusement des documents markdown. Le processus de traduction fonctionne comme suit :
 
-* parse markdown file to AST (abstract syntax tree)
-* visit tree and lookup existing translation or mark node that needs translation
-* run LLM inference to collect new translations
-* inject new translations in document and validate quality
-* save translations to file cache
-* commit changes
+* analyser le fichier markdown en AST (arbre de syntaxe abstraite)
+* parcourir l'arbre et rechercher une traduction existante ou marquer le nœud nécessitant une traduction
+* exécuter l'inférence LLM pour collecter de nouvelles traductions
+* injecter les nouvelles traductions dans le document et valider la qualité
+* enregistrer les traductions dans le cache de fichiers
+* commettre les modifications
 
 ## Entrées
 
-* `lang`: The iso-code target language for translation. (default: `fr`)
+* `lang` : Le code iso de la langue cible pour la traduction. (par défaut : `fr`)
 * `force` : Force la traduction même si le fichier a déjà été traduit.
-* `files`: Files to process, separated by semi columns. Default is `README.md`.
+* `files` : Fichiers à traiter, séparés par des points-virgules. Par défaut : `README.md`.
 * `debug` : Active la journalisation de débogage ([https://microsoft.github.io/genaiscript/reference/scripts/logging/](https://microsoft.github.io/genaiscript/reference/scripts/logging/)).
 * `openai_api_key` : Clé API OpenAI (par défaut : `${{ secrets.OPENAI_API_KEY }}`)
 * `openai_api_base` : URL de base de l'API OpenAI (par défaut : `${{ env.OPENAI_API_BASE }}`)
@@ -49,7 +49,7 @@ with:
 
 ## Exemple
 
-Enregistrez ce fichier dans votre `.github/workflows/`répertoire `continuous-translation.yml`:
+Enregistrez ce fichier dans votre répertoire `.github/workflows/` sous le nom `continuous-translation.yml` :
 
 ```yaml
 name: Continuous Translation
