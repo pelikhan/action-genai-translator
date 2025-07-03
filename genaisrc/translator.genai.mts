@@ -35,9 +35,8 @@ script({
     },
     starlightBase: {
       type: "string",
-      default: "genaiscript",
       description:
-        "Base path for the Astro Starlight documentation. Used to patch links in translations. Must specify startlightDir as well.",
+        "Base path for the Astro Starlight documentation. Used to patch links in translations. Must specify starlightDir as well.",
     },
     force: {
       type: "boolean",
@@ -126,7 +125,7 @@ export default async function main() {
     throw new Error(
       `Both starlightDir and starlightBase must be defined or undefined together.`
     );
-  const startlightBaseRx = starlightBase
+  const starlightBaseRx = starlightBase
     ? new RegExp(`^/${starlightBase}/`)
     : undefined;
 
@@ -518,7 +517,7 @@ export default async function main() {
                   data.hero.actions.forEach((action) => {
                     if (typeof action.link === "string") {
                       action.link = action.link.replace(
-                        startlightBaseRx,
+                        starlightBaseRx,
                         `/${starlightBase}/${to.toLowerCase()}/`
                       );
                       dbg(`yaml hero action link: %s`, action.link);
@@ -629,11 +628,16 @@ export default async function main() {
         });
 
         // patch links
-        visit(translated, "link", (node) => {
-          if (startlightBaseRx.test(node.url)) {
-            node.url = patchFn(node.url.replace(startlightBaseRx, "../"), true);
-          }
-        });
+        if (starlight) {
+          visit(translated, "link", (node) => {
+            if (starlightBaseRx.test(node.url)) {
+              node.url = patchFn(
+                node.url.replace(starlightBaseRx, "../"),
+                true
+              );
+            }
+          });
+        }
 
         output.itemValue(`unresolved translations`, unresolvedTranslations);
         const nTranslations = Object.keys(llmHashes).length;
