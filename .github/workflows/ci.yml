@@ -6,11 +6,11 @@ on:
   push:
     branches:
       - main
-permissions:
-  contents: read
-  models: read
 jobs:
   test:
+    permissions:
+      contents: read
+      models: read
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,8 +20,16 @@ jobs:
       - run: npm ci
       - run: npm test
   test-action:
+    permissions:
+      contents: write
+      models: read
     needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          file_pattern: "**.md* docs/translations/*.json"
+          commit_message: "[genai] translated docs"
+          commit_user_name: "genaiscript"
