@@ -2,6 +2,9 @@
 
 Cette action utilise les modèles GitHub et remark pour traduire progressivement des documents markdown dans votre dépôt.
 
+* [French](./README.fr.md)
+* [Spanish](./README.es.md)
+
 ## Entrées
 
 * `to` : Code ISO de la langue cible pour la traduction. (par défaut : `fr`)
@@ -32,6 +35,7 @@ Ajoutez ce qui suit à votre étape dans votre fichier de workflow :
 ```yaml
 uses: pelikhan/action-genai-markdown-translator@main
 with:
+  github_token: ${{ secrets.GITHUB_TOKEN }}
   lang: fr,es
 ```
 
@@ -56,6 +60,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: pelikhan/action-genai-markdown-translator@main
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           lang: fr,es
 ```
 
