@@ -20,7 +20,7 @@
     "configure": "genaiscript configure action translator",
     "test": "npm run typecheck",
     "dev": "genaiscript run translator",
-    "start": "genaiscript run translator --github-workspace --no-run-trace --out-trace $GITHUB_STEP_SUMMARY",
+    "start": "genaiscript run translator --github-workspace --no-run-trace --no-output-trace --out-output $GITHUB_STEP_SUMMARY",
     "release": "sh release.sh"
   }
 }
