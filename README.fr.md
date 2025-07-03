@@ -1,4 +1,4 @@
-# Traductions continues avec GenAI
+# Traduction Continue
 
 Cette action permet de traduire de manière incrémentielle un document markdown en utilisant les [GitHub Models](https://github.com/models).
 

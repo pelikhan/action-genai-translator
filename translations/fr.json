@@ -90,5 +90,6 @@
   "780E7ED8138A179249AD": "exécute une inférence LLM pour collecter de nouvelles traductions",
   "8672CB69084D69B4E208": "injecte les nouvelles traductions dans le document et valide la qualité",
   "076EA4CE74DC76F2077B": "enregistre les traductions dans le cache de fichiers",
-  "03148452C0FE3399557A": "effectue le commit des modifications"
+  "03148452C0FE3399557A": "effectue le commit des modifications",
+  "58F2F26990A259B51BAB": "Traduction Continue"
 }
