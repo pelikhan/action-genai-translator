@@ -687,5 +687,14 @@
   "Comments\n": "Commentaires",
   "Emojis\n": "Émojis",
   "Conclusion\n": "Conclusion",
-  "Note\n": "Remarque"
+  "Note\n": "Remarque",
+  "`instructions`: Extra instructions for the LLM to use when translating.\n": "`instructions` : Instructions supplémentaires à utiliser par le LLM lors de la traduction.",
+  "`instructions_file`: Path to a file containing extra instructions for the LLM to.84A37D5CB7CE89EE84C4": "`instructions_file` : Chemin d'accès à un fichier contenant des instructions supplémentaires à utiliser par le LLM lors de la traduction.",
+  "`starlight_dir`: root folder of the Astro Starlight documentation.\n": "`starlight_dir` : dossier racine de la documentation Astro Starlight.",
+  "`starlight_base`: base alias for the Starlight documentation.\n": "`starlight_base` : alias de base pour la documentation Starlight.",
+  "## Diagnostics\n": "Diagnostics",
+  "### LLM configuration\n": "Configuration du LLM",
+  "## Astro Starlight\n": "Astro Starlight",
+  "The plugin supports translations Astro Starlight markdown or MDX files\nfor a sit.4059B4EF28EB66C2B0F9": "Le plugin prend en charge la traduction de fichiers markdown ou MDX Astro Starlight pour un site utilisant une locale par défaut **racine** et un alias de **base** pour la documentation.",
+  "Configure the `starlight_dir` and `starlight_base` inputs to point to the root f.CE03A728B62796736629": "Configurez les paramètres `starlight_dir` et `starlight_base` pour pointer respectivement vers le dossier racine de votre documentation Astro Starlight et vers l'alias de base de la documentation."
 }

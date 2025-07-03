@@ -20,17 +20,34 @@ Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pou
 ## Entrées
 
 * `lang` : Code ISO de la langue cible pour la traduction. (par défaut : `fr`)
-* `force` : Force la traduction même si le fichier a déjà été traduit.
 * `files` : Fichiers à traiter, séparés par des points-virgules. Par défaut : `README.md`.
+* `instructions` : Instructions supplémentaires à utiliser par le LLM lors de la traduction.
+* `instructions_file` : Chemin d'accès à un fichier contenant des instructions supplémentaires à utiliser par le LLM lors de la traduction.
+* `starlight_dir` : dossier racine de la documentation Astro Starlight.
+* `starlight_base` : alias de base pour la documentation Starlight.
+
+## Diagnostics
+
+* `force` : Force la traduction même si le fichier a déjà été traduit.
 * `debug` : Active la journalisation de debug (<https://microsoft.github.io/genaiscript/reference/scripts/logging/>).
-* `openai_api_key` : Clé API OpenAI (par défaut : `${{ secrets.OPENAI_API_KEY }}`)
-* `openai_api_base` : URL de base de l'API OpenAI (par défaut : `${{ env.OPENAI_API_BASE }}`)
-* `azure_openai_api_endpoint` : Point de terminaison Azure OpenAI. Dans le Portail Azure, ouvrez votre ressource Azure OpenAI, sélectionnez « Clés et points de terminaison », puis copiez le point de terminaison. (par défaut : `${{ env.AZURE_OPENAI_API_ENDPOINT }}`)
-* `azure_openai_api_key` : Clé API Azure OpenAI. \*\*Vous N’AVEZ PAS BESOIN de ceci si vous utilisez Microsoft Entra ID. (par défaut : `${{ secrets.AZURE_OPENAI_API_KEY }}`)
-* `azure_openai_subscription_id` : ID d’abonnement Azure OpenAI pour lister les déploiements disponibles (seulement Microsoft Entra). (par défaut : `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}`)
-* `azure_openai_api_version` : Version de l’API Azure OpenAI. (par défaut : `${{ env.AZURE_OPENAI_API_VERSION }}`)
-* `azure_openai_api_credentials` : Type d’identifiants Azure OpenAI API. Laisser sur 'default' sauf si vous avez une configuration Azure spéciale. (par défaut : `${{ env.AZURE_OPENAI_API_CREDENTIALS }}`)
+
+### Configuration du LLM
+
 * `github_token` : Jeton GitHub avec une permission `models: read` au minimum (<https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions>). (par défaut : `${{ secrets.GITHUB_TOKEN }}`)
+
+* `openai_api_key` : Clé API OpenAI (par défaut : `${{ secrets.OPENAI_API_KEY }}`)
+
+* `openai_api_base` : URL de base de l'API OpenAI (par défaut : `${{ env.OPENAI_API_BASE }}`)
+
+* `azure_openai_api_endpoint` : Point de terminaison Azure OpenAI. Dans le Portail Azure, ouvrez votre ressource Azure OpenAI, sélectionnez « Clés et points de terminaison », puis copiez le point de terminaison. (par défaut : `${{ env.AZURE_OPENAI_API_ENDPOINT }}`)
+
+* `azure_openai_api_key` : Clé API Azure OpenAI. \*\*Vous N’AVEZ PAS BESOIN de ceci si vous utilisez Microsoft Entra ID. (par défaut : `${{ secrets.AZURE_OPENAI_API_KEY }}`)
+
+* `azure_openai_subscription_id` : ID d’abonnement Azure OpenAI pour lister les déploiements disponibles (seulement Microsoft Entra). (par défaut : `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}`)
+
+* `azure_openai_api_version` : Version de l’API Azure OpenAI. (par défaut : `${{ env.AZURE_OPENAI_API_VERSION }}`)
+
+* `azure_openai_api_credentials` : Type d’identifiants Azure OpenAI API. Laisser sur 'default' sauf si vous avez une configuration Azure spéciale. (par défaut : `${{ env.AZURE_OPENAI_API_CREDENTIALS }}`)
 
 ## Sorties
 
@@ -85,6 +102,12 @@ jobs:
           commit_message: "[cai] translated docs"
           commit_user_name: "genaiscript"
 ```
+
+## Astro Starlight
+
+Le plugin prend en charge la traduction de fichiers markdown ou MDX Astro Starlight pour un site utilisant une locale par défaut **racine** et un alias de **base** pour la documentation.
+
+Configurez les paramètres `starlight_dir` et `starlight_base` pour pointer respectivement vers le dossier racine de votre documentation Astro Starlight et vers l'alias de base de la documentation.
 
 ## Développement
 
