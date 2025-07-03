@@ -64,4 +64,4 @@ outputs:
     description: The generated text output.
 runs:
   using: docker
-  image: docker://ghcr.io/pelikhan/action-continuous-translation:v0.0.6
+  image: Dockerfile
