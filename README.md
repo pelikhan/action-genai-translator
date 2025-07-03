@@ -1,4 +1,4 @@
-# Continuous Translations using GenAI
+# Continuous Translation
 
 This action uses translate incrementally markdown document using [GitHub Models](https://github.com/models).
 
