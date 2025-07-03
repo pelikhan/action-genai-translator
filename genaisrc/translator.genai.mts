@@ -19,14 +19,14 @@ import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx";
 script({
   title: "Automatic Markdown Translations using GenAI",
   description:
-    "This action uses GitHub Models and remark to translate markdown document incrementally in your repository.",
+    "This action uses GitHub Models and remark to incrementally translate markdown documents in your repository.",
   accept: ".md,.mdx",
   files: ["README.md", "markdown.md"],
   parameters: {
     lang: {
       type: "string",
       default: "fr,es",
-      description: "The iso-code target language for translation.",
+      description: "The ISO code(s) of the target language(s) for translation (comma-separated values).",
     },
     instructions: {
       type: "string",
