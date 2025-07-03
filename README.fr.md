@@ -8,7 +8,7 @@ Cette action utilise les modèles GitHub et remark pour traduire progressivement
 
 ## Entrées
 
-* `to` : Code ISO de la langue cible pour la traduction. (par défaut : `fr`)
+* `lang`: The iso-code target language for translation. (default: `fr`)
 * `force` : Force la traduction même si le fichier a déjà été traduit.
 * `files` : Fichiers à traiter, séparés par des points-virgules (;). .md, .mdx
 * `debug` : Active la journalisation de débogage ([https://microsoft.github.io/genaiscript/reference/scripts/logging/](https://microsoft.github.io/genaiscript/reference/scripts/logging/)).
