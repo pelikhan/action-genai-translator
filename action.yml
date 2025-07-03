@@ -20,7 +20,6 @@ inputs:
   openai_api_key:
     description: OpenAI API key
     required: false
-    default: ${{ secrets.OPENAI_API_KEY }}
   openai_api_base:
     description: OpenAI API base URL
     required: false
@@ -34,7 +33,6 @@ inputs:
     description: Azure OpenAI API key. **You do NOT need this if you are using
       Microsoft Entra ID.
     required: false
-    default: ${{ secrets.AZURE_OPENAI_API_KEY }}
   azure_openai_subscription_id:
     description: Azure OpenAI subscription ID to list available deployments
       (Microsoft Entra only).
@@ -52,7 +50,6 @@ inputs:
   azure_ai_inference_api_key:
     description: Azure AI Inference key
     required: false
-    default: ${{ secrets.AZURE_AI_INFERENCE_API_KEY }}
   azure_ai_inference_api_endpoint:
     description: Azure Serverless OpenAI endpoint
     required: false
@@ -70,7 +67,6 @@ inputs:
       (https://microsoft.github.io/genaiscript/reference/github-actions/#github\
       -models-permissions)."
     required: false
-    default: ${{ secrets.GITHUB_TOKEN }}
 outputs:
   text:
     description: The generated text output.
