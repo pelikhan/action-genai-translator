@@ -21,7 +21,7 @@ echo "major: $MAJOR"
 git push origin HEAD --tags
 
 # Step 3: Build and push Docker image to GitHub Container Registry
-IMAGE_NAME="ghcr.io/pelikhan/action-continuous-ai"
+IMAGE_NAME="ghcr.io/pelikhan/action-continuous-translation"
 echo "Building Docker image: $IMAGE_NAME:$NEW_VERSION"
 
 # Build the Docker image with version tag
