@@ -35,6 +35,7 @@ Add the following to your step in your workflow file:
 ```yaml
 uses: pelikhan/action-genai-markdown-translator@main
 with:
+  github_token: ${{ secrets.GITHUB_TOKEN }}
   lang: fr,es
 ```
 
@@ -59,6 +60,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: pelikhan/action-genai-markdown-translator@main
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           lang: fr,es
 ```
 
