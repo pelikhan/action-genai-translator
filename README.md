@@ -41,7 +41,7 @@ This action uses [GenAIScript](https://microsoft.github.io/genaiscript/) to prog
 Add the following to your step in your workflow file:
 
 ```yaml
-uses: pelikhan/action-continuous-translation@main
+uses: pelikhan/action-continuous-translation@v0
 with:
   github_token: ${{ secrets.GITHUB_TOKEN }}
   lang: fr,es
