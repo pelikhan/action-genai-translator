@@ -8,7 +8,7 @@ This action uses GitHub Models and remark to translate markdown document increme
 
 ## Inputs
 
-- `to`: The iso-code target language for translation. (default: `fr`)
+- `lang`: The iso-code target language for translation. (default: `fr`)
 - `force`: Force translation even if the file has already been translated.
 - `files`: Files to process, separated by semi columns (;). .md,.mdx
 - `debug`: Enable debug logging (https://microsoft.github.io/genaiscript/reference/scripts/logging/).
