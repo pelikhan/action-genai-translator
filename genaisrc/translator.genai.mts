@@ -28,6 +28,16 @@ script({
       default: "fr,es",
       description: "The iso-code target language for translation.",
     },
+    instructions: {
+      type: "string",
+      description:
+        "Additional prompting instructions that will be injected in the translation prompt.",
+    },
+    instructionsFile: {
+      type: "string",
+      description:
+        "File containing additional prompting instructions that will be injected in the translation prompt.",
+    },
     starlightDir: {
       type: "string",
       description:
@@ -112,9 +122,14 @@ export default async function main() {
     force: boolean;
     starlightDir?: string;
     starlightBase?: string;
+    instructions?: string;
+    instructionsFile?: string;
   };
-  const { force } = parameters;
+  const { force, instructions } = parameters;
 
+  const instructionsFile = parameters.instructionsFile
+    ? MD.content(await workspace.readText(parameters.instructionsFile))
+    : undefined;
   const starlightDir = parameters.starlightDir
     ? `${parameters.starlightDir}/src/content/docs`
     : undefined;
@@ -456,12 +471,12 @@ export default async function main() {
       - Always make sure that the URLs are not modified by the translation.
       - Translate each node individually, preserving the original meaning and context.
       - If you are unsure about the translation, skip the translation.
-
-      `.role("system");
+      ${instructions || ""}
+      ${instructionsFile || ""}`.role("system");
             },
             {
               responseType: "text",
-              systemSafety: false,
+              systemSafety: true,
               system: [],
               cache: true,
               label: `translating ${filename} (${llmHashTodos.size} nodes)`,
@@ -713,8 +728,7 @@ export default async function main() {
               label: `judge translation ${to} ${basename(filename)}`,
               explanations: true,
               cache: true,
-              system: ["system.annotations"],
-              systemSafety: false,
+              systemSafety: true,
             }
           );
 

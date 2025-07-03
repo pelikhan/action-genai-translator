@@ -22,7 +22,7 @@ Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pou
 * `lang` : Le code iso de la langue cible pour la traduction. (par défaut : `fr`)
 * `force` : Force la traduction même si le fichier a déjà été traduit.
 * `files` : Fichiers à traiter, séparés par des points-virgules. Par défaut : `README.md`.
-* `debug` : Active la journalisation de débogage ([https://microsoft.github.io/genaiscript/reference/scripts/logging/](https://microsoft.github.io/genaiscript/reference/scripts/logging/)).
+* `debug` : Active la journalisation de débogage (<https://microsoft.github.io/genaiscript/reference/scripts/logging/>).
 * `openai_api_key` : Clé API OpenAI (par défaut : `${{ secrets.OPENAI_API_KEY }}`)
 * `openai_api_base` : URL de base de l'API OpenAI (par défaut : `${{ env.OPENAI_API_BASE }}`)
 * `azure_openai_api_endpoint` : Point de terminaison Azure OpenAI. Dans le Portail Azure, ouvrez votre ressource Azure OpenAI, puis Clés et points de terminaison, copiez le point de terminaison. (par défaut : `${{ env.AZURE_OPENAI_API_ENDPOINT }}`)
@@ -30,7 +30,7 @@ Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pou
 * `azure_openai_subscription_id` : ID d'abonnement Azure OpenAI pour lister les déploiements disponibles (Microsoft Entra uniquement). (par défaut : `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}`)
 * `azure_openai_api_version` : Version de l'API Azure OpenAI. (par défaut : `${{ env.AZURE_OPENAI_API_VERSION }}`)
 * `azure_openai_api_credentials` : Type d'identifiants pour l'API Azure OpenAI. Laisser sur 'default' sauf si vous avez une configuration Azure spéciale. (par défaut : `${{ env.AZURE_OPENAI_API_CREDENTIALS }}`)
-* `github_token` : Jeton GitHub avec au moins la permission `models: read` ([https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions)). (par défaut : `${{ secrets.GITHUB_TOKEN }}`)
+* `github_token` : Jeton GitHub avec au moins la permission `models: read` (<https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions>). (par défaut : `${{ secrets.GITHUB_TOKEN }}`)
 
 ## Sorties
 

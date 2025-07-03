@@ -116,7 +116,7 @@ Numérotation alternative :
 [Lien avec titre](https://www.example.com "Example Website")
 
 // TODO désactiver MDX
-\< [https://www.autolink.com>](https://www.autolink.com>)
+< [https://www.autolink.com>](https://www.autolink.com>)
 
 \[Lien de référence]\[ref1]
 
@@ -263,11 +263,11 @@ coupure grâce à un antislash.
 
 ## Éléments HTML
 
-Vous pouvez utiliser des <em>balises HTML</em> dans du Markdown.
+Vous pouvez utiliser des <em>balises HTML</em> dans Markdown.
 
-<strong>Gras avec HTML</strong>
+<strong>Gras en HTML</strong>
 
-<code>Code en ligne avec HTML</code>
+<code>Code en ligne en HTML</code>
 
 <kbd>Ctrl</kbd> + <kbd>C</kbd>
 
@@ -278,16 +278,17 @@ Vous pouvez utiliser des <em>balises HTML</em> dans du Markdown.
 <sub>Indice</sub> et <sup>Exposant</sup>
 
 <details>
-  <summary>Section extensible</summary>
+<summary>Expandable section</summary>
 
-  Ce contenu est masqué par défaut et peut être affiché.
+Ce contenu est masqué par défaut et peut être affiché.
 
-  * Élément de liste
-  * Autre élément
+* Élément de liste
+* Autre élément
 
-  ```javascript
-  console.log("Code in details");
-  ```
+```javascript
+console.log("Code in details");
+```
+
 </details>
 
 ## Fonctionnalités avancées

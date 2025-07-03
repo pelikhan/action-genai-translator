@@ -116,7 +116,7 @@ Numeración alternativa:
 [Enlace con título](https://www.example.com "Example Website")
 
 // TODO desactivar MDX
-\< [https://www.autolink.com>](https://www.autolink.com>)
+< [https://www.autolink.com>](https://www.autolink.com>)
 
 \[Enlace de referencia]\[ref1]
 
@@ -265,7 +265,7 @@ salto de línea con barra invertida.
 
 Puedes usar <em>etiquetas HTML</em> en Markdown.
 
-<strong>Negrita usando HTML</strong>
+<strong>Negrita con HTML</strong>
 
 <code>Código en línea usando HTML</code>
 
@@ -278,16 +278,17 @@ Puedes usar <em>etiquetas HTML</em> en Markdown.
 <sub>Subíndice</sub> y <sup>Superíndice</sup>
 
 <details>
-  <summary>Sección expandible</summary>
+<summary>Expandable section</summary>
 
-  Este contenido está oculto por defecto y puede ser expandido.
+Este contenido está oculto por defecto y puede ser expandido.
 
-  * Elemento de lista
-  * Otro elemento
+* Elemento de lista
+* Otro elemento
 
-  ```javascript
-  console.log("Code in details");
-  ```
+```javascript
+console.log("Code in details");
+```
+
 </details>
 
 ## Características avanzadas
