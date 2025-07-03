@@ -1,6 +1,6 @@
 # Guide complet de la syntaxe Markdown
 
-Ce document présente toutes les principales constructions syntaxiques disponibles en Markdown.
+Ce document présente toutes les principales constructions syntaxiques disponibles dans Markdown.
 
 ## Table des matières
 
@@ -9,7 +9,7 @@ Ce document présente toutes les principales constructions syntaxiques disponibl
 * [Listes](#lists)
 * [Liens et images](#links-and-images)
 * [Code](#code)
-* [Tableaux](#tables)
+* [Tables](#tables)
 * [Citations](#blockquotes)
 * [Règles horizontales](#horizontal-rules)
 * [Sauts de ligne](#line-breaks)
@@ -18,94 +18,94 @@ Ce document présente toutes les principales constructions syntaxiques disponibl
 
 ## En-têtes
 
-# Titre H1
+# En-tête H1
 
-## Titre H2
+## En-tête H2
 
-### Titre H3
+### En-tête H3
 
-#### Titre H4
+#### En-tête H4
 
-##### Titre H5
+##### En-tête H5
 
-###### Titre H6
+###### En-tête H6
 
-# H1 alternatif
+# Alternative H1
 
-## H2 alternatif
+## Alternative H2
 
 ## Formatage du texte
 
 **Texte en gras avec des astérisques**
-**Texte en gras avec des tirets bas**
+**Texte en gras avec des underscores**
 
 *Texte en italique avec des astérisques*
-*Texte en italique avec des tirets bas*
+*Texte en italique avec des underscores*
 
 ***Gras et italique avec des astérisques***
-***Gras et italique avec des tirets bas***
+***Gras et italique avec des underscores***
 
 ~~Texte barré~~
 
 `Code en ligne`
 
-Texte normal avec du **gras**, de l’*italique*, et du `code` mélangés.
+Texte normal avec **gras**, *italique* et `code` mélangés.
 
 ## Listes
 
-### Listes à puces
+### Listes non ordonnées
 
 * Élément 1
 * Élément 2
-  * Sous-élément 2.1
-  * Sous-élément 2.2
-    * Sous-élément imbriqué 2.2.1
+  * Élément imbriqué 2.1
+  * Élément imbriqué 2.2
+    * Élément profondément imbriqué 2.2.1
 * Élément 3
 
 Syntaxe alternative :
 
 * Élément A
 * Élément B
-  * Sous-élément B.1
-  * Sous-élément B.2
+  * Élément imbriqué B.1
+  * Élément imbriqué B.2
 
 Autre alternative :
 
 * Élément X
 * Élément Y
-  * Sous-élément Y.1
+  * Élément imbriqué Y.1
 
-### Listes numérotées
+### Listes ordonnées
 
 1. Premier élément
 2. Deuxième élément
-   1. Sous-élément numéroté
-   2. Autre sous-élément
-      1. Sous-élément imbriqué
+   1. Élément numéroté imbriqué
+   2. Autre élément imbriqué
+      1. Élément profondément imbriqué
 3. Troisième élément
 
 Numérotation alternative :
 
 1. Élément un
-2. Élément deux (numérotation automatique)
-3. Élément trois (numérotation automatique)
+2. Élément deux (auto-numéroté)
+3. Élément trois (auto-numéroté)
 
 ### Listes mixtes
 
 1. Élément ordonné
-   * Sous-élément non ordonné
-   * Autre sous-élément non ordonné
+   * Élément imbriqué non ordonné
+   * Autre élément imbriqué non ordonné
 2. Autre élément ordonné
-   1. Sous-élément ordonné
-   2. Autre sous-élément ordonné
+   1. Élément ordonné imbriqué
+   2. Autre élément ordonné imbriqué
 
 ### Listes de tâches
 
-* [x] Tâche complétée
+* [x] Tâche terminée
 * [ ] Tâche incomplète
-* [x] Autre tâche complétée
-  * [x] Sous-tâche complétée
-  * [ ] Sous-tâche incomplète
+* [x] Autre tâche terminée
+  * [x] Tâche imbriquée terminée
+  * [ ] Tâche imbriquée incomplète
 
 ## Liens et images
 
@@ -124,11 +124,11 @@ Numérotation alternative :
 
 \[Lien de référence insensible à la casse]\[REF1]
 
-Vous pouvez aussi lier des [fichiers locaux](./README.md).
+Vous pouvez également lier des [fichiers locaux](./README.md).
 
 ### Images
 
-![Texte alternatif](https://via.placeholder.com/150x100 "Titre de l’image")
+![Texte alternatif](https://via.placeholder.com/150x100 "Titre de l'image")
 
 !\[Image de référence]\[img1]
 
@@ -191,7 +191,7 @@ done
 ```
 
 Bloc de code indenté (4 espaces) :
-TODO: corriger ce problème de parsing
+TODO : corriger ce problème d'analyse
 
 ## Tableaux
 
@@ -206,18 +206,18 @@ TODO: corriger ce problème de parsing
 | :-------------- | :-----: | --------------: |
 | Gauche          |  Centre |          Droite |
 | Texte           |  Texte  |           Texte |
-| Encore          | Données |             Ici |
+| Plus            | Données |             Ici |
 
 ### Tableau simple
 
-| En-tête 1         | En-tête 2         |
-| ----------------- | ----------------- |
-| Cellule contenu 1 | Cellule contenu 2 |
-| Cellule contenu 3 | Cellule contenu 4 |
+| Premier en-tête | Deuxième en-tête |
+| --------------- | ---------------- |
+| Cellule 1       | Cellule 2        |
+| Cellule 3       | Cellule 4        |
 
 ## Citations
 
-> Ceci est une simple citation.
+> Ceci est une citation simple.
 
 > Ceci est une citation
 > qui s’étend sur plusieurs lignes.
@@ -226,14 +226,14 @@ TODO: corriger ce problème de parsing
 >
 > > Ceci est une citation imbriquée.
 > >
-> > > Et voici une citation très imbriquée.
+> > > Et ceci est imbriqué plus profondément.
 
-> ### Citation avec d’autres éléments
+> ### Citation avec d'autres éléments
 >
 > * Élément de liste dans la citation
-> * Autre élément
+> * Un autre élément
 >
-> **Texte en gras** dans une citation avec du `code en ligne`.
+> **Texte en gras** dans la citation avec `code en ligne`.
 
 ## Règles horizontales
 
@@ -259,15 +259,15 @@ Ceci est la troisième ligne.
 Ceci est la quatrième ligne (une ligne vide crée une coupure de paragraphe).
 
 Ceci est une ligne avec une\
-coupure grâce à un antislash.
+coupure de ligne par antislash.
 
 ## Éléments HTML
 
 Vous pouvez utiliser des <em>balises HTML</em> dans Markdown.
 
-<strong>Gras en HTML</strong>
+<strong>Gras avec HTML</strong>
 
-<code>Code en ligne en HTML</code>
+<code>Code en ligne avec HTML</code>
 
 <kbd>Ctrl</kbd> + <kbd>C</kbd>
 
@@ -280,10 +280,10 @@ Vous pouvez utiliser des <em>balises HTML</em> dans Markdown.
 <details>
 <summary>Expandable section</summary>
 
-Ce contenu est masqué par défaut et peut être affiché.
+Ce contenu est masqué par défaut et peut être développé.
 
 * Élément de liste
-* Autre élément
+* Un autre élément
 
 ```javascript
 console.log("Code in details");
@@ -310,7 +310,7 @@ Terme 1
 
 Terme 2
 :   Définition du terme 2
-:   Une autre définition du terme 2
+:   Une autre définition pour le terme 2
 
 ### Abréviations
 
@@ -321,9 +321,9 @@ HTML et CSS sont des technologies web importantes.
 
 ### Mathématiques (si supporté)
 
-Math en ligne : $E = mc^2$
+Mathématique en ligne : $E = mc^2$
 
-Math en bloc :
+Mathématique en bloc :
 
 $$
 \int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
@@ -333,10 +333,10 @@ $$
 
 Utilisez des antislashs pour échapper les caractères spéciaux :
 
-\*Pas d’italique\*
-\#Pas de titre
-\[Pas de lien]
-\`Pas de code\`
+\*Pas en italique\*\
+\#Pas un titre\
+\[Pas un lien]\
+\`Pas du code\`
 
 ### Commentaires
 
@@ -350,6 +350,6 @@ Utilisez des antislashs pour échapper les caractères spéciaux :
 
 ## Conclusion
 
-Ce document couvre la plupart des syntaxes Markdown standards. Certaines fonctionnalités telles que les notes de bas de page, les listes de définitions, les mathématiques et certains éléments HTML peuvent ne pas être supportées par tous les interpréteurs Markdown, mais elles fonctionnent dans de nombreuses versions étendues comme GitHub Flavored Markdown (GFM), CommonMark et d’autres.
+Ce document couvre la plupart de la syntaxe standard du Markdown. Certaines fonctionnalités comme les notes de bas de page, les listes de définitions, les mathématiques et certains éléments HTML peuvent ne pas être prises en charge par tous les processeurs Markdown, mais elles fonctionnent dans de nombreuses versions étendues comme GitHub Flavored Markdown (GFM), CommonMark, et d’autres.
 
-**Remarque** : Le rendu exact de ces éléments peut varier selon l’interpréteur Markdown utilisé.
+**Remarque** : Le rendu exact de ces éléments peut varier selon le processeur Markdown utilisé.

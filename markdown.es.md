@@ -1,20 +1,20 @@
-# Guía completa de la sintaxis de Markdown
+# Guía Integral de Sintaxis Markdown
 
 Este documento demuestra todas las principales construcciones sintácticas disponibles en Markdown.
 
 ## Tabla de Contenidos
 
 * [Encabezados](#headers)
-* [Formateo de texto](#text-formatting)
+* [Formato de Texto](#text-formatting)
 * [Listas](#lists)
 * [Enlaces e Imágenes](#links-and-images)
 * [Código](#code)
 * [Tablas](#tables)
-* [Citas en bloque](#blockquotes)
-* [Reglas horizontales](#horizontal-rules)
-* [Saltos de línea](#line-breaks)
+* [Citas](#blockquotes)
+* [Reglas Horizontales](#horizontal-rules)
+* [Saltos de Línea](#line-breaks)
 * [Elementos HTML](#html-elements)
-* [Características avanzadas](#advanced-features)
+* [Características Avanzadas](#advanced-features)
 
 ## Encabezados
 
@@ -34,7 +34,7 @@ Este documento demuestra todas las principales construcciones sintácticas dispo
 
 ## Alternativa H2
 
-## Formateo de texto
+## Formato de Texto
 
 **Texto en negrita usando asteriscos**
 **Texto en negrita usando guiones bajos**
@@ -49,17 +49,17 @@ Este documento demuestra todas las principales construcciones sintácticas dispo
 
 `Código en línea`
 
-Texto regular con **negrita**, *cursiva* y `código` mezclados.
+Texto normal con **negrita**, *cursiva* y `código` mezclados.
 
 ## Listas
 
-### Listas no ordenadas
+### Listas desordenadas
 
 * Elemento 1
 * Elemento 2
   * Elemento anidado 2.1
   * Elemento anidado 2.2
-    * Elemento muy anidado 2.2.1
+    * Elemento anidado profundamente 2.2.1
 * Elemento 3
 
 Sintaxis alternativa:
@@ -81,20 +81,20 @@ Otra alternativa:
 2. Segundo elemento
    1. Elemento numerado anidado
    2. Otro elemento anidado
-      1. Elemento muy anidado
+      1. Elemento profundamente anidado
 3. Tercer elemento
 
 Numeración alternativa:
 
 1. Elemento uno
-2. Elemento dos (numerado automáticamente)
-3. Elemento tres (numerado automáticamente)
+2. Elemento dos (numeración automática)
+3. Elemento tres (numeración automática)
 
 ### Listas mixtas
 
 1. Elemento ordenado
-   * Elemento no ordenado anidado
-   * Otro elemento no ordenado anidado
+   * Elemento anidado desordenado
+   * Otro elemento anidado desordenado
 2. Otro elemento ordenado
    1. Elemento ordenado anidado
    2. Otro elemento ordenado anidado
@@ -104,8 +104,8 @@ Numeración alternativa:
 * [x] Tarea completada
 * [ ] Tarea incompleta
 * [x] Otra tarea completada
-  * [x] Tarea completada anidada
-  * [ ] Tarea incompleta anidada
+  * [x] Tarea anidada completada
+  * [ ] Tarea anidada incompleta
 
 ## Enlaces e Imágenes
 
@@ -122,7 +122,7 @@ Numeración alternativa:
 
 \[Otro enlace de referencia]\[ref2]
 
-\[Enlace de referencia no sensible a mayúsculas]\[REF1]
+\[Enlace de referencia insensible a mayúsculas]\[REF1]
 
 También puedes enlazar a [archivos locales](./README.md).
 
@@ -191,53 +191,51 @@ done
 ```
 
 Bloque de código indentado (4 espacios):
-TODO: arreglar este problema de análisis
+TODO: solucionar este problema de análisis
 
 ## Tablas
 
-| Columna 1 | Columna 2   | Columna 3 |
-| --------- | ----------- | --------- |
-| Fila 1    | Datos       | Más datos |
-| Fila 2    | Información | Detalles  |
+| Columna 1 | Columna 2 | Columna 3 |
+| --------- | --------- | --------- |
+| Fila 1    | Dato      | Más datos |
+| Fila 2    | Info      | Detalles  |
 
 ### Tabla con alineación
 
-| Alineado a la izquierda | Centrado | Alineado a la derecha |
-| :---------------------- | :------: | --------------------: |
-| Izquierda               |  Centro  |               Derecha |
-| Texto                   |   Texto  |                 Texto |
-| Más                     |   Datos  |                  Aquí |
+| Alineado a la izquierda | Alineado al centro | Alineado a la derecha |
+| :---------------------- | :----------------: | --------------------: |
+| Izquierda               |       Centro       |               Derecha |
+| Texto                   |        Texto       |                 Texto |
+| Más                     |        Dato        |                  Aquí |
 
 ### Tabla simple
 
-| Primer encabezado    | Segundo encabezado   |
+| Primer Encabezado    | Segundo Encabezado   |
 | -------------------- | -------------------- |
 | Celda de contenido 1 | Celda de contenido 2 |
 | Celda de contenido 3 | Celda de contenido 4 |
 
-## Citas en bloque
+## Citas
 
-> Esta es una cita en bloque simple.
+> Esta es una cita simple.
 
-> Esta es una cita en bloque
+> Esta es una cita
 > que abarca varias líneas.
 
-> Citas en bloque anidadas:
+> Citas anidadas:
 >
-> > Esta es una cita en bloque anidada.
+> > Esta es una cita anidada.
 > >
 > > > Y esta está profundamente anidada.
 
-> ### Cita en bloque con otros elementos
+> ### Cita con otros elementos
 >
-> * Elemento de lista en cita en bloque
+> * Elemento de lista en cita
 > * Otro elemento
 >
-> **Texto en negrita** en cita en bloque con `código en línea`.
+> **Texto en negrita** en cita con `código en línea`.
 
-## Reglas horizontales
-
-***
+## Reglas Horizontales
 
 ***
 
@@ -249,23 +247,25 @@ TODO: arreglar este problema de análisis
 
 ***
 
-## Saltos de línea
+***
+
+## Saltos de Línea
 
 Esta es la primera línea.\
 Esta es la segunda línea (dos espacios al final de la línea anterior).
 
 Esta es la tercera línea.
 
-Esta es la cuarta línea (una línea vacía crea salto de párrafo).
+Esta es la cuarta línea (una línea vacía crea un salto de párrafo).
 
-Esta es una línea con un\
+Esta es una línea con una\
 salto de línea con barra invertida.
 
 ## Elementos HTML
 
 Puedes usar <em>etiquetas HTML</em> en Markdown.
 
-<strong>Negrita con HTML</strong>
+<strong>Negrita usando HTML</strong>
 
 <code>Código en línea usando HTML</code>
 
@@ -280,7 +280,7 @@ Puedes usar <em>etiquetas HTML</em> en Markdown.
 <details>
 <summary>Expandable section</summary>
 
-Este contenido está oculto por defecto y puede ser expandido.
+Este contenido está oculto por defecto y puede expandirse.
 
 * Elemento de lista
 * Otro elemento
@@ -291,19 +291,19 @@ console.log("Code in details");
 
 </details>
 
-## Características avanzadas
+## Características Avanzadas
 
 ### Notas al pie
 
-Aquí hay una oración con una nota al pie\[^1].
+Esta es una frase con una nota al pie\[^1].
 
-Otra oración con una nota al pie\[^note].
+Otra frase con una nota al pie\[^note].
 
 [^1]: Esta es la primera nota al pie.
 
-[^note]: Esta es una nota al pie nombrada con más detalles.
+[^note]: Esta es una nota al pie con nombre y más detalles.
 
-### Listas de definiciones
+### Listas de definición
 
 Término 1
 :   Definición para el término 1
@@ -331,9 +331,9 @@ $$
 
 ### Caracteres de escape
 
-Usa barras invertidas para escapar caracteres especiales:
+Utiliza barras invertidas para escapar caracteres especiales:
 
-\*No en cursiva\*
+\*No cursiva\*
 \#No es un encabezado
 \[No es un enlace]
 \`No es código\`
@@ -350,6 +350,6 @@ Usa barras invertidas para escapar caracteres especiales:
 
 ## Conclusión
 
-Este documento cubre la mayoría de la sintaxis estándar de Markdown. Algunas características como notas al pie, listas de definiciones, matemáticas y ciertos elementos HTML pueden no estar soportadas en todos los procesadores de Markdown, pero funcionan en muchas versiones extendidas como GitHub Flavored Markdown (GFM), CommonMark y otras.
+Este documento cubre la mayoría de la sintaxis estándar de Markdown. Algunas funciones como las notas al pie, listas de definición, matemáticas y ciertos elementos HTML pueden no estar soportados en todos los procesadores de Markdown, pero funcionan en muchas versiones extendidas como GitHub Flavored Markdown (GFM), CommonMark y otras.
 
-**Nota**: La representación exacta de estos elementos puede variar dependiendo del procesador de Markdown que se use.
+**Nota**: La representación exacta de estos elementos puede variar dependiendo del procesador de Markdown que se utilice.

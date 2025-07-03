@@ -57,6 +57,7 @@ script({
   },
 });
 
+const HASH_TEXT_LENGTH = 80;
 const HASH_LENGTH = 20;
 const maxPromptPerFile = 5;
 const minTranslationsThreshold = 0.9;
@@ -199,8 +200,18 @@ export default async function main() {
           node = structuredClone(node);
           visit(node, (node) => delete node.position);
         }
-        const chunkHash = hash("sha-256", JSON.stringify(node));
-        return chunkHash.slice(0, HASH_LENGTH).toUpperCase();
+        const text =
+          typeof node === "string"
+            ? node
+            : stringify({ type: "root", children: [node as any] });
+        const chunkHash = hash("sha-256", JSON.stringify(text));
+        if (text.length < HASH_TEXT_LENGTH) return text;
+        else
+          return (
+            text.slice(0, HASH_TEXT_LENGTH) +
+            "." +
+            chunkHash.slice(0, HASH_LENGTH).toUpperCase()
+          );
       };
 
       try {
