@@ -42,24 +42,24 @@ with:
 
 ## Exemple
 
-Enregistrez ce fichier dans votre répertoire `.github/workflows/` sous le nom `genai-translator.yml` :
+Enregistrez ce fichier dans votre `.github/workflows/`répertoire `continuous-translation.yml`:
 
 ```yaml
-name: Action-continuous-translation
+name: Continuous Translation
 on:
-    push:
+  push:
 permissions:
-    contents: write
-    models: read
+  contents: write
+  models: read
 concurrency:
-    group: ${{ github.workflow }}-${{ github.ref }}
-    cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
-  action_genai_markdown_translator:
+  continuous_translation:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pelikhan/action-continuous-translation@main
+      - uses: pelikhan/action-continuous-translation@v0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           lang: fr,es
