@@ -1,17 +1,18 @@
 name: Release
 on:
   workflow_dispatch:
-
 permissions:
   contents: write
   packages: write
   pull-requests: read
-
 env:
   REGISTRY: ghcr.io
-    
 jobs:
   release:
+    permissions:
+      contents: write
+      packages: write
+      pull-requests: read
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -37,3 +38,21 @@ jobs:
           GITHUB_ACTOR: ${{ github.actor }}
       - run: docker logout ghcr.io
         if: always()
+  test_release:
+    needs: release
+    permissions:
+      contents: write
+      pull-requests: read
+    name: Test Result Translation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pelikhan/action-continuous-translation@v0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          lang: fr,es
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          file_pattern: "translations/*.json **.md* translations/*.json"
+          commit_message: "[cai] translated docs"
+          commit_user_name: "genaiscript"
