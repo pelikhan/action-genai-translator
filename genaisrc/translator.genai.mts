@@ -55,13 +55,11 @@ script({
     },
     starlightDir: {
       type: "string",
-      description:
-        "Root directory for the Astro Starlight documentation. Must specify starlightBase as well.",
+      description: "Root directory for the Astro Starlight documentation.",
     },
     starlightBase: {
       type: "string",
-      description:
-        "Base path for the Astro Starlight documentation. Used to patch links in translations. Must specify starlightDir as well.",
+      description: "Base path for the Astro Starlight documentation.",
     },
     force: {
       type: "boolean",
@@ -134,10 +132,11 @@ export default async function main() {
   dbg(`starlightDir: %s`, starlightDir);
   const starlightBase = parameters.starlightBase;
   dbg(`starlightBase: %s`, starlightBase);
-  if (!!starlightDir !== !!starlightBase)
+  if (starlightBase && !starlightDir) {
     throw new Error(
-      `Both starlightDir and starlightBase must be defined or undefined together.`,
+      `"starlightDir" must be defined when "starlightBase" is defined.`,
     );
+  }
   const starlightBaseRx = starlightBase
     ? new RegExp(`^/${starlightBase}/`)
     : undefined;
@@ -299,18 +298,14 @@ export default async function main() {
               ) {
                 dbg(`text node: %s`, nhash);
                 // compress long hash into LLM friendly short hash
-                const llmHash = `T${Object.keys(llmHashes)
-                  .length.toString()
-                  .padStart(3, "0")}`;
+                const llmHash = `T${Object.keys(llmHashes).length.toString().padStart(3, "0")}`;
                 llmHashes[llmHash] = nhash;
                 llmHashTodos.add(llmHash);
                 node.value = `┌${llmHash}┐${node.value}└${llmHash}┘`;
               }
             } else if (node.type === "paragraph" || node.type === "heading") {
               dbg(`paragraph/heading node: %s`, nhash);
-              const llmHash = `P${Object.keys(llmHashes)
-                .length.toString()
-                .padStart(3, "0")}`;
+              const llmHash = `P${Object.keys(llmHashes).length.toString().padStart(3, "0")}`;
               llmHashes[llmHash] = nhash;
               llmHashTodos.add(llmHash);
               node.children.unshift({
@@ -335,9 +330,7 @@ export default async function main() {
                         dbg(`yaml hero.action: %s -> %s`, nhash, tr);
                         if (!tr) action.text = tr;
                         else {
-                          const llmHash = `T${Object.keys(llmHashes)
-                            .length.toString()
-                            .padStart(3, "0")}`;
+                          const llmHash = `T${Object.keys(llmHashes).length.toString().padStart(3, "0")}`;
                           llmHashes[llmHash] = nhash;
                           llmHashTodos.add(llmHash);
                           action.text = `┌${llmHash}┐${action.text}└${llmHash}┘`;
@@ -355,9 +348,7 @@ export default async function main() {
                   const tr = translationCache[nhash];
                   if (tr) data.hero.tagline = tr;
                   else {
-                    const llmHash = `T${Object.keys(llmHashes)
-                      .length.toString()
-                      .padStart(3, "0")}`;
+                    const llmHash = `T${Object.keys(llmHashes).length.toString().padStart(3, "0")}`;
                     llmHashes[llmHash] = nhash;
                     llmHashTodos.add(llmHash);
                     data.hero.tagline = `┌${llmHash}┐${data.hero.tagline}└${llmHash}┘`;
@@ -370,9 +361,7 @@ export default async function main() {
                   const tr = translationCache[nhash];
                   if (tr) data[field] = tr;
                   else {
-                    const llmHash = `T${Object.keys(llmHashes)
-                      .length.toString()
-                      .padStart(3, "0")}`;
+                    const llmHash = `T${Object.keys(llmHashes).length.toString().padStart(3, "0")}`;
                     llmHashes[llmHash] = nhash;
                     llmHashTodos.add(llmHash);
                     data[field] = `┌${llmHash}┐${data[field]}└${llmHash}┘`;
@@ -402,9 +391,7 @@ export default async function main() {
               const tr = translationCache[nhash];
               if (tr) title = tr;
               else {
-                const llmHash = `T${Object.keys(llmHashes)
-                  .length.toString()
-                  .padStart(3, "0")}`;
+                const llmHash = `T${Object.keys(llmHashes).length.toString().padStart(3, "0")}`;
                 llmHashes[llmHash] = nhash;
                 llmHashTodos.add(llmHash);
                 title = `┌${llmHash}┐${title}└${llmHash}┘`;
@@ -558,10 +545,13 @@ export default async function main() {
                 if (Array.isArray(data?.hero?.actions)) {
                   data.hero.actions.forEach((action) => {
                     if (typeof action.link === "string") {
-                      action.link = action.link.replace(
-                        starlightBaseRx,
-                        `/${starlightBase}/${to.toLowerCase()}/`,
-                      );
+                      if (starlightBase)
+                        action.link = action.link.replace(
+                          starlightBaseRx,
+                          `/${starlightBase}/${to.toLowerCase()}/`,
+                        );
+                      if (!starlightBase)
+                        action.link = `/${to.toLowerCase()}/${action.link}`;
                       dbg(`yaml hero action link: %s`, action.link);
                     }
                     if (typeof action.text === "string") {
@@ -672,6 +662,9 @@ export default async function main() {
                 true,
               );
             }
+            if (!starlightBase) {
+              node.url = patchFn(`/../${node.url}`, true);
+            }
           });
         }
 
@@ -735,10 +728,7 @@ export default async function main() {
           Your task is to determine the quality of the translation of a Markdown document from ${
             sourceInfo.name
           } (${source}) to ${lang} (${to}).
-          The original document is in ${ctx.def(
-            "ORIGINAL",
-            content,
-          )}, and the translated document is provided in ${ctx.def(
+          The original document is in ${ctx.def("ORIGINAL", content)}, and the translated document is provided in ${ctx.def(
             "TRANSLATED",
             contentTranslated,
             { lineNumbers: true },
