@@ -55,7 +55,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           lang: fr,es
-      - uses: git pull --ff-only
+      - run: git pull --ff-only
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           file_pattern: "translations/*.json **.md* translations/*.json"
