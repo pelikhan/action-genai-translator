@@ -42,7 +42,7 @@ export default defineConfig({
         },
         "pt-br": {
           label: "Portuguese (Brazil)",
-          lang: "pt-BR",
+          lang: "pt-br",
         },
       },
       sidebar: [

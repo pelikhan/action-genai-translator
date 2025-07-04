@@ -15,7 +15,7 @@ export const LANGS = Object.freeze({
   de: { name: "German" },
   it: { name: "Italian" },
   pt: { name: "Portuguese" },
-  "pt-BR": { name: "Brazilian Portuguese" },
+  "pt-br": { name: "Brazilian Portuguese" },
   ru: { name: "Russian" },
   zh: { name: "Chinese" },
   ja: { name: "Japanese" },
