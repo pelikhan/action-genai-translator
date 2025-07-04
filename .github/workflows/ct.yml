@@ -51,6 +51,7 @@ jobs:
           files: |
             README.md
             docs/src/content/**/*
+      - run: git pull --ff-only
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           file_pattern: "**.md* translations/*.json"
