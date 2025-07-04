@@ -812,5 +812,6 @@
   "This action can be used to translation the content of a \n": "Cette action peut être utilisée pour traduire le contenu d'un site de documentation ",
   "The action works for a Starlight site using a \n": "L'action fonctionne pour un site Starlight utilisant une ",
   "root locale\n": "locale racine",
-  "Arabic\n": "Arabe"
+  "Arabic\n": "Arabe",
+  "`source`: The iso-code source language for translation. (default: `en`)\n": "`source`: Le code ISO de la langue source pour la traduction. (par défaut : `en`)"
 }
