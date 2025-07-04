@@ -15,18 +15,27 @@ import { basename, dirname, join, relative } from "path";
 import { URL } from "url";
 import { xor } from "es-toolkit";
 import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx";
+import type {
+  FrontmatterWithTranslator,
+  TranslatorConfiguration,
+} from "./src/types.mts";
+import {
+  FrontmatterWithTranslatorSchema,
+  TranslatorConfigurationSchema,
+} from "./src/types.mts";
 
 script({
   title: "Automatic Markdown Translations using GenAI",
   description:
     "This action uses GitHub Models and remark to incrementally translate markdown documents in your repository.",
   accept: ".md,.mdx",
-  files: ["README.md", "markdown.md"],
+  files: ["README.md"],
   parameters: {
     lang: {
       type: "string",
-      default: "fr,es",
-      description: "The ISO code(s) of the target language(s) for translation (comma-separated values).",
+      default: "fr",
+      description:
+        "The ISO code(s) of the target language(s) for translation (comma-separated values).",
     },
     instructions: {
       type: "string",
@@ -55,6 +64,16 @@ script({
         "Force translation even if the file has already been translated.",
     },
   },
+  tests: [
+    {
+      files: "test/markdown.md",
+      keywords: ["paragraph", "heading"],
+    },
+    {
+      files: "test/example-with-instructions.md",
+      keywords: ["translator"],
+    },
+  ],
 });
 
 const HASH_TEXT_LENGTH = 80;
@@ -255,26 +274,28 @@ export default async function main() {
         dbgc(`parsing %s`, filename);
         const root = parse(content);
         dbgt(`original %O`, root.children);
-        
+
         // Extract instructions from frontmatter if not provided via parameters
-        if (!instructions) {
-          const frontmatterNode = root.children.find(child => child.type === "yaml");
-          if (frontmatterNode && frontmatterNode.type === "yaml") {
-            try {
-              const frontmatter = parsers.YAML(frontmatterNode.value);
-              if (frontmatter) {
-                // Check for translatorInstructions or translator_instructions
-                instructions = frontmatter.translatorInstructions || frontmatter.translator_instructions;
-                if (instructions) {
-                  dbg(`found instructions in frontmatter: %s`, instructions);
-                }
-              }
-            } catch (error) {
-              dbg(`error parsing frontmatter for instructions: %s`, error);
-            }
-          }
+        const frontmatterNode = root.children.find(
+          (child) => child.type === "yaml"
+        );
+        const frontmatter = parsers.YAML(frontmatterNode?.value, {
+          schema: FrontmatterWithTranslatorSchema,
+        }) as FrontmatterWithTranslator;
+        const { translator } = frontmatter || {};
+        dbg(`frontmatter config: %O`, translator);
+        if (!instructions && translator?.instructions) {
+          instructions = translator.instructions;
+          dbg(`frontmatter instructions: %s`, instructions);
         }
-        
+        // remove the translator node
+        if (translator) {
+          delete frontmatter.translator;
+          frontmatterNode.value = YAML.stringify(frontmatter);
+          dbg(`patched frontmatter: %s`, frontmatterNode.value);
+          content = stringify(root);
+        }
+
         // collect original nodes nodes
         const nodes: Record<string, NodeType> = {};
         visit(root, nodeTypes, (node) => {
@@ -703,7 +724,7 @@ export default async function main() {
           parse(contentTranslated);
         } catch (error) {
           output.error(`Translated content is not valid Markdown`, error);
-          output.diff(content, contentTranslated);
+          output.diff(contentTranslated, content);
           continue;
         }
 

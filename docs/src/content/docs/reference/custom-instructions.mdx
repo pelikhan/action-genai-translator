@@ -2,14 +2,14 @@
 title: Custom Instructions
 description: Custom instructions for the translation
 sidebar:
-    order: 10
+  order: 10
 ---
 
 You can inject custom prompting instructions for the translation task.
 This can be used to insert additional instructions, glossary or other guidance to improve
 the overall translation quality.
 
-- inline instructions
+## Inline instructions
 
 ```yaml title=".github/workflows/ct.yml" "instructions: Use a casual tone."
 uses: pelikhan/action-continuous-translation@v0
@@ -17,7 +17,7 @@ with:
   instructions: Use a casual tone.
 ```
 
-- instructions from a file
+## Instructions from a file
 
 ```yaml title=".github/workflows/ct.yml" "instructions_file: ./instructions.txt"
 uses: pelikhan/action-continuous-translation@v0
@@ -25,14 +25,17 @@ with:
   instructions_file: ./instructions.txt
 ```
 
-- instructions in document frontmatter
+## Instructions in frontmatter
 
-You can also specify translation instructions directly in the frontmatter of individual documents. This is useful when different documents require specific translation approaches.
+You can also specify translation instructions directly in the frontmatter of individual documents.
+This is useful when different documents require specific translation approaches.
 
 ```markdown title="example.md"
 ---
 title: "My Document"
-translatorInstructions: "Use formal tone and preserve all technical terms in English."
+translator:
+  instructions: |
+    Use formal tone and preserve all technical terms in English.
 ---
 
 # My Document Content
@@ -40,22 +43,14 @@ translatorInstructions: "Use formal tone and preserve all technical terms in Eng
 This document will be translated using the instructions specified in the frontmatter.
 ```
 
-Alternative field name:
+The `translator` object is a [configuration](/action-continuous-translation/reference/configuration) instance and validated at runtime.
 
-```markdown title="example.md"
----
-title: "My Document"  
-translator_instructions: "Use casual tone and localize all examples."
----
+## Priority Order
 
-# My Document Content
-```
-
-:::note[Priority Order]
 Instructions are applied in the following priority order:
+
 1. `instructions` parameter (highest priority)
 2. `instructions_file` parameter
-3. `translatorInstructions` or `translator_instructions` from document frontmatter (lowest priority)
+3. `translator.instructions` from document frontmatter (lowest priority)
 
 If multiple methods are used, only the highest priority one will be applied.
-:::

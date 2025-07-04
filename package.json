@@ -4,6 +4,7 @@
   "version": "0.0.7",
   "description": "This action uses GitHub Models and remark to translate markdown document incrementally in your repository.",
   "dependencies": {
+    "@genaiscript/core": "^2.2.6",
     "@genaiscript/plugin-mdast": "^2.2.6",
     "@genaiscript/runtime": "^2.2.6",
     "@types/mdast": "^4.0.4",
@@ -19,6 +20,7 @@
     "typecheck": "genaiscript scripts compile",
     "configure": "genaiscript configure action translator",
     "test": "npm run typecheck",
+    "test:genai": "genaiscript test translator",
     "dev": "genaiscript run translator",
     "dev:astro": "genaiscript run translator \"docs/src/content/**/*\" -x \"lang=fr,es,pr-BR\" --no-run-trace -x starlightDir=docs starlightBase=action-continuous-translation",
     "start": "DEBUG=* genaiscript run translator --github-workspace --no-run-trace --no-output-trace --out-output $GITHUB_STEP_SUMMARY"

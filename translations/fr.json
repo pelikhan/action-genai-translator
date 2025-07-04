@@ -756,5 +756,11 @@
   "about how-to guides\n": "à propos des guides pratiques",
   "Learn more in\n": "En savoir plus dans ",
   "README\n": "README",
-  "Automated Translated Docs using GitHub Actions and Models": "Documentation traduite automatiquement à l'aide de GitHub Actions et de modèles"
+  "Automated Translated Docs using GitHub Actions and Models": "Documentation traduite automatiquement à l'aide de GitHub Actions et de modèles",
+  "Example Document with Translation Instructions": "Document d'exemple avec des instructions de traduction",
+  "# Example Document\n": "Document d'exemple",
+  "This is an example document that contains translation instructions in its frontm.A8995A84279D9314AF86": "C'est un document d'exemple et il a des trucs pour traduire écrits tout au début.",
+  "The translator script will now automatically detect and use the `translator.inst.CF1B0083CC795F493515": "Le script de traduction va maintenant trouver tout seul et utiliser le champ `translator.instructions` dans le début du document si on ne donne pas d'instructions à part.",
+  "## Code Example\n": "Exemple de code",
+  "This functionality makes it easier to have document-specific translation instruc.875C14B92B17228880E6": "Avec ça, c'est plus facile d'avoir des instructions de traduction rien que pour le document sans devoir les dire à chaque fois."
 }

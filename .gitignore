@@ -1,2 +1,3 @@
 node_modules/
 .genaiscript/
+test/*.*.md

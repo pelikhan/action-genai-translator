@@ -1,6 +1,8 @@
 ---
 title: "Example Document with Translation Instructions"
-translatorInstructions: "When translating this document, please use formal tone and prefer technical terminology over casual language. For code examples, preserve all variable names and function names in English, but translate code comments."
+translator:
+  instructions: >
+    Use happy tone.
 ---
 
 # Example Document
@@ -9,14 +11,14 @@ This is an example document that contains translation instructions in its frontm
 
 ## Features
 
-The translator script will now automatically detect and use the `translatorInstructions` or `translator_instructions` field from the document's frontmatter if no instructions are provided via parameters.
+The translator script will now automatically detect and use the `translator.instructions` field from the document's frontmatter if no instructions are provided via parameters.
 
 ## Code Example
 
 ```javascript
 // Shows a simple greeting in the console
 function greetUser(name) {
-    console.log(`Hello, ${name}!`);
+  console.log(`Hello, ${name}!`);
 }
 ```
 
