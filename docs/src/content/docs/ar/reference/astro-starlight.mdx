@@ -14,7 +14,7 @@ import { Steps } from "@astrojs/starlight/components";
 <Steps>
   <ol>
     <li>
-      يعمل هذا الإجراء مع موقع ستارلايت الذي يستخدم [اللغة الافتراضية](https://starlight.astro.build/guides/i18n/#use-a-root-locale).
+      اتبع دليل Starlight لاستخدام [root locale](https://starlight.astro.build/guides/i18n/#use-a-root-locale).
     </li>
 
     <li>
@@ -29,3 +29,14 @@ import { Steps } from "@astrojs/starlight/components";
     </li>
   </ol>
 </Steps>
+
+## إشعار محتوى الذكاء الاصطناعي
+
+يمكنك إعلام مستخدميك بأن الترجمة تم إنشاؤها بواسطة GenAI عن طريق
+إضافة إشعار في العنوان. في الوقت الحالي، لا يدعم Astro Starlight ميزة مدمجة لإضافة الإشعارات
+لذا يتطلب تجاوز بعض المكونات.
+
+* تجاوز المكونات `PageTitle` و `Hero` في ملف `astro.config.mjs` الخاص بك:
+* أضف المكونات إلى دليل `src/components` الخاص بك من `docs/src/components` في هذا المستودع.
+
+لا تتردد في تعديل المنطق في `AIGeneratedNotice.astro` ليناسب احتياجاتك.

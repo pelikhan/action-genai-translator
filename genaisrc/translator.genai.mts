@@ -1,6 +1,7 @@
 import { hash } from "crypto";
 import { classify } from "@genaiscript/runtime";
 import { mdast } from "@genaiscript/plugin-mdast";
+import "mdast-util-mdx";
 import "mdast-util-mdxjs-esm";
 import "mdast-util-mdx-jsx";
 import type {
@@ -16,7 +17,7 @@ import { URL } from "url";
 import { xor } from "es-toolkit";
 import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx";
 import type { FrontmatterWithTranslator } from "./src/types.mts";
-import { FrontmatterWithTranslatorSchema } from "./src/types.mts";
+import { FrontmatterWithTranslatorSchema } from "./src/schemas.mts";
 import { DEFAULT_MODELS, LANGS } from "./src/models.mts";
 
 script({
@@ -54,13 +55,12 @@ script({
     },
     starlightDir: {
       type: "string",
-      description:
-        "Root directory for the Astro Starlight documentation. Must specify starlightBase as well.",
+      description: "Root directory for the Astro Starlight documentation.",
     },
     starlightBase: {
       type: "string",
-      description:
-        "Base path for the Astro Starlight documentation. Used to patch links in translations. Must specify starlightDir as well.",
+      description: "Base path for the Astro Starlight documentation.",
+      default: "",
     },
     force: {
       type: "boolean",
@@ -133,13 +133,15 @@ export default async function main() {
   dbg(`starlightDir: %s`, starlightDir);
   const starlightBase = parameters.starlightBase;
   dbg(`starlightBase: %s`, starlightBase);
-  if (!!starlightDir !== !!starlightBase)
+  if (starlightBase && !starlightDir) {
     throw new Error(
-      `Both starlightDir and starlightBase must be defined or undefined together.`
+      `"starlightDir" must be defined when "starlightBase" is defined.`
     );
+  }
   const starlightBaseRx = starlightBase
     ? new RegExp(`^/${starlightBase}/`)
-    : undefined;
+    : new RegExp(`^/`);
+  dbg(`starlightbase rx: %s`, starlightBaseRx);
   const langs = vars.lang
     .split(",")
     .map((s) => s.trim())
@@ -559,7 +561,7 @@ export default async function main() {
                     if (typeof action.link === "string") {
                       action.link = action.link.replace(
                         starlightBaseRx,
-                        `/${starlightBase}/${to.toLowerCase()}/`
+                        `${starlightBase}/${to.toLowerCase()}/`
                       );
                       dbg(`yaml hero action link: %s`, action.link);
                     }

@@ -5,6 +5,7 @@ on:
 permissions:
   issues: write
   contents: read
+  models: read
 jobs:
   dedup:
     runs-on: ubuntu-latest
