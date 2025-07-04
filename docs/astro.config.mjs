@@ -5,15 +5,15 @@ import starlight from "@astrojs/starlight";
 // https://astro.build/config
 export default defineConfig({
   site: "https://microsoft.github.io",
-  base: "/action-continous-translation",
+  base: "/action-continuous-translation",
   integrations: [
     starlight({
-      title: "Continous Translation",
+      title: "Continuous Translation",
       social: [
         {
           icon: "github",
           label: "GitHub",
-          href: "https://github.com/pelikhan/action-continous-translation",
+          href: "https://github.com/pelikhan/action-continuous-translation",
         },
       ],
       defaultLocale: "root",
