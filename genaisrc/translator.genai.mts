@@ -150,7 +150,8 @@ export default async function main() {
     .map((s) => s.trim())
     .filter(Boolean);
   dbg(`tos: %o`, tos);
-  const ignorer = await parsers.ignore(".mdtranslatorignore");
+  const ignorer = await parsers.ignore(".ctignore");
+  dbg(`ignorer: %s`, ignorer ? "loaded" : "no .ctignore found");
   const files = env.files
     .filter((f) => ignorer([f]).length)
     .filter(
