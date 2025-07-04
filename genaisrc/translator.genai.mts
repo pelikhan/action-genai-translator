@@ -496,6 +496,12 @@ export default async function main() {
           );
 
           if (error) {
+            // are we out of tokens?
+            if (/429/.test(error.message)) {
+              output.error(`Rate limit exceeded: ${error.message}`);
+              cancel(`rate limit exceeded`);
+            }
+
             output.error(`Error translating ${filename}: ${error.message}`);
             break;
           }
@@ -743,6 +749,12 @@ export default async function main() {
               systemSafety: true,
             }
           );
+
+          // are we out of tokens?
+          if (/429/.test(res.error)) {
+            output.error(`Rate limit exceeded: ${res.error}`);
+            cancel(`rate limit exceeded`);
+          }
 
           output.resultItem(
             res.label === "ok",
