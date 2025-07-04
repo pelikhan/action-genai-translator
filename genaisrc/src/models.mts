@@ -9,7 +9,7 @@ export const DEFAULT_MODELS = {
   translation: "github:openai/gpt-4o",
   classify: "github:openai/gpt-4o",
 } as Required<LangConfiguration["models"]>;
-export const LANGS: Record<string, LangConfiguration> = {
+export const LANGS = Object.freeze({
   fr: { name: "French" },
   es: { name: "Spanish" },
   de: { name: "German" },
@@ -49,4 +49,4 @@ export const LANGS: Record<string, LangConfiguration> = {
   sk: { name: "Slovak" },
   sl: { name: "Slovenian" },
   hr: { name: "Croatian" },
-};
+} as Record<string, LangConfiguration>);

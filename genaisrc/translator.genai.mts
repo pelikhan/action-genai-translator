@@ -135,6 +135,11 @@ export default async function main() {
     .map((s) => s.trim())
     .filter(Boolean);
   output.item(langs.join(", "));
+  if (langs.some((l) => !LANGS[l]))
+    cancel(
+      `unsupported languages: ${langs.filter((l) => !LANGS[l]).join(", ")}`
+    );
+
   const ignorer = await parsers.ignore(".ctignore");
   dbg(`ignorer: %s`, ignorer ? "loaded" : "no .ctignore found");
   dbg(
@@ -152,7 +157,6 @@ export default async function main() {
 
   for (const to of langs) {
     const langInfo = LANGS[to];
-    if (!langInfo) cancel(`unsupported language: ${to}`);
     const lang = langInfo.name;
     const translationModel =
       langInfo.models?.translation || DEFAULT_MODELS.translation;

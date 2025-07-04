@@ -45,7 +45,7 @@ jobs:
         continue-on-error: true
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          lang: fr,es,pr-BR,ar
+          lang: fr,es,pt-BR,ar
           starlight_dir: docs
           starlight_base: action-continuous-translation
           files: |
