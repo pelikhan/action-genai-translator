@@ -14,7 +14,7 @@ Requiere una configuración específica de Starlight como se detalla a continuac
 <Steps>
   <ol>
     <li>
-      La acción funciona para un sitio Starlight que utiliza un [idioma raíz](https://starlight.astro.build/guides/i18n/#use-a-root-locale).
+      Sigue la guía de Starlight para usar un [idioma raíz](https://starlight.astro.build/guides/i18n/#use-a-root-locale).
     </li>
 
     <li>
@@ -29,3 +29,12 @@ Requiere una configuración específica de Starlight como se detalla a continuac
     </li>
   </ol>
 </Steps>
+
+## Aviso de Contenido AI
+
+Puedes informar a tus usuarios que la traducción fue generada por GenAI añadiendo un aviso en el título. En este momento, Astro Starlight no soporta una función integrada para añadir avisos, por lo que es necesario sobrescribir algunos componentes.
+
+* Sobrescribe los componentes `PageTitle` y `Hero` en tu archivo `astro.config.mjs`:
+* Añade los componentes en tu directorio `src/components` desde `docs/src/components` en este repositorio.
+
+Siéntete libre de modificar la lógica en `AIGeneratedNotice.astro` para adaptarlo a tus necesidades.

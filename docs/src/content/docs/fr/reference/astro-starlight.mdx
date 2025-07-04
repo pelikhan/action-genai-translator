@@ -14,7 +14,7 @@ Elle nécessite une configuration spécifique de Starlight détaillée ci-dessou
 <Steps>
   <ol>
     <li>
-      L'action fonctionne pour un site Starlight utilisant une [langue racine](https://starlight.astro.build/guides/i18n/#use-a-root-locale).
+      Suivez le guide Starlight pour utiliser une [locale racine](https://starlight.astro.build/guides/i18n/#use-a-root-locale).
     </li>
 
     <li>
@@ -29,3 +29,14 @@ Elle nécessite une configuration spécifique de Starlight détaillée ci-dessou
     </li>
   </ol>
 </Steps>
+
+## Avis sur le contenu généré par l'IA
+
+Vous pouvez informer vos utilisateurs que la traduction a été générée par GenAI en
+ajoutant un avis dans le titre. Actuellement, Astro Starlight ne prend pas en charge une fonctionnalité intégrée pour ajouter des avis,
+ce qui nécessite de remplacer quelques composants.
+
+* Remplacez les composants `PageTitle` et `Hero` dans votre fichier `astro.config.mjs` :
+* Ajoutez les composants dans votre répertoire `src/components` à partir de `docs/src/components` dans ce dépôt.
+
+N'hésitez pas à modifier la logique dans `AIGeneratedNotice.astro` pour l'adapter à vos besoins.

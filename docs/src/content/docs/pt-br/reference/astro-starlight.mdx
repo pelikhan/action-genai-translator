@@ -14,7 +14,7 @@ Ela requer uma configuração específica do Starlight, conforme detalhado abaix
 <Steps>
   <ol>
     <li>
-      A ação funciona para um site Starlight que utiliza um [locale raiz](https://starlight.astro.build/guides/i18n/#use-a-root-locale).
+      Siga o guia do Starlight para usar um [root locale](https://starlight.astro.build/guides/i18n/#use-a-root-locale).
     </li>
 
     <li>
@@ -29,3 +29,14 @@ Ela requer uma configuração específica do Starlight, conforme detalhado abaix
     </li>
   </ol>
 </Steps>
+
+## Aviso de Conteúdo de IA
+
+Você pode informar aos seus usuários que a tradução foi gerada pela GenAI
+adicionando um aviso no título. No momento, o Astro Starlight não suporta um recurso embutido para adicionar avisos,
+portanto, é necessário substituir alguns componentes.
+
+* Substitua os componentes `PageTitle` e `Hero` no seu arquivo `astro.config.mjs`:
+* Adicione os componentes no diretório `src/components` a partir de `docs/src/components` deste repositório.
+
+Sinta-se à vontade para modificar a lógica em `AIGeneratedNotice.astro` para atender às suas necessidades.

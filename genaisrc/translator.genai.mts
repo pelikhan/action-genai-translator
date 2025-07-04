@@ -60,6 +60,7 @@ script({
     starlightBase: {
       type: "string",
       description: "Base path for the Astro Starlight documentation.",
+      default: "",
     },
     force: {
       type: "boolean",
@@ -134,12 +135,13 @@ export default async function main() {
   dbg(`starlightBase: %s`, starlightBase);
   if (starlightBase && !starlightDir) {
     throw new Error(
-      `"starlightDir" must be defined when "starlightBase" is defined.`,
+      `"starlightDir" must be defined when "starlightBase" is defined.`
     );
   }
   const starlightBaseRx = starlightBase
     ? new RegExp(`^/${starlightBase}/`)
-    : undefined;
+    : new RegExp(`^/`);
+  dbg(`starlightbase rx: %s`, starlightBaseRx);
   const langs = vars.lang
     .split(",")
     .map((s) => s.trim())
@@ -147,14 +149,14 @@ export default async function main() {
   output.item(langs.join(", "));
   if (langs.some((l) => !LANGS[l]))
     cancel(
-      `unsupported languages: ${langs.filter((l) => !LANGS[l]).join(", ")}`,
+      `unsupported languages: ${langs.filter((l) => !LANGS[l]).join(", ")}`
     );
 
   const ignorer = await parsers.ignore(".ctignore");
   dbg(`ignorer: %s`, ignorer ? "loaded" : "no .ctignore found");
   dbg(
     `files (before filter): %O`,
-    env.files.map((f) => f.filename),
+    env.files.map((f) => f.filename)
   );
   const files = env.files
     .filter((f) => ignorer([f.filename]).length)
@@ -249,7 +251,7 @@ export default async function main() {
 
         // Extract instructions from frontmatter if not provided via parameters
         const frontmatterNode = root.children.find(
-          (child) => child.type === "yaml",
+          (child) => child.type === "yaml"
         );
         const frontmatter = parsers.YAML(frontmatterNode?.value, {
           schema: FrontmatterWithTranslatorSchema,
@@ -298,14 +300,18 @@ export default async function main() {
               ) {
                 dbg(`text node: %s`, nhash);
                 // compress long hash into LLM friendly short hash
-                const llmHash = `T${Object.keys(llmHashes).length.toString().padStart(3, "0")}`;
+                const llmHash = `T${Object.keys(llmHashes)
+                  .length.toString()
+                  .padStart(3, "0")}`;
                 llmHashes[llmHash] = nhash;
                 llmHashTodos.add(llmHash);
                 node.value = `┌${llmHash}┐${node.value}└${llmHash}┘`;
               }
             } else if (node.type === "paragraph" || node.type === "heading") {
               dbg(`paragraph/heading node: %s`, nhash);
-              const llmHash = `P${Object.keys(llmHashes).length.toString().padStart(3, "0")}`;
+              const llmHash = `P${Object.keys(llmHashes)
+                .length.toString()
+                .padStart(3, "0")}`;
               llmHashes[llmHash] = nhash;
               llmHashTodos.add(llmHash);
               node.children.unshift({
@@ -330,7 +336,9 @@ export default async function main() {
                         dbg(`yaml hero.action: %s -> %s`, nhash, tr);
                         if (!tr) action.text = tr;
                         else {
-                          const llmHash = `T${Object.keys(llmHashes).length.toString().padStart(3, "0")}`;
+                          const llmHash = `T${Object.keys(llmHashes)
+                            .length.toString()
+                            .padStart(3, "0")}`;
                           llmHashes[llmHash] = nhash;
                           llmHashTodos.add(llmHash);
                           action.text = `┌${llmHash}┐${action.text}└${llmHash}┘`;
@@ -348,20 +356,24 @@ export default async function main() {
                   const tr = translationCache[nhash];
                   if (tr) data.hero.tagline = tr;
                   else {
-                    const llmHash = `T${Object.keys(llmHashes).length.toString().padStart(3, "0")}`;
+                    const llmHash = `T${Object.keys(llmHashes)
+                      .length.toString()
+                      .padStart(3, "0")}`;
                     llmHashes[llmHash] = nhash;
                     llmHashTodos.add(llmHash);
                     data.hero.tagline = `┌${llmHash}┐${data.hero.tagline}└${llmHash}┘`;
                   }
                 }
                 for (const field of STARLIGHT_FRONTMATTER_STRINGS.filter(
-                  (field) => typeof data[field] === "string",
+                  (field) => typeof data[field] === "string"
                 )) {
                   const nhash = hashNode(data[field]);
                   const tr = translationCache[nhash];
                   if (tr) data[field] = tr;
                   else {
-                    const llmHash = `T${Object.keys(llmHashes).length.toString().padStart(3, "0")}`;
+                    const llmHash = `T${Object.keys(llmHashes)
+                      .length.toString()
+                      .padStart(3, "0")}`;
                     llmHashes[llmHash] = nhash;
                     llmHashTodos.add(llmHash);
                     data[field] = `┌${llmHash}┐${data[field]}└${llmHash}┘`;
@@ -391,7 +403,9 @@ export default async function main() {
               const tr = translationCache[nhash];
               if (tr) title = tr;
               else {
-                const llmHash = `T${Object.keys(llmHashes).length.toString().padStart(3, "0")}`;
+                const llmHash = `T${Object.keys(llmHashes)
+                  .length.toString()
+                  .padStart(3, "0")}`;
                 llmHashes[llmHash] = nhash;
                 llmHashTodos.add(llmHash);
                 title = `┌${llmHash}┐${title}└${llmHash}┘`;
@@ -488,7 +502,7 @@ export default async function main() {
               system: [],
               cache: true,
               label: `translating ${filename} (${llmHashTodos.size} nodes)`,
-            },
+            }
           );
 
           if (error) {
@@ -545,13 +559,10 @@ export default async function main() {
                 if (Array.isArray(data?.hero?.actions)) {
                   data.hero.actions.forEach((action) => {
                     if (typeof action.link === "string") {
-                      if (starlightBase)
-                        action.link = action.link.replace(
-                          starlightBaseRx,
-                          `/${starlightBase}/${to.toLowerCase()}/`,
-                        );
-                      if (!starlightBase)
-                        action.link = `/${to.toLowerCase()}/${action.link}`;
+                      action.link = action.link.replace(
+                        starlightBaseRx,
+                        `${starlightBase}/${to.toLowerCase()}/`
+                      );
                       dbg(`yaml hero action link: %s`, action.link);
                     }
                     if (typeof action.text === "string") {
@@ -579,7 +590,7 @@ export default async function main() {
                 else unresolvedTranslations++;
               }
               for (const field of STARLIGHT_FRONTMATTER_STRINGS.filter(
-                (field) => typeof data[field] === "string",
+                (field) => typeof data[field] === "string"
               )) {
                 const nhash = hashNode(data[field]);
                 const tr = translationCache[nhash];
@@ -659,11 +670,8 @@ export default async function main() {
             if (starlightBaseRx.test(node.url)) {
               node.url = patchFn(
                 node.url.replace(starlightBaseRx, "../"),
-                true,
+                true
               );
-            }
-            if (!starlightBase) {
-              node.url = patchFn(`/../${node.url}`, true);
             }
           });
         }
@@ -712,7 +720,7 @@ export default async function main() {
           });
           const diffLinks = xor(
             Array.from(originalLinks),
-            Array.from(translatedLinks),
+            Array.from(translatedLinks)
           );
           if (diffLinks.length) {
             output.warn(`some links have changed`);
@@ -728,11 +736,14 @@ export default async function main() {
           Your task is to determine the quality of the translation of a Markdown document from ${
             sourceInfo.name
           } (${source}) to ${lang} (${to}).
-          The original document is in ${ctx.def("ORIGINAL", content)}, and the translated document is provided in ${ctx.def(
-            "TRANSLATED",
-            contentTranslated,
-            { lineNumbers: true },
-          )} (line numbers were added).`.role("system");
+          The original document is in ${ctx.def(
+            "ORIGINAL",
+            content
+          )}, and the translated document is provided in ${ctx.def(
+                "TRANSLATED",
+                contentTranslated,
+                { lineNumbers: true }
+              )} (line numbers were added).`.role("system");
             },
             {
               ok: `Translation is faithful to the original document and conveys the same meaning.`,
@@ -744,7 +755,7 @@ export default async function main() {
               cache: true,
               systemSafety: true,
               model: classifyModel,
-            },
+            }
           );
 
           // are we out of tokens?
@@ -755,7 +766,7 @@ export default async function main() {
 
           output.resultItem(
             res.label === "ok",
-            `Translation quality: ${res.label}`,
+            `Translation quality: ${res.label}`
           );
           if (res.label !== "ok") {
             output.fence(res.answer);
@@ -771,7 +782,7 @@ export default async function main() {
         await workspace.writeText(translationFn, contentTranslated);
         await workspace.writeText(
           translationCacheFilename,
-          JSON.stringify(translationCache, null, 2),
+          JSON.stringify(translationCache, null, 2)
         );
       } catch (error) {
         output.error(error);
