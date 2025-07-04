@@ -61,3 +61,25 @@ so it requires to override a few components.
 - Add the components in your `src/components` directory [from the `docs/src/components` in this repository](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
 
 Feel free to modify the logic in `AIGeneratedNotice.astro` to fit your needs.
+
+## Astro Link Validator
+
+If you use the [Astro Link Validator](https://github.com/HiDeoo/starlight-links-validator),
+make sure to disable `errorOnRelativeLinks` option in your `astro.config.mjs` file
+as the localized links are relative to the root locale.
+
+```js title="astro.config.mjs" "errorOnRelativeLinks: false"
+import starlightLinksValidator from "starlight-links-validator";
+
+export default defineConfig({
+  integrations: [
+    starlight({
+      plugins: [
+        starlightLinksValidator({
+          errorOnRelativeLinks: false,
+        }),
+      ],
+    }),
+  ],
+});
+```
