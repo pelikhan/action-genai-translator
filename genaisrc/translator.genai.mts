@@ -1,6 +1,7 @@
 import { hash } from "crypto";
 import { classify } from "@genaiscript/runtime";
 import { mdast } from "@genaiscript/plugin-mdast";
+import "mdast-util-mdx";
 import "mdast-util-mdxjs-esm";
 import "mdast-util-mdx-jsx";
 import type {
@@ -16,7 +17,7 @@ import { URL } from "url";
 import { xor } from "es-toolkit";
 import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx";
 import type { FrontmatterWithTranslator } from "./src/types.mts";
-import { FrontmatterWithTranslatorSchema } from "./src/types.mts";
+import { FrontmatterWithTranslatorSchema } from "./src/schemas.mts";
 import { DEFAULT_MODELS, LANGS } from "./src/models.mts";
 
 script({
@@ -135,7 +136,7 @@ export default async function main() {
   dbg(`starlightBase: %s`, starlightBase);
   if (!!starlightDir !== !!starlightBase)
     throw new Error(
-      `Both starlightDir and starlightBase must be defined or undefined together.`
+      `Both starlightDir and starlightBase must be defined or undefined together.`,
     );
   const starlightBaseRx = starlightBase
     ? new RegExp(`^/${starlightBase}/`)
@@ -147,14 +148,14 @@ export default async function main() {
   output.item(langs.join(", "));
   if (langs.some((l) => !LANGS[l]))
     cancel(
-      `unsupported languages: ${langs.filter((l) => !LANGS[l]).join(", ")}`
+      `unsupported languages: ${langs.filter((l) => !LANGS[l]).join(", ")}`,
     );
 
   const ignorer = await parsers.ignore(".ctignore");
   dbg(`ignorer: %s`, ignorer ? "loaded" : "no .ctignore found");
   dbg(
     `files (before filter): %O`,
-    env.files.map((f) => f.filename)
+    env.files.map((f) => f.filename),
   );
   const files = env.files
     .filter((f) => ignorer([f.filename]).length)
@@ -249,7 +250,7 @@ export default async function main() {
 
         // Extract instructions from frontmatter if not provided via parameters
         const frontmatterNode = root.children.find(
-          (child) => child.type === "yaml"
+          (child) => child.type === "yaml",
         );
         const frontmatter = parsers.YAML(frontmatterNode?.value, {
           schema: FrontmatterWithTranslatorSchema,
@@ -363,7 +364,7 @@ export default async function main() {
                   }
                 }
                 for (const field of STARLIGHT_FRONTMATTER_STRINGS.filter(
-                  (field) => typeof data[field] === "string"
+                  (field) => typeof data[field] === "string",
                 )) {
                   const nhash = hashNode(data[field]);
                   const tr = translationCache[nhash];
@@ -500,7 +501,7 @@ export default async function main() {
               system: [],
               cache: true,
               label: `translating ${filename} (${llmHashTodos.size} nodes)`,
-            }
+            },
           );
 
           if (error) {
@@ -559,7 +560,7 @@ export default async function main() {
                     if (typeof action.link === "string") {
                       action.link = action.link.replace(
                         starlightBaseRx,
-                        `/${starlightBase}/${to.toLowerCase()}/`
+                        `/${starlightBase}/${to.toLowerCase()}/`,
                       );
                       dbg(`yaml hero action link: %s`, action.link);
                     }
@@ -588,7 +589,7 @@ export default async function main() {
                 else unresolvedTranslations++;
               }
               for (const field of STARLIGHT_FRONTMATTER_STRINGS.filter(
-                (field) => typeof data[field] === "string"
+                (field) => typeof data[field] === "string",
               )) {
                 const nhash = hashNode(data[field]);
                 const tr = translationCache[nhash];
@@ -668,7 +669,7 @@ export default async function main() {
             if (starlightBaseRx.test(node.url)) {
               node.url = patchFn(
                 node.url.replace(starlightBaseRx, "../"),
-                true
+                true,
               );
             }
           });
@@ -718,7 +719,7 @@ export default async function main() {
           });
           const diffLinks = xor(
             Array.from(originalLinks),
-            Array.from(translatedLinks)
+            Array.from(translatedLinks),
           );
           if (diffLinks.length) {
             output.warn(`some links have changed`);
@@ -736,12 +737,12 @@ export default async function main() {
           } (${source}) to ${lang} (${to}).
           The original document is in ${ctx.def(
             "ORIGINAL",
-            content
+            content,
           )}, and the translated document is provided in ${ctx.def(
-                "TRANSLATED",
-                contentTranslated,
-                { lineNumbers: true }
-              )} (line numbers were added).`.role("system");
+            "TRANSLATED",
+            contentTranslated,
+            { lineNumbers: true },
+          )} (line numbers were added).`.role("system");
             },
             {
               ok: `Translation is faithful to the original document and conveys the same meaning.`,
@@ -753,7 +754,7 @@ export default async function main() {
               cache: true,
               systemSafety: true,
               model: classifyModel,
-            }
+            },
           );
 
           // are we out of tokens?
@@ -764,7 +765,7 @@ export default async function main() {
 
           output.resultItem(
             res.label === "ok",
-            `Translation quality: ${res.label}`
+            `Translation quality: ${res.label}`,
           );
           if (res.label !== "ok") {
             output.fence(res.answer);
@@ -780,7 +781,7 @@ export default async function main() {
         await workspace.writeText(translationFn, contentTranslated);
         await workspace.writeText(
           translationCacheFilename,
-          JSON.stringify(translationCache, null, 2)
+          JSON.stringify(translationCache, null, 2),
         );
       } catch (error) {
         output.error(error);
