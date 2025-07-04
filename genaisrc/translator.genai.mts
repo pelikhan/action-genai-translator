@@ -15,14 +15,12 @@ import { basename, dirname, join, relative } from "path";
 import { URL } from "url";
 import { xor } from "es-toolkit";
 import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx";
-import type {
-  FrontmatterWithTranslator,
-  TranslatorConfiguration,
-} from "./src/types.mts";
+import type { FrontmatterWithTranslator } from "./src/types.mts";
 import {
   FrontmatterWithTranslatorSchema,
   TranslatorConfigurationSchema,
 } from "./src/types.mts";
+import { DEFAULT_MODELS, LANGS } from "./src/models.mts";
 
 script({
   title: "Automatic Markdown Translations using GenAI",
@@ -85,58 +83,6 @@ const MARKER_START = "┌";
 const MARKER_END = "└";
 type NodeType = Text | Paragraph | Heading | Yaml;
 const STARLIGHT_FRONTMATTER_STRINGS = ["excerpt", "title", "description"];
-type LangConfiguration = {
-  name: string;
-  models?: {
-    translation?: string;
-    classify?: string;
-  };
-};
-const DEFAULT_MODELS = {
-  translation: "github:openai/gpt-4o",
-  classify: "github:openai/gpt-4o",
-} as Required<LangConfiguration["models"]>;
-const LANGS: Record<string, LangConfiguration> = {
-  fr: { name: "French" },
-  es: { name: "Spanish" },
-  de: { name: "German" },
-  it: { name: "Italian" },
-  pt: { name: "Portuguese" },
-  "pt-BR": { name: "Brazilian Portuguese" },
-  ru: { name: "Russian" },
-  zh: { name: "Chinese" },
-  ja: { name: "Japanese" },
-  ko: { name: "Korean" },
-  ar: {
-    name: "Arabic",
-    models: {
-      translation: "github:openai/gpt-4o-mini",
-      classify: "github:openai/gpt-4o-mini",
-    },
-  },
-  hi: { name: "Hindi" },
-  tr: { name: "Turkish" },
-  nl: { name: "Dutch" },
-  pl: { name: "Polish" },
-  sv: { name: "Swedish" },
-  no: { name: "Norwegian" },
-  fi: { name: "Finnish" },
-  da: { name: "Danish" },
-  cs: { name: "Czech" },
-  hu: { name: "Hungarian" },
-  ro: { name: "Romanian" },
-  th: { name: "Thai" },
-  vi: { name: "Vietnamese" },
-  id: { name: "Indonesian" },
-  ms: { name: "Malay" },
-  he: { name: "Hebrew" },
-  bg: { name: "Bulgarian" },
-  uk: { name: "Ukrainian" },
-  el: { name: "Greek" },
-  sk: { name: "Slovak" },
-  sl: { name: "Slovenian" },
-  hr: { name: "Croatian" },
-};
 
 const isUri = (str: string): URL => {
   try {
