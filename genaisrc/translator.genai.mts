@@ -128,7 +128,8 @@ export default async function main() {
     instructions?: string;
     instructionsFile?: string;
   };
-  const { force, instructions } = parameters;
+  const { force } = parameters;
+  let { instructions } = parameters;
 
   const instructionsFile = parameters.instructionsFile
     ? MD.content(await workspace.readText(parameters.instructionsFile))
@@ -254,6 +255,26 @@ export default async function main() {
         dbgc(`parsing %s`, filename);
         const root = parse(content);
         dbgt(`original %O`, root.children);
+        
+        // Extract instructions from frontmatter if not provided via parameters
+        if (!instructions) {
+          const frontmatterNode = root.children.find(child => child.type === "yaml");
+          if (frontmatterNode && frontmatterNode.type === "yaml") {
+            try {
+              const frontmatter = parsers.YAML(frontmatterNode.value);
+              if (frontmatter) {
+                // Check for translatorInstructions or translator_instructions
+                instructions = frontmatter.translatorInstructions || frontmatter.translator_instructions;
+                if (instructions) {
+                  dbg(`found instructions in frontmatter: %s`, instructions);
+                }
+              }
+            } catch (error) {
+              dbg(`error parsing frontmatter for instructions: %s`, error);
+            }
+          }
+        }
+        
         // collect original nodes nodes
         const nodes: Record<string, NodeType> = {};
         visit(root, nodeTypes, (node) => {
