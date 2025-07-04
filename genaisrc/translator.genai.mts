@@ -157,9 +157,9 @@ export default async function main() {
     .filter((f) => ignorer([f]).length)
     .filter(
       ({ filename }) =>
-        !tos.some((to) => filename.includes(`/${to.toLowerCase()}/`))
+        !langs[/\.(?<lang>\w+)\.mdx?$/i.exec(filename)?.groups?.lang]
     );
-  if (!files.length) cancel("No files selected.");
+  if (!files.length) cancel("No files or not matching languages selected.");
   dbg(
     `files: %O`,
     files.map((f) => f.filename)
