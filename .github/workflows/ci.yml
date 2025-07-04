@@ -1,4 +1,4 @@
-name: Continuous Translation
+name: Continuous Integration
 on:
   pull_request:
     branches:
