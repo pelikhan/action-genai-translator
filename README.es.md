@@ -76,6 +76,9 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "README.md"
+      - "docs/src/content/docs/**"
 permissions:
   contents: write
   models: read

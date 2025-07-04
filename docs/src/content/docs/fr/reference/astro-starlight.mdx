@@ -1,0 +1,31 @@
+---
+title: Astro Starlight
+description: Configurer votre site de documentation Starlight
+sidebar:
+  order: 9
+
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+Cette action peut être utilisée pour traduire le contenu d'un site de documentation [Astro Starlight](https://starlight.astro.build/).
+Elle nécessite une configuration spécifique de Starlight détaillée ci-dessous.
+
+<Steps>
+  <ol>
+    <li>
+      L'action fonctionne pour un site Starlight utilisant une [langue racine](https://starlight.astro.build/guides/i18n/#use-a-root-locale).
+    </li>
+
+    <li>
+      Pour activer le mode Starlight, vous devez fournir les entrées `starlight_dir` et `starlight_base` dans l'action.
+
+      ```yaml title=".github/workflows/ct.yml" "starlight_dir: ./docs" "starlight_base: my_repo_name"
+      uses: pelikhan/action-continuous-translation@v0
+      with:
+        starlight_dir: ./docs
+        starlight_base: my_repo_name
+      ```
+    </li>
+  </ol>
+</Steps>
