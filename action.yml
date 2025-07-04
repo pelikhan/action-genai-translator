@@ -81,7 +81,7 @@ inputs:
     required: false
 runs:
   using: docker
-  image: docker://ghcr.io/pelikhan/action-continuous-translation:v0.0.12
+  image: Dockerfile
 outputs:
   text:
     description: The generated text output.
