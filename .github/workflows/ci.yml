@@ -55,7 +55,7 @@ jobs:
         with:
           node-version: "22"
       - run: npm ci
-      - run: npm build
+      - run: npm run build
       - name: no jekyll
         run: touch docs/dist/.nojekyll
       - name: Deploy 🚀
