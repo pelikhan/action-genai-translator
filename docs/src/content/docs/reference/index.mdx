@@ -86,13 +86,7 @@ with:
   force: false
   debug: false
   github_token: ${{ secrets.GITHUB_TOKEN }}
-  openai_api_key: ${{ secrets.OPENAI_API_KEY }}
-  openai_api_base: ${{ env.OPENAI_API_BASE }}
-  azure_openai_api_endpoint: ${{ env.AZURE_OPENAI_API_ENDPOINT }}
-  azure_openai_api_key: ${{ secrets.AZURE_OPENAI_API_KEY }}
-  azure_openai_subscription_id: ${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}
-  azure_openai_api_version: ${{ env.AZURE_OPENAI_API_VERSION }}
-  azure_openai_api_credentials: ${{ env.AZURE_OPENAI_API_CREDENTIALS }}
+  ...
 ```
 
 ### `lang`
@@ -168,63 +162,7 @@ Read further details under [the GenAIScript Logging docs](https://microsoft.gith
 Your [GitHub token](https://github.com/settings/tokens) with at least `models: read` permission.
 Read further details under [the GenAIScript GitHub Models Permissions docs](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
 
-### `openai_api_key`
+### OpenAI, Azure OpenAI, ...
 
-**Type**: `string` (secret recommended)  
-**Default**: `${{ secrets.OPENAI_API_KEY }}`
-
-Your OpenAI API key.
-Read more [here](https://help.openai.com/en/articles/4936850-where-do-i-find-my-openai-api-key).
-
-### `openai_api_base`
-
-**Type**: `string` (environment variable recommended)  
-**Default**: `${{ env.OPENAI_API_BASE }}`
-
-The OpenAI API base URL.
-
-### `azure_openai_api_endpoint`
-
-**Type**: `string` (environment variable recommended)  
-**Default**: `${{ env.AZURE_OPENAI_API_ENDPOINT }}`
-
-The Azure OpenAI endpoint.
-To find this endpoint, go to you Azure Portal, open your Azure OpenAI resource.
-Find Keys and Endpoints and finally copy the Endpoint.
-
-### `azure_openai_api_key`
-
-**Type**: `string` (secret recommended)  
-**Default**: `${{ secrets.AZURE_OPENAI_API_KEY }}`
-
-The Azure OpenAI API key.
-
-:::note
-You do NOT need this if you are using Microsoft Entra ID.
-:::
-
-### `azure_openai_subscription_id`
-
-**Type**: `string` (environment variable recommended)  
-**Default**: `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}`
-
-The Azure OpenAI subscription ID to list available deployments.
-
-:::note
-You ONLY need this if you are using Microsoft Entra ID.
-:::
-
-### `azure_openai_api_version`
-
-**Type**: `string` (environment variable recommended)  
-**Default**: `${{ env.AZURE_OPENAI_API_VERSION }}`
-
-The Azure OpenAI API version.
-
-### `azure_openai_api_credentials`
-
-**Type**: `string` (environment variable recommended)  
-**Default**: `${{ env.AZURE_OPENAI_API_CREDENTIALS }}`
-
-The Azure OpenAI API credentials type.
-Leave this as `'default'` unless you have a special Azure setup.
+See [Models](/action-continuous-translation/reference/models/) for more details about other provides
+like OpenAI, Azure OpenAI, ...
