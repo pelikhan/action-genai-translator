@@ -1,0 +1,54 @@
+---
+title: إرشادات مخصصة
+description: إرشادات مخصصة للترجمة
+sidebar:
+  order: 10
+
+---
+
+يمكنك إدخال إرشادات مخصصة لتحفيز عملية الترجمة. يمكن استخدام هذا لإضافة تعليمات إضافية أو مسرد أو توجيهات أخرى لتحسين جودة الترجمة بشكل عام.
+
+## تعليمات مضمنة
+
+```yaml title=".github/workflows/ct.yml" "instructions: Use a casual tone."
+uses: pelikhan/action-continuous-translation@v0
+with:
+  instructions: Use a casual tone.
+```
+
+## تعليمات من ملف
+
+```yaml title=".github/workflows/ct.yml" "instructions_file: ./instructions.txt"
+uses: pelikhan/action-continuous-translation@v0
+with:
+  instructions_file: ./instructions.txt
+```
+
+## تعليمات في المقدمة
+
+يمكنك أيضًا تحديد تعليمات الترجمة مباشرة في مقدمة المستندات الفردية. يكون هذا مفيدًا عندما تتطلب المستندات المختلفة نهجًا ترجمياً محددًا.
+
+```markdown title="example.md"
+---
+title: "My Document"
+translator:
+  instructions: |
+    Use formal tone and preserve all technical terms in English.
+---
+
+# My Document Content
+
+This document will be translated using the instructions specified in the frontmatter.
+```
+
+كائن `translator` هو [إعداد](../../reference/configuration/) يتم التحقق منه في وقت التشغيل. يتم إزالته من المقدمة قبل بدء الترجمة، لذلك لا يؤثر على النتيجة النهائية.
+
+## ترتيب الأولوية
+
+تُطبق التعليمات حسب ترتيب الأولوية التالي:
+
+1. معامل `instructions` (أعلى أولوية)
+2. معامل `instructions_file`
+3. `translator.instructions` من مقدمة المستند (أقل أولوية)
+
+إذا تم استخدام عدة طرق، فسيتم تطبيق الطريقة ذات الأولوية القصوى فقط.

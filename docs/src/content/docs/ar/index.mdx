@@ -1,0 +1,77 @@
+---
+title: الترجمة المستمرة
+description: وثائق مترجمة باستخدام الذكاء الاصطناعي العام
+template: splash
+hero:
+  tagline: وثائق مترجمة تلقائيًا باستخدام GitHub Actions والنماذج
+  image:
+    file: ../../../assets/houston.webp
+  actions:
+    - text: Getting Started
+      link: /action-continuous-translation/ar/reference/
+      icon: right-arrow
+    - text: Read the blog post
+      link: https://microsoft.github.io/genaiscript/blog/continuous-translations/
+      icon: external
+      variant: minimal
+
+---
+
+import { Card, CardGrid } from "@astrojs/starlight/components";
+
+يتم ترجمة هذا الموقع باستخدام الذكاء الاصطناعي، تحقق من اللغات الأخرى (في الزاوية العلوية اليمنى)...
+
+## ترجمات مدعومة بالذكاء الاصطناعي
+
+<CardGrid>
+  <Card title="إجراءات GitHub" icon="github">
+    عند إجراء تغييرات على ملفات الوثائق الخاصة بك، يبدأ سير عمل الترجمة تلقائيًا في تشغيل مهمة الترجمة.
+  </Card>
+
+  <Card title="نماذج GitHub" icon="seti:markdown">
+    يستخدم سير عمل الذكاء الاصطناعي محللات Markdown واستدلال LLM لترجمة وثائقك بدقة وبشكل تدريجي.
+  </Card>
+</CardGrid>
+
+<Card title="الذكاء الاصطناعي المستمر" icon="rocket">
+  استكشاف أتمتة مدعومة بالـ LLM في التعاون البرمجي المستند إلى المنصات
+
+  [https://githubnext.com/projects/continuous-ai/](https://githubnext.com/projects/continuous-ai/)
+</Card>
+
+## الخطوات التالية
+
+<CardGrid stagger>
+  <Card title="إضافة سير العمل" icon="pencil">
+    أضف سير عمل الترجمة عن طريق إبلاغ وكيلك...
+
+    ```
+    add the workflow for the pelikhan/action-continuous-translation action
+    ```
+  </Card>
+
+  <Card title="تهيئة موقعك" icon="setting">
+    قم بتحرير سير العمل باستخدام معلومات Astro Starlight.
+  </Card>
+
+  <Card title="ترجم!" icon="add-document">
+    قم بالتزام ودع سير العمل يقوم بالمهمة!
+  </Card>
+
+  <Card title="اقرأ الوثائق" icon="open-book">
+    تعرف على المزيد في
+    [README](https://github.com/pelikhan/action-continuous-translation).
+  </Card>
+</CardGrid>
+
+## الميزات
+
+* ترجمات مدعومة بالذكاء الاصطناعي لوثائقك.
+* تكامل سلس مع GitHub Actions.
+* تحديثات ترجمة تدريجية باستخدام استدلال LLM.
+* يستخدم Remark ومعالجة AST لترجمات موثوقة.
+* تحكم في الجودة باستخدام LLM كقاضٍ وفحوصات المترجم.
+* يدعم تنسيقات Markdown وGFM وMDX (إلى حد ما).
+* تكامل مع Astro Starlight
+
+تم بناء هذا المشروع باستخدام [GenAIScript](https://microsoft.github.io/genaiscript).

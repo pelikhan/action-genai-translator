@@ -1,0 +1,31 @@
+---
+title: أسترو ستارلايت
+description: تكوين موقع الوثائق الخاص بستارلايت
+sidebar:
+  order: 9
+
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+يمكن استخدام هذا الإجراء لترجمة محتوى موقع وثائق [أسترو ستارلايت](https://starlight.astro.build/).
+يتطلب إعدادًا محددًا لـ ستارلايت كما هو مفصل أدناه.
+
+<Steps>
+  <ol>
+    <li>
+      يعمل هذا الإجراء مع موقع ستارلايت الذي يستخدم [اللغة الافتراضية](https://starlight.astro.build/guides/i18n/#use-a-root-locale).
+    </li>
+
+    <li>
+      لتفعيل وضع ستارلايت، تحتاج إلى توفير مدخلات `starlight_dir` و `starlight_base` في الإجراء.
+
+      ```yaml title=".github/workflows/ct.yml" "starlight_dir: ./docs" "starlight_base: my_repo_name"
+      uses: pelikhan/action-continuous-translation@v0
+      with:
+        starlight_dir: ./docs
+        starlight_base: my_repo_name
+      ```
+    </li>
+  </ol>
+</Steps>

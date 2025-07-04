@@ -1,0 +1,25 @@
+---
+title: الإعدادات
+description: خيارات الإعدادات لإجراء الترجمة
+sidebar:
+  order: 30
+
+---
+
+import { Code } from "@astrojs/starlight/components";
+import types from "../../../../../../genaisrc/src/types.mjs?raw";
+
+بيانات الإعداد هي `types.ts`.
+يمكن إضافتها إلى مقدمة التوثيق ككائن `translator`.
+
+```markdown
+---
+translator:
+  instructions: Use a friendly tone.
+---
+Lorem ipsum...
+```
+
+## المخطط
+
+<Code lang="ts" code={types} title="نوع الإعداد" />

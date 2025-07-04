@@ -1,0 +1,58 @@
+---
+title: Instruções Personalizadas
+description: Instruções personalizadas para a tradução
+sidebar:
+  order: 10
+
+---
+
+Você pode inserir instruções personalizadas de prompting para a tarefa de tradução.
+Isso pode ser usado para adicionar instruções adicionais, glossário ou outras orientações para melhorar
+a qualidade geral da tradução.
+
+## Instruções inline
+
+```yaml title=".github/workflows/ct.yml" "instructions: Use a casual tone."
+uses: pelikhan/action-continuous-translation@v0
+with:
+  instructions: Use a casual tone.
+```
+
+## Instruções de um arquivo
+
+```yaml title=".github/workflows/ct.yml" "instructions_file: ./instructions.txt"
+uses: pelikhan/action-continuous-translation@v0
+with:
+  instructions_file: ./instructions.txt
+```
+
+## Instruções no frontmatter
+
+Você também pode especificar instruções de tradução diretamente no frontmatter de documentos individuais.
+Isso é útil quando diferentes documentos requerem abordagens específicas de tradução.
+
+```markdown title="example.md"
+---
+title: "My Document"
+translator:
+  instructions: |
+    Use formal tone and preserve all technical terms in English.
+---
+
+# My Document Content
+
+This document will be translated using the instructions specified in the frontmatter.
+```
+
+O objeto `translator` é uma [configuração](../../reference/configuration/) e validado em tempo de execução.
+Ele é removido do frontmatter antes que a tradução comece, para que não afete o resultado final.
+
+## Ordem de Prioridade
+
+As instruções são aplicadas na seguinte ordem de prioridade:
+
+1. Parâmetro `instructions` (maior prioridade)
+2. Parâmetro `instructions_file`
+3. `translator.instructions` do frontmatter do documento (menor prioridade)
+
+Se vários métodos forem usados, apenas o de maior prioridade será aplicado.

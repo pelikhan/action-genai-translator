@@ -1,0 +1,25 @@
+---
+title: Configuração
+description: Opções de configuração para a ação de tradução
+sidebar:
+  order: 30
+
+---
+
+import { Code } from "@astrojs/starlight/components";
+import types from "../../../../../../genaisrc/src/types.mjs?raw";
+
+Os dados de configuração estão em `types.ts`.
+Eles podem ser adicionados ao frontmatter da documentação como objeto `translator`.
+
+```markdown
+---
+translator:
+  instructions: Use a friendly tone.
+---
+Lorem ipsum...
+```
+
+## Esquema
+
+<Code lang="ts" code={types} title="Tipo de Configuração" />

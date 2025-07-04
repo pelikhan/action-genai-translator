@@ -1,0 +1,67 @@
+---
+title: المرجع
+description: توثيق المرجع للإجراء
+sidebar:
+  order: 8
+
+---
+
+الإجراء المخصص يستخدم [نماذج GitHub](https://github.com/models) لترجمة ملفات Markdown في مستودعك.
+تم تصميمه ليُستخدم في سير عمل [إجراءات GitHub](https://docs.github.com/en/actions) لترجمة ملفات التوثيق تلقائيًا عند تحديثها.
+
+```yaml title=".github/workflows/ct.yml"
+---
+- uses: pelikhan/action-continuous-translation@v0
+  with:
+    github_token: ${{ secrets.GITHUB_TOKEN }}
+    lang: fr,es
+```
+
+## التثبيت
+
+يمكنك حفظ هذا الملف في دليل `.github/workflows/` الخاص بك باسم `ct.yml`:
+
+```yaml title=".github/workflows/ct.yml" wrap
+name: Continuous Translation
+on:
+  workflow_dispatch:
+  # translate when doc files are changed in main
+  push:
+    branches:
+      - main
+    paths: # update the file paths
+      - "README.md"
+      - "docs/src/content/docs/**"
+permissions:
+  contents: write
+  # allow the action to use the GitHub Models API
+  models: read
+concurrency:
+  # cancel in-progress jobs for the same workflow and ref
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  continuous_translation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # cache the LLM inference results
+      - uses: actions/cache@v4
+        with:
+          path: .genaiscript/cache/**
+          key: continuous-translation-${{ github.run_id }}
+          restore-keys: |
+            continuous-translation-
+      # this is the translation action
+      - uses: pelikhan/action-continuous-translation@v0
+        continue-on-error: true # don't stop if translation fails, we still need to store the cache
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          lang: fr,es
+      # commit the generated files
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          file_pattern: "translations/*.json **.md* translations/*.json"
+          commit_message: "[cai] translated docs"
+          commit_user_name: "genaiscript"
+```
