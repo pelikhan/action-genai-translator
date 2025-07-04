@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
+import starlightLinksValidator from "starlight-links-validator";
 
 // https://astro.build/config
 export default defineConfig({
@@ -8,6 +9,11 @@ export default defineConfig({
   base: "/action-continuous-translation",
   integrations: [
     starlight({
+      plugins: [
+        starlightLinksValidator({
+          errorOnRelativeLinks: false,
+        }),
+      ],
       title: "Continuous Translation",
       social: [
         {
@@ -36,13 +42,6 @@ export default defineConfig({
         },
       },
       sidebar: [
-        {
-          label: "Guides",
-          items: [
-            // Each item here is one entry in the navigation menu.
-            { label: "Example Guide", slug: "guides/example" },
-          ],
-        },
         {
           label: "Reference",
           autogenerate: { directory: "reference" },
