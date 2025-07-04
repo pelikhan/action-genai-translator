@@ -2,6 +2,7 @@
 
 Cette action permet de traduire de manière incrémentale les documents markdown en utilisant les [Modèles GitHub](https://github.com/models).
 
+* [Documentation](https://pelikhan.github.io/action-continuous-translation/)
 * [Article de blog](https://microsoft.github.io/genaiscript/blog/continuous-translations/)
 * [Français](./README.fr.md)
 * [Espagnol](./README.es.md)
