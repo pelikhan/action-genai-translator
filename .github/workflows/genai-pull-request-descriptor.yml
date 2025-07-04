@@ -1,0 +1,24 @@
+name: GenAI Pull Request Descriptor
+on:
+    pull_request:
+permissions:
+    contents: read
+    pull-requests: write
+    models: read
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+jobs:
+  action_genai_pull_request_descriptor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: .genaiscript/cache/**
+          key: genaiscript-${{ github.run_id }}
+          restore-keys: |
+            genaiscript-
+      - uses: pelikhan/action-genai-pull-request-descriptor@v0 # update to the major version you want to use
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
