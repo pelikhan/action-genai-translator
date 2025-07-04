@@ -21,7 +21,9 @@
         "GitHub.vscode-github-actions",
         "esbenp.prettier-vscode",
         "GitHub.copilot-chat",
-        "genaiscript.genaiscript-vscode"
+        "genaiscript.genaiscript-vscode",
+        "astro-build.astro-vscode",
+        "unifiedjs.vscode-mdx"
       ]
     }
   },

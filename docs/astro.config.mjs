@@ -51,6 +51,10 @@ export default defineConfig({
           autogenerate: { directory: "reference" },
         },
       ],
+      components: {
+        PageTitle: "./src/components/PageTitle.astro",
+        Hero: "./src/components/Hero.astro",
+      }
     }),
   ],
 });
