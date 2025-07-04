@@ -36,6 +36,11 @@ jobs:
       - uses: ./
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          starlight-dir: docs
+          starlight-base: action-continuous-translation
+          files: |
+            *
+            docs/src/content/**/*
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           file_pattern: "**.md* translations/*.json"
