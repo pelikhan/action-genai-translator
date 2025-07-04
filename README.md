@@ -1,6 +1,7 @@
 # Continuous Translation
 
 This action uses translate incrementally markdown document using [GitHub Models](https://github.com/models).
+Builtin support for [Astro Starlight](https://starlight.astro.build/)!
 
 - [Documentation](https://pelikhan.github.io/action-continuous-translation/)
 - [Blog post](https://microsoft.github.io/genaiscript/blog/continuous-translations/)
