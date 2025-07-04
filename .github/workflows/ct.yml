@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "README.md"
+      - "docs/src/content/**/*.md"
+      - "docs/src/content/**/*.mdx"
 concurrency:
   group: \${{ github.workflow }}-\${{ github.ref }}
   cancel-in-progress: true

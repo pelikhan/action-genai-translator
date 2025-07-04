@@ -153,15 +153,15 @@ export default async function main() {
   dbg(`tos: %o`, tos);
   const ignorer = await parsers.ignore(".ctignore");
   dbg(`ignorer: %s`, ignorer ? "loaded" : "no .ctignore found");
+  dbg(
+    `files (before filter): %O`,
+    env.files.map((f) => f.filename)
+  );
   const files = env.files
     .filter((f) => ignorer([f]).length)
     // Filter files that match the ISO language code pattern in the filename
-    .filter(({ filename }) => /\.\w\w(-\w\w\w?)?\.mdx?$/i.test(filename));
+    .filter(({ filename }) => !/\.\w\w(-\w\w\w?)?\.mdx?$/i.test(filename));
   if (!files.length) cancel("No files or not matching languages selected.");
-  dbg(
-    `files: %O`,
-    files.map((f) => f.filename)
-  );
 
   for (const to of tos) {
     let lang = langs[to];

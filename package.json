@@ -21,6 +21,6 @@
     "test": "npm run typecheck",
     "dev": "genaiscript run translator",
     "dev:astro": "genaiscript run translator \"docs/src/content/**/*\" --no-run-trace -x starlightDir=docs starlightBase=action-continuous-translation",
-    "start": "genaiscript run translator --github-workspace --no-run-trace --no-output-trace --out-output $GITHUB_STEP_SUMMARY"
+    "start": "DEBUG=* genaiscript run translator --github-workspace --no-run-trace --no-output-trace --out-output $GITHUB_STEP_SUMMARY"
   }
 }
