@@ -762,5 +762,6 @@
   "This is an example document that contains translation instructions in its frontm.A8995A84279D9314AF86": "C'est un document d'exemple et il a des trucs pour traduire écrits tout au début.",
   "The translator script will now automatically detect and use the `translator.inst.CF1B0083CC795F493515": "Le script de traduction va maintenant trouver tout seul et utiliser le champ `translator.instructions` dans le début du document si on ne donne pas d'instructions à part.",
   "## Code Example\n": "Exemple de code",
-  "This functionality makes it easier to have document-specific translation instruc.875C14B92B17228880E6": "Avec ça, c'est plus facile d'avoir des instructions de traduction rien que pour le document sans devoir les dire à chaque fois."
+  "This functionality makes it easier to have document-specific translation instruc.875C14B92B17228880E6": "Avec ça, c'est plus facile d'avoir des instructions de traduction rien que pour le document sans devoir les dire à chaque fois.",
+  "[Documentation](https://pelikhan.github.io/action-continuous-translation/)\n": "[Documentation](https://pelikhan.github.io/action-continuous-translation/)"
 }

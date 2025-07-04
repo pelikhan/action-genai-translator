@@ -85,40 +85,57 @@ const MARKER_START = "┌";
 const MARKER_END = "└";
 type NodeType = Text | Paragraph | Heading | Yaml;
 const STARLIGHT_FRONTMATTER_STRINGS = ["excerpt", "title", "description"];
-const langs = {
-  fr: "French",
-  es: "Spanish",
-  de: "German",
-  it: "Italian",
-  pt: "Portuguese",
-  "pt-BR": "Brazilian Portuguese",
-  ru: "Russian",
-  zh: "Chinese",
-  ja: "Japanese",
-  ko: "Korean",
-  ar: "Arabic",
-  hi: "Hindi",
-  tr: "Turkish",
-  nl: "Dutch",
-  pl: "Polish",
-  sv: "Swedish",
-  no: "Norwegian",
-  fi: "Finnish",
-  da: "Danish",
-  cs: "Czech",
-  hu: "Hungarian",
-  ro: "Romanian",
-  th: "Thai",
-  vi: "Vietnamese",
-  id: "Indonesian",
-  ms: "Malay",
-  he: "Hebrew",
-  bg: "Bulgarian",
-  uk: "Ukrainian",
-  el: "Greek",
-  sk: "Slovak",
-  sl: "Slovenian",
-  hr: "Croatian",
+type LangConfiguration = {
+  name: string;
+  models?: {
+    translation?: string;
+    classify?: string;
+  };
+};
+const DEFAULT_MODELS = {
+  translation: "github:openai/gpt-4o",
+  classify: "github:openai/gpt-4o",
+} as Required<LangConfiguration["models"]>;
+const LANGS: Record<string, LangConfiguration> = {
+  fr: { name: "French" },
+  es: { name: "Spanish" },
+  de: { name: "German" },
+  it: { name: "Italian" },
+  pt: { name: "Portuguese" },
+  "pt-BR": { name: "Brazilian Portuguese" },
+  ru: { name: "Russian" },
+  zh: { name: "Chinese" },
+  ja: { name: "Japanese" },
+  ko: { name: "Korean" },
+  ar: {
+    name: "Arabic",
+    models: {
+      translation: "github:openai/gpt-4o-mini",
+      classify: "github:openai/gpt-4o-mini",
+    },
+  },
+  hi: { name: "Hindi" },
+  tr: { name: "Turkish" },
+  nl: { name: "Dutch" },
+  pl: { name: "Polish" },
+  sv: { name: "Swedish" },
+  no: { name: "Norwegian" },
+  fi: { name: "Finnish" },
+  da: { name: "Danish" },
+  cs: { name: "Czech" },
+  hu: { name: "Hungarian" },
+  ro: { name: "Romanian" },
+  th: { name: "Thai" },
+  vi: { name: "Vietnamese" },
+  id: { name: "Indonesian" },
+  ms: { name: "Malay" },
+  he: { name: "Hebrew" },
+  bg: { name: "Bulgarian" },
+  uk: { name: "Ukrainian" },
+  el: { name: "Greek" },
+  sk: { name: "Slovak" },
+  sl: { name: "Slovenian" },
+  hr: { name: "Croatian" },
 };
 
 const isUri = (str: string): URL => {
@@ -188,17 +205,12 @@ export default async function main() {
   files.forEach(({ filename }) => output.item(filename));
 
   for (const to of langs) {
-    let lang = langs[to];
-    if (!lang) {
-      const res =
-        await prompt`Respond human friendly name of language: ${to}`.options({
-          cache: true,
-          systemSafety: false,
-          responseType: "text",
-          throwOnError: true,
-        });
-      lang = res.text;
-    }
+    const langInfo = LANGS[to];
+    if (!langInfo) cancel(`unsupported language: ${to}`);
+    const lang = langInfo.name;
+    const translationModel =
+      langInfo.models?.translation || DEFAULT_MODELS.translation;
+    const classifyModel = langInfo.models?.classify || DEFAULT_MODELS.classify;
     output.heading(2, `Translating Markdown files to ${lang} (${to})`);
     const translationCacheFilename = `translations/${to.toLowerCase()}.json`;
     dbg(`cache: %s`, translationCacheFilename);
@@ -522,6 +534,7 @@ export default async function main() {
       ${instructionsFile || ""}`.role("system");
             },
             {
+              model: translationModel,
               responseType: "text",
               systemSafety: true,
               system: [],
@@ -777,6 +790,7 @@ export default async function main() {
               explanations: true,
               cache: true,
               systemSafety: true,
+              model: classifyModel,
             }
           );
 
