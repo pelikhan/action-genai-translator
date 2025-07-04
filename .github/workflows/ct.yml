@@ -42,6 +42,7 @@ jobs:
           restore-keys: |
             continuous-translation-
       - uses: ./
+        continue-on-error: true
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           lang: fr,es,pr-BR
