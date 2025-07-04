@@ -65,6 +65,11 @@ const nodeTypes = ["text", "paragraph", "heading", "yaml"];
 const MARKER_START = "┌";
 const MARKER_END = "└";
 type NodeType = Text | Paragraph | Heading | Yaml;
+const STARLIGHT_FRONTMATTER_STRINGS = [
+  "excerpt",
+  "title",
+  "description"
+];
 const langs = {
   fr: "French",
   es: "Spanish",
@@ -334,43 +339,32 @@ export default async function main() {
                     dbg(`yaml cover image: %s`, data.cover.image);
                   }
                 }
-                if (typeof data.excerpt === "string") {
-                  const nhash = hashNode(data.excerpt);
+                if (data.hero && typeof data.hero.tagline === "string") {
+                  const nhash = hashNode(data.hero.tagline);
                   const tr = translationCache[nhash];
-                  if (tr) data.excerpt = tr;
+                  if (tr) data.hero.tagline = tr;
                   else {
                     const llmHash = `T${Object.keys(llmHashes)
                       .length.toString()
                       .padStart(3, "0")}`;
                     llmHashes[llmHash] = nhash;
                     llmHashTodos.add(llmHash);
-                    data.excerpt = `┌${llmHash}┐${data.excerpt}└${llmHash}┘`;
+                    data.hero.tagline = `┌${llmHash}┐${data.hero.tagline}└${llmHash}┘`;
                   }
                 }
-                if (typeof data.title === "string") {
-                  const nhash = hashNode(data.title);
+                for (const field of STARLIGHT_FRONTMATTER_STRINGS.filter(
+                  (field) => typeof data[field] === "string"
+                )) {
+                  const nhash = hashNode(data[field]);
                   const tr = translationCache[nhash];
-                  if (tr) data.title = tr;
+                  if (tr) data[field] = tr;
                   else {
                     const llmHash = `T${Object.keys(llmHashes)
                       .length.toString()
                       .padStart(3, "0")}`;
                     llmHashes[llmHash] = nhash;
                     llmHashTodos.add(llmHash);
-                    data.title = `┌${llmHash}┐${data.title}└${llmHash}┘`;
-                  }
-                }
-                if (typeof data.description === "string") {
-                  const nhash = hashNode(data.description);
-                  const tr = translationCache[nhash];
-                  if (tr) data.title = tr;
-                  else {
-                    const llmHash = `D${Object.keys(llmHashes)
-                      .length.toString()
-                      .padStart(3, "0")}`;
-                    llmHashes[llmHash] = nhash;
-                    llmHashTodos.add(llmHash);
-                    data.description = `┌${llmHash}┐${data.description}└${llmHash}┘`;
+                    data[field] = `┌${llmHash}┐${data[field]}└${llmHash}┘`;
                   }
                 }
                 node.value = YAML.stringify(data);
@@ -576,25 +570,19 @@ export default async function main() {
                   dbg(`yaml cover image: %s`, data.cover.image);
                 }
               }
-              if (typeof data.excerpt === "string") {
-                const nhash = hashNode(data.excerpt);
+              if (data.hero && typeof data.hero.tagline === "string") {
+                const nhash = hashNode(data.hero.tagline);
                 const tr = translationCache[nhash];
-                dbg(`yaml excerpt: %s -> %s`, nhash, tr);
-                if (tr) data.excerpt = tr;
+                if (tr) data.hero.tagline = tr;
                 else unresolvedTranslations++;
               }
-              if (typeof data.title === "string") {
-                const nhash = hashNode(data.title);
+              for (const field of STARLIGHT_FRONTMATTER_STRINGS.filter(
+                (field) => typeof data[field] === "string"
+              )) {
+                const nhash = hashNode(data[field]);
                 const tr = translationCache[nhash];
-                dbg(`yaml title: %s -> %s`, nhash, tr);
-                if (tr) data.title = tr;
-                else unresolvedTranslations++;
-              }
-              if (typeof data.description === "string") {
-                const nhash = hashNode(data.description);
-                const tr = translationCache[nhash];
-                dbg(`yaml description: %s -> %s`, nhash, tr);
-                if (tr) data.description = tr;
+                dbg(`yaml %s: %s -> %s`, field, nhash, tr);
+                if (tr) data[field] = tr;
                 else unresolvedTranslations++;
               }
               node.value = YAML.stringify(data);

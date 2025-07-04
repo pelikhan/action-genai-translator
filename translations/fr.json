@@ -755,5 +755,6 @@
   " in the Diátaxis framework\n": "dans le cadre du framework Diátaxis",
   "about how-to guides\n": "à propos des guides pratiques",
   "Learn more in\n": "En savoir plus dans ",
-  "README\n": "README"
+  "README\n": "README",
+  "Automated Translated Docs using GitHub Actions and Models": "Documentation traduite automatiquement à l'aide de GitHub Actions et de modèles"
 }

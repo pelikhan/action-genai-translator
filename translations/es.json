@@ -752,5 +752,6 @@
   "about how-to guides\n": "sobre las guías de instrucciones",
   "Learn more in\n": "Obtén más información en ",
   "README\n": "README",
-  "[Documentation](https://pelikhan.github.io/action-continuous-translation/)\n": "[Documentación](https://pelikhan.github.io/action-continuous-translation/)"
+  "[Documentation](https://pelikhan.github.io/action-continuous-translation/)\n": "[Documentación](https://pelikhan.github.io/action-continuous-translation/)",
+  "Automated Translated Docs using GitHub Actions and Models": "Documentación traducida automáticamente usando GitHub Actions y modelos"
 }

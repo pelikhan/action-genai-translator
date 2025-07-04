@@ -58,5 +58,6 @@
   "README\n": "README",
   "Features\n": "Funcionalidades",
   "This project is built using \n": "Este projeto foi construído usando ",
-  "GenAIScript\n": "GenAIScript"
+  "GenAIScript\n": "GenAIScript",
+  "Automated Translated Docs using GitHub Actions and Models": "Documentação traduzida automaticamente usando GitHub Actions e Modelos"
 }
