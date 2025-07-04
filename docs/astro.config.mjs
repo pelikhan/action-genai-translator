@@ -26,6 +26,10 @@ export default defineConfig({
           label: "French",
           lang: "fr",
         },
+        es: {
+          label: "Spanish",
+          lang: "es",
+        },
       },
       sidebar: [
         {
