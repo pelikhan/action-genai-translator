@@ -20,7 +20,7 @@
     "configure": "genaiscript configure action translator",
     "test": "npm run typecheck",
     "dev": "genaiscript run translator",
-    "dev:astro": "genaiscript run translator \"docs/src/content/**/*\" --no-run-trace -x starlightDir=docs starlightBase=action-continuous-translation",
+    "dev:astro": "genaiscript run translator \"docs/src/content/**/*\" -x \"lang=fr,es,pr-BR\" --no-run-trace -x starlightDir=docs starlightBase=action-continuous-translation",
     "start": "DEBUG=* genaiscript run translator --github-workspace --no-run-trace --no-output-trace --out-output $GITHUB_STEP_SUMMARY"
   }
 }

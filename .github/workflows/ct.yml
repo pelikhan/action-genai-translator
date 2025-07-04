@@ -40,6 +40,7 @@ jobs:
       - uses: ./
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          lang: fr,es,pr-BR
           starlight_dir: docs
           starlight_base: action-continuous-translation
           files: |

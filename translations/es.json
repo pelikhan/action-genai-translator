@@ -752,5 +752,15 @@
   "about how-to guides\n": "sobre las guías de instrucciones",
   "Learn more in\n": "Obtén más información en ",
   "README\n": "README",
-  "[Documentation](https://pelikhan.github.io/action-continuous-translation/)\n": "[Documentación](https://pelikhan.github.io/action-continuous-translation/)"
+  "[Documentation](https://pelikhan.github.io/action-continuous-translation/)\n": "[Documentación](https://pelikhan.github.io/action-continuous-translation/)",
+  "Exemplo de Referência": "Ejemplo de Referencia",
+  "Uma página de referência no meu novo site de documentação Starlight.": "Una página de referencia en mi nuevo sitio de documentación de Starlight.",
+  "Páginas de referência são ideais para descrever como as coisas funcionam de form.4620AF9842DB16CB8823": "Las páginas de referencia son ideales para describir cómo funcionan las cosas de manera sucinta y clara.\nMenos centradas en contar una historia o abordar un caso de uso específico, deben proporcionar una visión general completa de lo que está documentando.",
+  "## Leitura adicional\n": "Lectura adicional",
+  "Leia [sobre referência](https://diataxis.fr/reference/) no framework Diátaxis\n": "Lea [sobre referencia](https://diataxis.fr/reference/) en el framework Diátaxis",
+  "Guia de Exemplo": "Guía de ejemplo",
+  "Um guia no meu novo site de documentação Starlight.": "Una guía en mi nuevo sitio de documentación Starlight.",
+  "Guias conduzem o usuário por uma tarefa específica que ele deseja realizar, freq.833C1731D6805B077190": "Las guías llevan al usuario a través de una tarea específica que desea realizar, a menudo en una secuencia de pasos.\nEscribir una buena guía requiere pensar en lo que tus usuarios están intentando lograr.",
+  "Leitura adicional\n": "Lectura adicional",
+  "Leia [sobre guias práticos](https://diataxis.fr/how-to-guides/) no framework Diá.A1230AF63DB9032C9441": "Lee [sobre guías prácticas](https://diataxis.fr/how-to-guides/) en el framework Diátaxis"
 }

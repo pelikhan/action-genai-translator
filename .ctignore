@@ -1,4 +1,5 @@
 markdown.*.md
 README.*.md
-docs/src/content/docs/fr/*
-docs/src/content/docs/es/*
+docs/src/content/docs/fr/
+docs/src/content/docs/es/
+docs/src/content/docs/pt-br/
