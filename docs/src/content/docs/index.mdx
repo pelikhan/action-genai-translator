@@ -1,36 +1,67 @@
 ---
-title: Welcome to Starlight
-description: Get started building your docs site with Starlight.
+title: Continuous Translation
+description: Translate your Developer Docs using AI
 template: splash
 hero:
-  tagline: Congrats on setting up a new Starlight project!
+  tagline: Translate your Developer Docs AI!
   image:
     file: ../../assets/houston.webp
   actions:
     - text: Example Guide
       link: /guides/example/
       icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
+    - text: Read the blog post
+      link: https://microsoft.github.io/genaiscript/blog/continuous-translations/
       icon: external
       variant: minimal
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Card, CardGrid } from "@astrojs/starlight/components";
+
+## AI-powered Translations
+
+<CardGrid>
+  <Card title="GitHub Actions" icon="github">
+    When you commit changes to your documentation files, the translation
+    workflow automatically starts a translation job.
+  </Card>
+  <Card title="GitHub Models" icon="seti:markdown">
+    The AI workflow uses Markdown parsers and LLM inference to precisely and
+    incrementally translate your documentation.
+  </Card>
+</CardGrid>
 
 ## Next steps
 
 <CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
-	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
-	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
-	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
-	</Card>
+  <Card title="Add the Workflow" icon="pencil">
+    Add the translation workflow by telling your agent...
+
+```
+add the workflow for the pelikhan/action-continuous-translation action
+```
+
+  </Card>
+  <Card title="Configure your site" icon="setting">
+    Edit the workflow with the Astro Starlight information.
+  </Card>
+  <Card title="Translate!" icon="add-document">
+    Commit and let the workflow do the work!
+  </Card>
+  <Card title="Read the docs" icon="open-book">
+    Learn more in
+    [README](https://github.com/pelikhan/action-continous-translation).
+  </Card>
 </CardGrid>
+
+## Features
+
+- AI-powered translations for your documentation.
+- Seamless integration with GitHub Actions.
+- Incremental translation updates using LLM inference.
+- Uses Remark and AST manipulation for reliable translations.
+- Quality control with LLM-as-judge and compiler checks.
+- Supports Markdown, GFM, and MDX formats (to some extent).
+- Astro Starlight integration
+
+This project is built using [GenAIScript](https://microsoft.github.io/genaiscript).
