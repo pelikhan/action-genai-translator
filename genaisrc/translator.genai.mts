@@ -155,10 +155,8 @@ export default async function main() {
   dbg(`ignorer: %s`, ignorer ? "loaded" : "no .ctignore found");
   const files = env.files
     .filter((f) => ignorer([f]).length)
-    .filter(
-      ({ filename }) =>
-        !langs[/\.(?<lang>\w+)\.mdx?$/i.exec(filename)?.groups?.lang]
-    );
+    // Filter files that match the ISO language code pattern in the filename
+    .filter(({ filename }) => /\.\w\w(-\w\w\w?)?\.mdx?$/i.test(filename));
   if (!files.length) cancel("No files or not matching languages selected.");
   dbg(
     `files: %O`,
