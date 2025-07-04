@@ -40,7 +40,7 @@ export default defineConfig({
           label: "Spanish",
           lang: "es",
         },
-        "pt-BR": {
+        "pt-br": {
           label: "Portuguese (Brazil)",
           lang: "pt-BR",
         },
