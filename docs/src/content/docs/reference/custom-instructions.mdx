@@ -24,3 +24,38 @@ uses: pelikhan/action-continuous-translation@v0
 with:
   instructions_file: ./instructions.txt
 ```
+
+- instructions in document frontmatter
+
+You can also specify translation instructions directly in the frontmatter of individual documents. This is useful when different documents require specific translation approaches.
+
+```markdown title="example.md"
+---
+title: "My Document"
+translatorInstructions: "Use formal tone and preserve all technical terms in English."
+---
+
+# My Document Content
+
+This document will be translated using the instructions specified in the frontmatter.
+```
+
+Alternative field name:
+
+```markdown title="example.md"
+---
+title: "My Document"  
+translator_instructions: "Use casual tone and localize all examples."
+---
+
+# My Document Content
+```
+
+:::note[Priority Order]
+Instructions are applied in the following priority order:
+1. `instructions` parameter (highest priority)
+2. `instructions_file` parameter
+3. `translatorInstructions` or `translator_instructions` from document frontmatter (lowest priority)
+
+If multiple methods are used, only the highest priority one will be applied.
+:::
