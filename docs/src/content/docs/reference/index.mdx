@@ -9,7 +9,6 @@ The custom action uses [GitHub Models](https://github.com/models) to translate m
 It is designed to be used in a [GitHub Actions](https://docs.github.com/en/actions) workflow to automatically translate documentation files when they are updated.
 
 ```yaml title=".github/workflows/ct.yml"
----
 - uses: pelikhan/action-continuous-translation@v0
   with:
     github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -60,7 +59,172 @@ jobs:
       # commit the generated files
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          file_pattern: "translations/*.json **.md* translations/*.json"
+          file_pattern: "**.md* translations/*.json"
           commit_message: "[cai] translated docs"
           commit_user_name: "genaiscript"
 ```
+
+## Parameters
+
+The `pelikhan/action-continuous-translation` GitHub action supports the following parameters.
+All parameters are optional.
+The default values are shown in the reference below.
+
+:::caution
+This action is currently work in progress. Parameters could change any time!
+:::
+
+```yaml
+with:
+  lang: fr
+  source: en
+  files: README.md
+  instructions:
+  instructions_file:
+  starlight_dir:
+  starlight_base:
+  force: false
+  debug: false
+  github_token: ${{ secrets.GITHUB_TOKEN }}
+  openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+  openai_api_base: ${{ env.OPENAI_API_BASE }}
+  azure_openai_api_endpoint: ${{ env.AZURE_OPENAI_API_ENDPOINT }}
+  azure_openai_api_key: ${{ secrets.AZURE_OPENAI_API_KEY }}
+  azure_openai_subscription_id: ${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}
+  azure_openai_api_version: ${{ env.AZURE_OPENAI_API_VERSION }}
+  azure_openai_api_credentials: ${{ env.AZURE_OPENAI_API_CREDENTIALS }}
+```
+
+### `lang`
+
+**Type**: `string`  
+**Default**: `fr`
+
+A list of ISO-codes of the target languages separated by colon (`,`) to which the documentation should be translated to from the [source language](#source).
+See a list of all supported languages [in the `models.mts` file in the repository](https://github.com/pelikhan/action-continuous-translation/blob/main/genaisrc/src/models.mts).
+
+### `source`
+
+**Type**: `string`  
+**Default**: `en`
+
+The ISO-code of the source language the main content is written in.
+
+### `files`
+
+**Type**: `string`  
+**Default**: `README.md`
+
+A list of files to process separated by colons.
+
+### `instructions`
+
+**Type**: `string`
+
+Extra instructions for the LLM to use when translating.
+
+### `instructions_file`
+
+**Type**: `string`
+
+Path to a file containing extra instructions for the LLM to use when translating.
+
+### `starlight_dir`
+
+**Type**: `string`
+
+Root folder of the [Astro Starlight](/action-continuous-translation/reference/astro-starlight/) documentation.
+Must be defined if the [`starlight_base` option](#starlight_base) is defined.
+
+### `starlight_base`
+
+**Type**: `string`
+
+Base alias for the [Astro Starlight](/action-continuous-translation/reference/astro-starlight/) documentation.
+This is used to patch links in translations.
+Must be defined if the [`starlight_dir` option](#starlight_dir) is defined.
+There is currently no support for [no base option](https://docs.astro.build/en/reference/configuration-reference/#base).
+
+### `force`
+
+**Type**: `boolean`  
+**Default**: `false`
+
+Force translation even if the file has already been translated.
+
+### `debug`
+
+**Type**: `boolean`  
+**Default**: `false`
+
+Enable debug logging.
+Read further details under [the GenAIScript Logging docs](https://microsoft.github.io/genaiscript/reference/scripts/logging/).
+
+### `github_token`
+
+**Type**: `string` (secret recommended)  
+**Default**: `${{ secrets.GITHUB_TOKEN }}`
+
+Your [GitHub token](https://github.com/settings/tokens) with at least `models: read` permission.
+Read further details under [the GenAIScript GitHub Models Permissions docs](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
+
+### `openai_api_key`
+
+**Type**: `string` (secret recommended)  
+**Default**: `${{ secrets.OPENAI_API_KEY }}`
+
+Your OpenAI API key.
+Read more [here](https://help.openai.com/en/articles/4936850-where-do-i-find-my-openai-api-key).
+
+### `openai_api_base`
+
+**Type**: `string` (environment variable recommended)  
+**Default**: `${{ env.OPENAI_API_BASE }}`
+
+The OpenAI API base URL.
+
+### `azure_openai_api_endpoint`
+
+**Type**: `string` (environment variable recommended)  
+**Default**: `${{ env.AZURE_OPENAI_API_ENDPOINT }}`
+
+The Azure OpenAI endpoint.
+To find this endpoint, go to you Azure Portal, open your Azure OpenAI resource.
+Find Keys and Endpoints and finally copy the Endpoint.
+
+### `azure_openai_api_key`
+
+**Type**: `string` (secret recommended)  
+**Default**: `${{ secrets.AZURE_OPENAI_API_KEY }}`
+
+The Azure OpenAI API key.
+
+:::note
+You do NOT need this if you are using Microsoft Entra ID.
+:::
+
+### `azure_openai_subscription_id`
+
+**Type**: `string` (environment variable recommended)  
+**Default**: `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}`
+
+The Azure OpenAI subscription ID to list available deployments.
+
+:::note
+You ONLY need this if you are using Microsoft Entra ID.
+:::
+
+### `azure_openai_api_version`
+
+**Type**: `string` (environment variable recommended)  
+**Default**: `${{ env.AZURE_OPENAI_API_VERSION }}`
+
+The Azure OpenAI API version.
+
+### `azure_openai_api_credentials`
+
+**Type**: `string` (environment variable recommended)  
+**Default**: `${{ env.AZURE_OPENAI_API_CREDENTIALS }}`
+
+The Azure OpenAI API credentials type.
+Leave this as `'default'` unless you have a special Azure setup.
