@@ -9,7 +9,6 @@ The custom action uses [GitHub Models](https://github.com/models) to translate m
 It is designed to be used in a [GitHub Actions](https://docs.github.com/en/actions) workflow to automatically translate documentation files when they are updated.
 
 ```yaml title=".github/workflows/ct.yml"
----
 - uses: pelikhan/action-continuous-translation@v0
   with:
     github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -60,7 +59,100 @@ jobs:
       # commit the generated files
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          file_pattern: "translations/*.json **.md* translations/*.json"
+          file_pattern: "**.md* translations/*.json"
           commit_message: "[cai] translated docs"
           commit_user_name: "genaiscript"
 ```
+
+## Parameters
+
+The `pelikhan/action-continuous-translation` GitHub action supports the following parameters.
+All parameters are optional.
+The default values are shown in the reference below.
+
+:::caution
+This action is currently work in progress. Parameters could change any time!
+:::
+
+```yaml
+with:
+  lang: fr
+  source: en
+  files: README.md
+  instructions:
+  instructions_file:
+  starlight_dir:
+  starlight_base:
+  force: false
+  debug: false
+  github_token: ${{ secrets.GITHUB_TOKEN }}
+  openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+  openai_api_base: ${{ env.OPENAI_API_BASE }}
+  azure_openai_api_endpoint: ${{ env.AZURE_OPENAI_API_ENDPOINT }}
+  azure_openai_api_key: ${{ secrets.AZURE_OPENAI_API_KEY }}
+  azure_openai_subscription_id: ${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}
+  azure_openai_api_version: ${{ env.AZURE_OPENAI_API_VERSION }}
+  azure_openai_api_credentials: ${{ env.AZURE_OPENAI_API_CREDENTIALS }}
+```
+
+### `lang`
+
+**Type**: `string`  
+**Default**: `fr`
+
+A list of ISO-codes of the target languages separated by colon (`,`) to which the documentation should be translated to from the [source language](#source).
+See a list of all supported languages [in the `models.mts` file in the repository](https://github.com/pelikhan/action-continuous-translation/blob/main/genaisrc/src/models.mts).
+
+### `source`
+
+**Type**: `string`  
+**Default**: `en`
+
+The ISO-code of the source language the main content is written in.
+
+### `files`
+
+**Type**: `string`  
+**Default**: `README.md`
+
+A list of files to process separated by colons.
+
+### `instructions`
+
+**Type**: `string`
+
+Extra instructions for the LLM to use when translating.
+
+### `instructions_file`
+
+**Type**: `string`
+
+Path to a file containing extra instructions for the LLM to use when translating.
+
+### `starlight_dir`
+
+**Type**: `string`  
+**Default**: `en`
+
+The source language the main content is written in.
+
+### `starlight_base`
+
+**Type**: `string`  
+**Default**: `en`
+
+The source language the main content is written in.
+
+### `force`
+
+**Type**: `string`  
+**Default**: `en`
+
+The source language the main content is written in.
+
+### `debug`
+
+**Type**: `string`  
+**Default**: `en`
+
+The source language the main content is written in.

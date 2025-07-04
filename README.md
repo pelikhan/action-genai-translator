@@ -24,7 +24,7 @@ This action uses [GenAIScript](https://microsoft.github.io/genaiscript/) to prog
 
 - `lang`: The iso-code target language for translation. (default: `fr`)
 - `source`: The iso-code source language for translation. (default: `en`)
-- `files`: Files to process, separated by semi columns. Default is `README.md`.
+- `files`: Files to process, separated by semi colons. Default is `README.md`.
 - `instructions`: Extra instructions for the LLM to use when translating.
 - `instructions_file`: Path to a file containing extra instructions for the LLM to use when translating.
 - `starlight_dir`: root folder of the Astro Starlight documentation.
