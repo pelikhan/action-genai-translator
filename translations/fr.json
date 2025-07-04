@@ -696,5 +696,13 @@
   "### LLM configuration\n": "Configuration du LLM",
   "## Astro Starlight\n": "Astro Starlight",
   "The plugin supports translations Astro Starlight markdown or MDX files\nfor a sit.4059B4EF28EB66C2B0F9": "Le plugin prend en charge la traduction de fichiers markdown ou MDX Astro Starlight pour un site utilisant une locale par défaut **racine** et un alias de **base** pour la documentation.",
-  "Configure the `starlight_dir` and `starlight_base` inputs to point to the root f.CE03A728B62796736629": "Configurez les paramètres `starlight_dir` et `starlight_base` pour pointer respectivement vers le dossier racine de votre documentation Astro Starlight et vers l'alias de base de la documentation."
+  "Configure the `starlight_dir` and `starlight_base` inputs to point to the root f.CE03A728B62796736629": "Configurez les paramètres `starlight_dir` et `starlight_base` pour pointer respectivement vers le dossier racine de votre documentation Astro Starlight et vers l'alias de base de la documentation.",
+  "Diagnostics\n": "Diagnostics",
+  "LLM configuration\n": "Configuration LLM",
+  "Astro Starlight\n": "Astro Starlight",
+  "The plugin supports translations Astro Starlight markdown or MDX files\nfor a sit.6404C9BB2C051085BD7A": "Le plugin prend en charge la traduction des fichiers markdown ou MDX Astro Starlight\npour un site utilisant une ",
+  "rooted\n": "ancrée",
+  " default locale and a \n": "locale par défaut et un ",
+  "base\n": "préfixe",
+  "Configure the \n": "Configurez les entrées `starlight_dir` et `starlight_base` pour pointer respectivement vers le dossier racine de votre documentation Astro Starlight et l’alias de base pour la documentation. "
 }
