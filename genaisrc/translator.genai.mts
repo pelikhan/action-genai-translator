@@ -65,11 +65,7 @@ const nodeTypes = ["text", "paragraph", "heading", "yaml"];
 const MARKER_START = "┌";
 const MARKER_END = "└";
 type NodeType = Text | Paragraph | Heading | Yaml;
-const STARLIGHT_FRONTMATTER_STRINGS = [
-  "excerpt",
-  "title",
-  "description"
-];
+const STARLIGHT_FRONTMATTER_STRINGS = ["excerpt", "title", "description"];
 const langs = {
   fr: "French",
   es: "Spanish",
@@ -151,11 +147,11 @@ export default async function main() {
     ? new RegExp(`^/${starlightBase}/`)
     : undefined;
 
-  const tos = vars.lang
+  const langs = vars.lang
     .split(",")
     .map((s) => s.trim())
     .filter(Boolean);
-  dbg(`tos: %o`, tos);
+  output.item(langs.join(", "));
   const ignorer = await parsers.ignore(".ctignore");
   dbg(`ignorer: %s`, ignorer ? "loaded" : "no .ctignore found");
   dbg(
@@ -171,7 +167,7 @@ export default async function main() {
 
   files.forEach(({ filename }) => output.item(filename));
 
-  for (const to of tos) {
+  for (const to of langs) {
     let lang = langs[to];
     if (!lang) {
       const res =
