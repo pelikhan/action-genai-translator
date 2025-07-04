@@ -87,3 +87,6 @@ runs:
 outputs:
   text:
     description: The generated text output.
+branding:
+  color: yellow
+  icon: globe

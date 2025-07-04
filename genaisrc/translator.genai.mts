@@ -24,6 +24,10 @@ script({
   description:
     "This action uses GitHub Models and remark to incrementally translate markdown documents in your repository.",
   accept: ".md,.mdx",
+  branding: {
+    color: "yellow",
+    icon: "globe",
+  },
   files: ["README.md"],
   parameters: {
     lang: {
