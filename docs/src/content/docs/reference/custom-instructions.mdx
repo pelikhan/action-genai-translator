@@ -1,0 +1,26 @@
+---
+title: Custom Instructions
+description: Custom instructions for the translation
+sidebar:
+    order: 10
+---
+
+You can inject custom prompting instructions for the translation task.
+This can be used to insert additional instructions, glossary or other guidance to improve
+the overall translation quality.
+
+- inline instructions
+
+```yaml title=".github/workflows/ct.yml" "instructions: Use a casual tone."
+uses: pelikhan/action-continuous-translation@v0
+with:
+  instructions: Use a casual tone.
+```
+
+- instructions from a file
+
+```yaml title=".github/workflows/ct.yml" "instructions_file: ./instructions.txt"
+uses: pelikhan/action-continuous-translation@v0
+with:
+  instructions_file: ./instructions.txt
+```
