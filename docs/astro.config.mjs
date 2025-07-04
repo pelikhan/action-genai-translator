@@ -30,6 +30,10 @@ export default defineConfig({
           label: "Spanish",
           lang: "es",
         },
+        "pt-BR": {
+          label: "Portuguese (Brazil)",
+          lang: "pt-BR",
+        },
       },
       sidebar: [
         {

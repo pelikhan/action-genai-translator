@@ -71,6 +71,7 @@ const langs = {
   de: "German",
   it: "Italian",
   pt: "Portuguese",
+  "pt-BR": "Brazilian Portuguese",
   ru: "Russian",
   zh: "Chinese",
   ja: "Japanese",
