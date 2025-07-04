@@ -10,6 +10,7 @@
     "@types/mdast": "^4.0.4",
     "es-toolkit": "^1.39.6",
     "genaiscript": "2.2.7",
+    "mdast-util-mdx": "^3.0.0",
     "mdast-util-mdx-jsx": "^3.2.0",
     "mdast-util-mdxjs-esm": "^2.0.1"
   },

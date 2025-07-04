@@ -1,6 +1,7 @@
 import { hash } from "crypto";
 import { classify } from "@genaiscript/runtime";
 import { mdast } from "@genaiscript/plugin-mdast";
+import "mdast-util-mdx";
 import "mdast-util-mdxjs-esm";
 import "mdast-util-mdx-jsx";
 import type {
@@ -16,7 +17,7 @@ import { URL } from "url";
 import { xor } from "es-toolkit";
 import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx";
 import type { FrontmatterWithTranslator } from "./src/types.mts";
-import { FrontmatterWithTranslatorSchema } from "./src/types.mts";
+import { FrontmatterWithTranslatorSchema } from "./src/schemas.mts";
 import { DEFAULT_MODELS, LANGS } from "./src/models.mts";
 
 script({
