@@ -28,6 +28,10 @@ export default defineConfig({
           label: "English",
           lang: "en",
         },
+        ar: {
+          label: "Arabic",
+          lang: "ar",
+        },
         fr: {
           label: "French",
           lang: "fr",
