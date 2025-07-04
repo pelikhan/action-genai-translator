@@ -678,10 +678,11 @@ export default async function main() {
         output.itemValue(`unresolved translations`, unresolvedTranslations);
         const nTranslations = Object.keys(llmHashes).length;
         if (
+          unresolvedTranslations > 5 &&
           (nTranslations - unresolvedTranslations) / nTranslations <
-          minTranslationsThreshold
+            minTranslationsThreshold
         ) {
-          output.warn(`not enough translations, skipping file.`);
+          output.warn(`not enough translations, try to translate more.`);
           continue;
         }
 
