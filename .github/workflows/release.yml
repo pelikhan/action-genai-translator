@@ -42,7 +42,6 @@ jobs:
     permissions:
       contents: write
       pull-requests: read
-    name: Test Result Translation
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
