@@ -1,6 +1,7 @@
 # Traduction Continue
 
-Cette action permet de traduire de manière incrémentale les documents markdown en utilisant les [Modèles GitHub](https://github.com/models).
+Cette action utilise une traduction incrémentielle de documents Markdown grâce aux [Modèles GitHub](https://github.com/models).
+Prise en charge intégrée pour [Astro Starlight](https://starlight.astro.build/) !
 
 * [Documentation](https://pelikhan.github.io/action-continuous-translation/)
 * [Article de blog](https://microsoft.github.io/genaiscript/blog/continuous-translations/)
@@ -8,7 +9,7 @@ Cette action permet de traduire de manière incrémentale les documents markdown
 * [Espagnol](./README.es.md)
 * [Arabe](./README.ar.md)
 
-## Comment ça fonctionne ?
+## Comment cela fonctionne ?
 
 Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pour analyser et traduire automatiquement les documents markdown. Le processus de traduction fonctionne ainsi :
 
@@ -23,13 +24,13 @@ Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pou
 
 * `lang` : Code ISO de la langue cible pour la traduction. (par défaut : `fr`)
 * `source`: Le code ISO de la langue source pour la traduction. (par défaut : `en`)
-* `files` : Fichiers à traiter, séparés par des points-virgules. Par défaut : `README.md`.
+* `files` : Fichiers à traiter, séparés par des points-virgules. Par défaut, `README.md`.
 * `instructions` : Instructions supplémentaires à utiliser par le LLM lors de la traduction.
 * `instructions_file` : Chemin d'accès à un fichier contenant des instructions supplémentaires à utiliser par le LLM lors de la traduction.
 * `starlight_dir` : dossier racine de la documentation Astro Starlight.
 * `starlight_base` : alias de base pour la documentation Starlight.
 
-## Diagnostics
+### Diagnostic
 
 * `force` : Force la traduction même si le fichier a déjà été traduit.
 * `debug` : Active la journalisation de debug (<https://microsoft.github.io/genaiscript/reference/scripts/logging/>).
@@ -138,16 +139,10 @@ Pour vérifier les types des scripts, exécutez :
 npm run typecheck
 ```
 
-Pour construire l’image Docker localement, exécutez :
+Pour tester le traducteur, exécutez :
 
 ```bash
-npm run docker:build
-```
-
-Pour exécuter l’action localement dans Docker (après l’avoir construite), utilisez :
-
-```bash
-npm run docker:start
+npm run test:genai
 ```
 
 ## Mise à niveau
@@ -156,12 +151,4 @@ La version de GenAIScript est fixée dans le fichier `package.json`. Pour la met
 
 ```bash
 npm run upgrade
-```
-
-## Publication
-
-Pour publier une nouvelle version de cette action, exécutez le script de publication sur un dossier de travail propre.
-
-```bash
-npm run release
 ```

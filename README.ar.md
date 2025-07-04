@@ -1,13 +1,15 @@
 # الترجمة المستمرة
 
-يستخدم هذا الإجراء ترجمة مستندات Markdown تدريجيًا باستخدام [نماذج GitHub](https://github.com/models).
+تستخدم هذه العملية ترجمة تدريجية لوثائق ماركداون باستخدام [نماذج GitHub](https://github.com/models).
+دعم مدمج لـ [Astro Starlight](https://starlight.astro.build/)!
 
 * [التوثيق](https://pelikhan.github.io/action-continuous-translation/)
 * [مدونة](https://microsoft.github.io/genaiscript/blog/continuous-translations/)
 * [الفرنسية](./README.fr.md)
 * [الإسبانية](./README.es.md)
+* [العربية](./README.ar.md)
 
-## كيف يعمل؟
+## كيف تعمل؟
 
 يستخدم هذا الإجراء [GenAIScript](https://microsoft.github.io/genaiscript/) لتحليل وترجمة مستندات Markdown برمجيًا. يعمل عملية الترجمة كما يلي:
 
@@ -21,13 +23,14 @@
 ## المدخلات
 
 * `lang`: رمز ISO للغة الهدف للترجمة. (الافتراضي: `fr`)
-* `files`: الملفات التي سيتم معالجتها، مفصولة بفواصل منقوطة. الافتراضي هو `README.md`.
+* `source`: رمز ISO للغة المصدر للترجمة. (الافتراضي: `en`)
+* `files`: الملفات التي سيتم معالجتها، مفصولة بفاصلة منقوطة. الافتراضي هو `README.md`.
 * `instructions`: تعليمات إضافية لـ LLM لاستخدامها أثناء الترجمة.
 * `instructions_file`: مسار إلى ملف يحتوي على تعليمات إضافية لـ LLM لاستخدامها أثناء الترجمة.
 * `starlight_dir`: مجلد الجذر لتوثيق Astro Starlight.
 * `starlight_base`: الاسم المستعار الأساسي لتوثيق Starlight.
 
-## التشخيصات
+### التشخيصات
 
 * `force`: فرض الترجمة حتى لو تم ترجمة الملف بالفعل.
 * `debug`: تمكين تسجيل التصحيح (<https://microsoft.github.io/genaiscript/reference/scripts/logging/>).
@@ -107,12 +110,6 @@ jobs:
           commit_user_name: "genaiscript"
 ```
 
-## Astro Starlight
-
-يدعم المكون الإضافي ترجمة ملفات Markdown أو MDX الخاصة بـ Astro Starlight لموقع يستخدم لغة افتراضية **مرتبطة** واسم مستعار **أساسي** للتوثيق.
-
-قم بتكوين مدخلات `starlight_dir` و`starlight_base` للإشارة إلى مجلد الجذر لتوثيق Astro Starlight والاسم المستعار الأساسي للتوثيق، على التوالي.
-
 ## التطوير
 
 تم إنشاء هذا الإجراء تلقائيًا بواسطة GenAIScript من بيانات التعريف الخاصة بالبرنامج النصي. نوصي بتحديث بيانات التعريف الخاصة بالبرنامج النصي بدلًا من تحرير ملفات الإجراء مباشرة.
@@ -141,16 +138,10 @@ npm run lint
 npm run typecheck
 ```
 
-لبناء صورة Docker محليًا، قم بتشغيل:
+لاختبار المترجم، قم بتشغيل:
 
 ```bash
-npm run docker:build
-```
-
-لتشغيل الإجراء محليًا في Docker (قم ببنائه أولاً)، استخدم:
-
-```bash
-npm run docker:start
+npm run test:genai
 ```
 
 ## التحديث
@@ -159,12 +150,4 @@ npm run docker:start
 
 ```bash
 npm run upgrade
-```
-
-## الإصدار
-
-لإصدار نسخة جديدة من هذا الإجراء، قم بتشغيل سكريبت الإصدار على دليل عمل نظيف.
-
-```bash
-npm run release
 ```

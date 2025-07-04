@@ -36,7 +36,41 @@ Você pode informar aos seus usuários que a tradução foi gerada pela GenAI
 adicionando um aviso no título. No momento, o Astro Starlight não suporta um recurso embutido para adicionar avisos,
 portanto, é necessário substituir alguns componentes.
 
-* Substitua os componentes `PageTitle` e `Hero` no seu arquivo `astro.config.mjs`:
-* Adicione os componentes no diretório `src/components` a partir de `docs/src/components` deste repositório.
+* [Substitua](https://starlight.astro.build/guides/overriding-components/#how-to-override) os componentes `PageTitle` e `Hero` no seu arquivo `astro.config.mjs`:
+
+  ```ts title="astro.config.mjs"
+  export default defineConfig({
+    integrations: [
+      starlight({
+        components: {
+          PageTitle: "./src/components/PageTitle.astro",
+          Hero: "./src/components/Hero.astro",
+        },
+      }),
+    ],
+  });
+  ```
+
+* Adicione os componentes no seu diretório `src/components` [a partir do `docs/src/components` neste repositório](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
 
 Sinta-se à vontade para modificar a lógica em `AIGeneratedNotice.astro` para atender às suas necessidades.
+
+## Validador de Links do Astro
+
+Se você usar o [Validador de Links do Astro](https://github.com/HiDeoo/starlight-links-validator), certifique-se de desativar a opção `errorOnRelativeLinks` no seu arquivo `astro.config.mjs`, já que os links localizados são relativos ao locale raiz.
+
+```js title="astro.config.mjs" "errorOnRelativeLinks: false"
+import starlightLinksValidator from "starlight-links-validator";
+
+export default defineConfig({
+  integrations: [
+    starlight({
+      plugins: [
+        starlightLinksValidator({
+          errorOnRelativeLinks: false,
+        }),
+      ],
+    }),
+  ],
+});
+```

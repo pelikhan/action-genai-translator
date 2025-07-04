@@ -1,6 +1,7 @@
 # Traducción continua
 
-Esta acción utiliza la traducción incremental de documentos markdown usando [GitHub Models](https://github.com/models).
+Esta acción traduce progresivamente documentos Markdown utilizando [GitHub Models](https://github.com/models).
+¡Soporte incorporado para [Astro Starlight](https://starlight.astro.build/)!
 
 * [Documentación](https://pelikhan.github.io/action-continuous-translation/)
 * [Entrada de blog](https://microsoft.github.io/genaiscript/blog/continuous-translations/)
@@ -22,14 +23,14 @@ Esta acción utiliza [GenAIScript](https://microsoft.github.io/genaiscript/) par
 ## Entradas
 
 * `lang`: Código ISO del idioma de destino para la traducción. (por defecto: `fr`)
-* `source`: The iso-code source language for translation. (default: `en`)
-* `files`: Archivos a procesar, separados por punto y coma. Por defecto es `README.md`.
+* `source`: El código ISO del idioma de origen para la traducción. (por defecto: `en`)
+* `files`: Archivos a procesar, separados por punto y coma. El valor predeterminado es `README.md`.
 * `instructions`: Instrucciones adicionales para que el LLM las utilice durante la traducción.
 * `instructions_file`: Ruta a un archivo que contiene instrucciones adicionales para que el LLM las utilice durante la traducción.
 * `starlight_dir`: Carpeta raíz de la documentación de Astro Starlight.
 * `starlight_base`: Alias base para la documentación de Starlight.
 
-## Diagnóstico
+### Diagnósticos
 
 * `force`: Forzar la traducción incluso si el archivo ya ha sido traducido.
 * `debug`: Habilitar el registro de depuración (<https://microsoft.github.io/genaiscript/reference/scripts/logging/>).
@@ -138,16 +139,10 @@ Para comprobar los tipos de los scripts, ejecuta:
 npm run typecheck
 ```
 
-Para construir la imagen Docker localmente, ejecuta:
+Para probar el traductor, ejecuta:
 
 ```bash
-npm run docker:build
-```
-
-Para ejecutar la acción localmente en Docker (constrúyela primero), usa:
-
-```bash
-npm run docker:start
+npm run test:genai
 ```
 
 ## Actualización
@@ -156,12 +151,4 @@ La versión de GenAIScript está fijada en el archivo `package.json`. Para actua
 
 ```bash
 npm run upgrade
-```
-
-## Lanzamiento
-
-Para lanzar una nueva versión de esta acción, ejecuta el script de lanzamiento en un directorio limpio.
-
-```bash
-npm run release
 ```

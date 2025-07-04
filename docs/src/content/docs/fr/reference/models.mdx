@@ -1,0 +1,85 @@
+---
+title: Modèles
+description: Configuration LLM
+sidebar:
+  order: 31
+
+---
+
+L'action GitHub `pelikhan/action-continuous-translation` prend en charge de nombreux fournisseurs de LLM via [GenAIScript](https://microsoft.github.io/genaiscript/configuration/).
+
+```yaml
+with:
+  github_token: ${{ secrets.GITHUB_TOKEN }}
+  openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+  openai_api_base: ${{ env.OPENAI_API_BASE }}
+  azure_openai_api_endpoint: ${{ env.AZURE_OPENAI_API_ENDPOINT }}
+  azure_openai_api_key: ${{ secrets.AZURE_OPENAI_API_KEY }}
+  azure_openai_subscription_id: ${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}
+  azure_openai_api_version: ${{ env.AZURE_OPENAI_API_VERSION }}
+  azure_openai_api_credentials: ${{ env.AZURE_OPENAI_API_CREDENTIALS }}
+```
+
+### `github_token`
+
+**Type** : `string` (secret recommandé)\
+**Par défaut** : `${{ secrets.GITHUB_TOKEN }}`
+
+Votre [Jeton GitHub](https://github.com/settings/tokens) avec au moins la permission `models: read`. Consultez plus de détails dans [les documents sur les Permissions des Modèles GitHub de GenAIScript](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
+
+### `openai_api_key`
+
+**Type** : `string` (secret recommandé)\
+**Par défaut** : `${{ secrets.OPENAI_API_KEY }}`
+
+Votre clé API OpenAI. En savoir plus [ici](https://help.openai.com/en/articles/4936850-where-do-i-find-my-openai-api-key).
+
+### `openai_api_base`
+
+**Type** : `string` (variable d'environnement recommandée)\
+**Par défaut** : `${{ env.OPENAI_API_BASE }}`
+
+L'URL de base de l'API OpenAI.
+
+### `azure_openai_api_endpoint`
+
+**Type** : `string` (variable d'environnement recommandée)\
+**Par défaut** : `${{ env.AZURE_OPENAI_API_ENDPOINT }}`
+
+Le point d'accès Azure OpenAI. Pour trouver ce point d'accès, accédez à votre portail Azure, ouvrez votre ressource Azure OpenAI. Trouvez les Clés et les Points d'accès, et copiez enfin le point d'accès.
+
+### `azure_openai_api_key`
+
+**Type** : `string` (secret recommandé)\
+**Par défaut** : `${{ secrets.AZURE_OPENAI_API_KEY }}`
+
+La clé API Azure OpenAI.
+
+:::note
+Vous n'avez PAS besoin de ceci si vous utilisez Microsoft Entra ID.
+:::
+
+### `azure_openai_subscription_id`
+
+**Type** : `string` (variable d'environnement recommandée)\
+**Par défaut** : `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}`
+
+L'ID d'abonnement Azure OpenAI pour répertorier les déploiements disponibles.
+
+:::note
+Vous avez UNIQUEMENT besoin de ceci si vous utilisez Microsoft Entra ID.
+:::
+
+### `azure_openai_api_version`
+
+**Type** : `string` (variable d'environnement recommandée)\
+**Par défaut** : `${{ env.AZURE_OPENAI_API_VERSION }}`
+
+La version de l'API Azure OpenAI.
+
+### `azure_openai_api_credentials`
+
+**Type** : `string` (variable d'environnement recommandée)\
+**Par défaut** : `${{ env.AZURE_OPENAI_API_CREDENTIALS }}`
+
+Le type d'identifiants API Azure OpenAI. Laissez cette valeur à `'default'` sauf si vous avez une configuration Azure spéciale.

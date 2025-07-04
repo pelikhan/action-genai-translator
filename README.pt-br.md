@@ -1,6 +1,6 @@
 # Tradução Contínua
 
-Esta ação usa a tradução incremental de documentos Markdown usando [GitHub Models](https://github.com/models).
+Esta ação usa tradução incremental em documentos Markdown utilizando [Modelos do GitHub](https://github.com/models). Suporte nativo para [Astro Starlight](https://starlight.astro.build/)!
 
 * [Documentação](https://pelikhan.github.io/action-continuous-translation/)
 * [Post no Blog](https://microsoft.github.io/genaiscript/blog/continuous-translations/)
@@ -29,7 +29,7 @@ Esta ação usa o [GenAIScript](https://microsoft.github.io/genaiscript/) para a
 * `starlight_dir`: Pasta raiz da documentação do Astro Starlight.
 * `starlight_base`: Alias base para a documentação do Starlight.
 
-## Diagnósticos
+### Diagnósticos
 
 * `force`: Forçar a tradução, mesmo que o arquivo já tenha sido traduzido.
 * `debug`: Habilitar logging de depuração (<https://microsoft.github.io/genaiscript/reference/scripts/logging/>).
@@ -138,16 +138,10 @@ Para verificar o tipo dos scripts, execute:
 npm run typecheck
 ```
 
-Para construir a imagem Docker localmente, execute:
+Para testar o tradutor, execute:
 
 ```bash
-npm run docker:build
-```
-
-Para executar a ação localmente no Docker (primeiro construa), use:
-
-```bash
-npm run docker:start
+npm run test:genai
 ```
 
 ## Atualizar
@@ -156,12 +150,4 @@ A versão do GenAIScript está fixada no arquivo `package.json`. Para atualizá-
 
 ```bash
 npm run upgrade
-```
-
-## Lançamento
-
-Para lançar uma nova versão desta ação, execute o script de lançamento em um diretório de trabalho limpo.
-
-```bash
-npm run release
 ```

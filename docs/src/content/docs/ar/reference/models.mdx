@@ -1,0 +1,85 @@
+---
+title: النماذج
+description: إعدادات LLM
+sidebar:
+  order: 31
+
+---
+
+إجراء GitHub `pelikhan/action-continuous-translation` يدعم العديد من موفري LLM المختلفين عبر [GenAIScript](https://microsoft.github.io/genaiscript/configuration/).
+
+```yaml
+with:
+  github_token: ${{ secrets.GITHUB_TOKEN }}
+  openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+  openai_api_base: ${{ env.OPENAI_API_BASE }}
+  azure_openai_api_endpoint: ${{ env.AZURE_OPENAI_API_ENDPOINT }}
+  azure_openai_api_key: ${{ secrets.AZURE_OPENAI_API_KEY }}
+  azure_openai_subscription_id: ${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}
+  azure_openai_api_version: ${{ env.AZURE_OPENAI_API_VERSION }}
+  azure_openai_api_credentials: ${{ env.AZURE_OPENAI_API_CREDENTIALS }}
+```
+
+### `github_token`
+
+**النوع**: `string` (موصى باستخدامه كسر)\
+**القيمة الافتراضية**: `${{ secrets.GITHUB_TOKEN }}`
+
+رمز GitHub الخاص بك [GitHub token](https://github.com/settings/tokens) مع صلاحية `models: read` على الأقل. اقرأ المزيد من التفاصيل في [وثائق أذونات نماذج GenAIScript لـ GitHub](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
+
+### `openai_api_key`
+
+**النوع**: `string` (موصى باستخدامه كسر)\
+**القيمة الافتراضية**: `${{ secrets.OPENAI_API_KEY }}`
+
+مفتاح OpenAI API الخاص بك. اقرأ المزيد [هنا](https://help.openai.com/en/articles/4936850-where-do-i-find-my-openai-api-key).
+
+### `openai_api_base`
+
+**النوع**: `string` (موصى باستخدامه كمتغير بيئي)\
+**القيمة الافتراضية**: `${{ env.OPENAI_API_BASE }}`
+
+عنوان URL الأساسي لـ OpenAI API.
+
+### `azure_openai_api_endpoint`
+
+**النوع**: `string` (موصى باستخدامه كمتغير بيئي)\
+**القيمة الافتراضية**: `${{ env.AZURE_OPENAI_API_ENDPOINT }}`
+
+نقطة النهاية لـ Azure OpenAI. للعثور على هذه النقطة، اذهب إلى بوابة Azure الخاصة بك، وافتح مورد Azure OpenAI الخاص بك. ابحث عن المفاتيح ونقاط النهاية وأخيرًا انسخ نقطة النهاية.
+
+### `azure_openai_api_key`
+
+**النوع**: `string` (موصى باستخدامه كسر)\
+**القيمة الافتراضية**: `${{ secrets.AZURE_OPENAI_API_KEY }}`
+
+مفتاح Azure OpenAI API.
+
+:::note
+لا تحتاج إلى هذا إذا كنت تستخدم Microsoft Entra ID.
+:::
+
+### `azure_openai_subscription_id`
+
+**النوع**: `string` (موصى باستخدامه كمتغير بيئي)\
+**القيمة الافتراضية**: `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}`
+
+معرف اشتراك Azure OpenAI لتحديد عمليات النشر المتوفرة.
+
+:::note
+تحتاج فقط إلى هذا إذا كنت تستخدم Microsoft Entra ID.
+:::
+
+### `azure_openai_api_version`
+
+**النوع**: `string` (موصى باستخدامه كمتغير بيئي)\
+**القيمة الافتراضية**: `${{ env.AZURE_OPENAI_API_VERSION }}`
+
+إصدار Azure OpenAI API.
+
+### `azure_openai_api_credentials`
+
+**النوع**: `string` (موصى باستخدامه كمتغير بيئي)\
+**القيمة الافتراضية**: `${{ env.AZURE_OPENAI_API_CREDENTIALS }}`
+
+نوع بيانات اعتماد Azure OpenAI API. اترك هذا كـ `'default'` إلا إذا كان لديك إعداد Azure خاص.

@@ -10,7 +10,6 @@ L'action personnalisée utilise [GitHub Models](https://github.com/models) pour 
 Elle est conçue pour être utilisée dans un flux de travail [GitHub Actions](https://docs.github.com/en/actions) afin de traduire automatiquement les fichiers de documentation lorsqu'ils sont mis à jour.
 
 ```yaml title=".github/workflows/ct.yml"
----
 - uses: pelikhan/action-continuous-translation@v0
   with:
     github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -61,7 +60,108 @@ jobs:
       # commit the generated files
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          file_pattern: "translations/*.json **.md* translations/*.json"
+          file_pattern: "**.md* translations/*.json"
           commit_message: "[cai] translated docs"
           commit_user_name: "genaiscript"
 ```
+
+## Paramètres
+
+L'action GitHub `pelikhan/action-continuous-translation` prend en charge les paramètres suivants.
+Tous les paramètres sont optionnels.
+Les valeurs par défaut sont indiquées dans la référence ci-dessous.
+
+:::caution
+Cette action est actuellement en cours de développement. Les paramètres peuvent changer à tout moment !
+:::
+
+```yaml
+with:
+  lang: fr
+  source: en
+  files: README.md
+  instructions:
+  instructions_file:
+  starlight_dir:
+  starlight_base:
+  force: false
+  debug: false
+  github_token: ${{ secrets.GITHUB_TOKEN }}
+  ...
+```
+
+### `lang`
+
+**Type** : `string`\
+**Par défaut** : `fr`
+
+Une liste de codes ISO des langues cibles, séparés par des virgules (`,`), vers lesquelles la documentation doit être traduite à partir de la [langue source](#source).
+Voir la liste de toutes les langues prises en charge [dans le fichier `models.mts` du dépôt](https://github.com/pelikhan/action-continuous-translation/blob/main/genaisrc/src/models.mts).
+
+### `source`
+
+**Type** : `string`\
+**Par défaut** : `en`
+
+Le code ISO de la langue source dans laquelle le contenu principal est écrit.
+
+### `files`
+
+**Type** : `string`\
+**Par défaut** : `README.md`
+
+Une liste de fichiers à traiter, séparés par des virgules.
+
+### `instructions`
+
+**Type** : `string`
+
+Instructions supplémentaires pour que le LLM les utilise lors de la traduction.
+
+### `instructions_file`
+
+**Type** : `string`
+
+Chemin d’un fichier contenant des instructions supplémentaires pour que le LLM les utilise lors de la traduction.
+
+### `starlight_dir`
+
+**Type** : `string`
+
+Dossier racine de la documentation [Astro Starlight](../../reference/astro-starlight/).
+Doit être défini si l’option [`starlight_base`](#starlight_base) est définie.
+
+### `starlight_base`
+
+**Type** : `string`
+
+Alias de base pour la documentation [Astro Starlight](../../reference/astro-starlight/).
+Cela est utilisé pour corriger les liens dans les traductions.
+Doit être défini si l’option [`starlight_dir`](#starlight_dir) est définie.
+Il n'y a actuellement aucun support pour [l’option sans base](https://docs.astro.build/en/reference/configuration-reference/#base).
+
+### `force`
+
+**Type** : `boolean`\
+**Par défaut** : `false`
+
+Forcer la traduction même si le fichier a déjà été traduit.
+
+### `debug`
+
+**Type** : `boolean`\
+**Par défaut** : `false`
+
+Activer la journalisation de débogage.
+Lisez plus de détails dans [la documentation du journal GenAIScript](https://microsoft.github.io/genaiscript/reference/scripts/logging/).
+
+### `github_token`
+
+**Type** : `string` (secret recommandé)\
+**Par défaut** : `${{ secrets.GITHUB_TOKEN }}`
+
+Votre [Jeton GitHub](https://github.com/settings/tokens) avec au moins la permission `models: read`. Consultez plus de détails dans [les documents sur les Permissions des Modèles GitHub de GenAIScript](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
+
+### OpenAI, Azure OpenAI, ...
+
+Voir [Modèles](../../reference/models/) pour plus de détails sur d'autres fournisseurs comme OpenAI, Azure OpenAI, ...
