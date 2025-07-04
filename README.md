@@ -9,7 +9,7 @@ Builtin support for [Astro Starlight](https://starlight.astro.build/)!
 - [Spanish](./README.es.md)
 - [Arabic](./README.ar.md)
 
-## How it work?
+## How does it work?
 
 This action uses [GenAIScript](https://microsoft.github.io/genaiscript/) to programmatically analyze and translate markdown documents. The translation process works as follows:
 
@@ -30,7 +30,7 @@ This action uses [GenAIScript](https://microsoft.github.io/genaiscript/) to prog
 - `starlight_dir`: root folder of the Astro Starlight documentation.
 - `starlight_base`: base alias for the Starlight documentation.
 
-## Diagnostics
+### Diagnostics
 
 - `force`: Force translation even if the file has already been translated.
 - `debug`: Enable debug logging (https://microsoft.github.io/genaiscript/reference/scripts/logging/).
@@ -133,16 +133,10 @@ To typecheck the scripts, run:
 npm run typecheck
 ```
 
-To build the Docker image locally, run:
+To test the translator, run:
 
 ```bash
-npm run docker:build
-```
-
-To run the action locally in Docker (build it first), use:
-
-```bash
-npm run docker:start
+npm run test:genai
 ```
 
 ## Upgrade
@@ -151,12 +145,4 @@ The GenAIScript version is pinned in the `package.json` file. To upgrade it, run
 
 ```bash
 npm run upgrade
-```
-
-## Release
-
-To release a new version of this action, run the release script on a clean working directory.
-
-```bash
-npm run release
 ```
