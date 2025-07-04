@@ -11,6 +11,7 @@ export default defineConfig({
       plugins: [
         starlightLinksValidator({
           errorOnRelativeLinks: false,
+          errorOnInconsistentLocale: true,
         }),
       ],
       social: [

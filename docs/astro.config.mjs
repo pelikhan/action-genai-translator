@@ -12,6 +12,7 @@ export default defineConfig({
       plugins: [
         starlightLinksValidator({
           errorOnRelativeLinks: false,
+          errorOnInconsistentLocale: true,
         }),
       ],
       title: "Continuous Translation",
@@ -42,7 +43,7 @@ export default defineConfig({
         },
         "pt-br": {
           label: "Portuguese (Brazil)",
-          lang: "pt-br",
+          lang: "pt-BR",
         },
       },
       sidebar: [
@@ -54,7 +55,7 @@ export default defineConfig({
       components: {
         PageTitle: "./src/components/PageTitle.astro",
         Hero: "./src/components/Hero.astro",
-      }
+      },
     }),
   ],
 });

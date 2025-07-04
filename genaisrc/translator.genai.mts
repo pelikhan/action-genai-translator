@@ -60,7 +60,6 @@ script({
     starlightBase: {
       type: "string",
       description: "Base path for the Astro Starlight documentation.",
-      default: "",
     },
     force: {
       type: "boolean",
@@ -106,9 +105,12 @@ const hasMarker = (str: string): boolean => {
 export default async function main() {
   const { dbg, output, vars } = env;
   const dbgc = host.logger(`script:md`);
+  const dbgo = host.logger(`script:translated`);
   const dbgt = host.logger(`script:tree`);
   const dbge = host.logger(`script:text`);
   const dbgm = host.logger(`script:mdx`);
+  const dbga = host.logger(`script:translate`);
+  const dbgp = host.logger(`script:patch`);
   const parameters = vars as {
     lang?: string;
     source?: string;
@@ -231,7 +233,7 @@ export default async function main() {
             const relativeToOriginal = relative(translationDir, originalDir);
             let r = join(relativeToOriginal, fn);
             if (trailingSlash && !r.endsWith("/")) r += "/";
-            dbg(`patching %s -> %s`, fn, r);
+            dbgp(`patching %s -> %s`, fn, r);
             return r;
           }
           return fn;
@@ -274,7 +276,7 @@ export default async function main() {
         const nodes: Record<string, NodeType> = {};
         visit(root, nodeTypes, (node) => {
           const hash = hashNode(node);
-          dbg(`node: %s -> %s`, node.type, hash);
+          dbga(`node: %s -> %s`, node.type, hash);
           nodes[hash] = node as NodeType;
         });
 
@@ -289,7 +291,7 @@ export default async function main() {
           const nhash = hashNode(node);
           const translation = translationCache[nhash];
           if (translation) {
-            dbg(`translated: %s`, nhash);
+            dbga(`translated: %s`, nhash);
             Object.assign(node, translation);
           } else {
             // mark untranslated nodes with a unique identifier
@@ -298,7 +300,7 @@ export default async function main() {
                 !/\s*[.,:;<>\]\[{}\(\)…]+\s*/.test(node.value) &&
                 !isUri(node.value)
               ) {
-                dbg(`text node: %s`, nhash);
+                dbga(`text node: %s`, nhash);
                 // compress long hash into LLM friendly short hash
                 const llmHash = `T${Object.keys(llmHashes)
                   .length.toString()
@@ -308,7 +310,7 @@ export default async function main() {
                 node.value = `┌${llmHash}┐${node.value}└${llmHash}┘`;
               }
             } else if (node.type === "paragraph" || node.type === "heading") {
-              dbg(`paragraph/heading node: %s`, nhash);
+              dbga(`paragraph/heading node: %s`, nhash);
               const llmHash = `P${Object.keys(llmHashes)
                 .length.toString()
                 .padStart(3, "0")}`;
@@ -324,7 +326,7 @@ export default async function main() {
               });
               return SKIP; // don't process children of paragraphs
             } else if (node.type === "yaml") {
-              dbg(`yaml node: %s`, nhash);
+              dbga(`yaml node: %s`, nhash);
               const data = parsers.YAML(node.value);
               if (data) {
                 if (starlight) {
@@ -383,7 +385,7 @@ export default async function main() {
                 return SKIP;
               }
             } else {
-              dbg(`untranslated node type: %s`, node.type);
+              dbga(`untranslated node type: %s`, node.type);
             }
           }
         });
@@ -554,33 +556,35 @@ export default async function main() {
               if (starlight) {
                 if (data?.hero?.image?.file) {
                   data.hero.image.file = patchFn(data.hero.image.file);
-                  dbg(`yaml hero image: %s`, data.hero.image.file);
+                  dbgo(`yaml hero image: %s`, data.hero.image.file);
                 }
                 if (Array.isArray(data?.hero?.actions)) {
                   data.hero.actions.forEach((action) => {
                     if (typeof action.link === "string") {
-                      action.link = action.link.replace(
-                        starlightBaseRx,
-                        `${starlightBase}/${to.toLowerCase()}/`
+                      action.link = patchFn(
+                        action.link.replace(
+                          starlightBaseRx,
+                          `/${starlightBase || ""}/${to.toLowerCase()}/`
+                        )
                       );
-                      dbg(`yaml hero action link: %s`, action.link);
+                      dbgo(`yaml hero action link: %s`, action.link);
                     }
                     if (typeof action.text === "string") {
                       const nhash = hashNode(action.text);
                       const tr = translationCache[nhash];
-                      dbg(`yaml hero.action: %s -> %s`, nhash, tr);
+                      dbgo(`yaml hero.action: %s -> %s`, nhash, tr);
                       if (tr) action.text = tr;
                       else unresolvedTranslations++;
                     }
                     if (action?.image?.file) {
                       action.image.file = patchFn(action.image.file);
-                      dbg(`yaml hero action image: %s`, action.image.file);
+                      dbgo(`yaml hero action image: %s`, action.image.file);
                     }
                   });
                 }
                 if (data?.cover?.image) {
                   data.cover.image = patchFn(data.cover.image);
-                  dbg(`yaml cover image: %s`, data.cover.image);
+                  dbgo(`yaml cover image: %s`, data.cover.image);
                 }
               }
               if (data.hero && typeof data.hero.tagline === "string") {
@@ -594,7 +598,7 @@ export default async function main() {
               )) {
                 const nhash = hashNode(data[field]);
                 const tr = translationCache[nhash];
-                dbg(`yaml %s: %s -> %s`, field, nhash, tr);
+                dbgo(`yaml %s: %s -> %s`, field, nhash, tr);
                 if (tr) data[field] = tr;
                 else unresolvedTranslations++;
               }
@@ -606,10 +610,10 @@ export default async function main() {
             const translation = translationCache[hash];
             if (translation) {
               if (node.type === "text") {
-                dbg(`translated text: %s -> %s`, hash, translation);
+                dbgo(`%s -> %s`, hash, translation);
                 node.value = translation;
               } else if (node.type === "paragraph" || node.type === "heading") {
-                dbg(`translated %s: %s -> %s`, node.type, hash, translation);
+                dbgo(`%s: %s -> %s`, node.type, hash, translation);
                 try {
                   const newNodes = parse(translation)
                     .children as PhrasingContent[];
@@ -640,7 +644,7 @@ export default async function main() {
               const pp = patchFn(p);
               const r =
                 k === "}" ? `} from "${pp}";` : `import ${i} from "${pp}";`;
-              dbg(`mdxjsEsm import: %s -> %s`, m, r);
+              dbgo(`import: %s -> %s`, m, r);
               return r;
             });
             return SKIP;
@@ -657,7 +661,7 @@ export default async function main() {
               const hash = hashNode(attribute.value);
               const tr = translationCache[hash];
               if (tr) {
-                dbg(`translate title: %s -> %s`, hash, tr);
+                dbgo(`%s -> %s`, hash, tr);
                 attribute.value = tr;
               } else unresolvedTranslations++;
             }
