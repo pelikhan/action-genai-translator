@@ -6,6 +6,7 @@ This action uses translate incrementally markdown document using [GitHub Models]
 - [Blog post](https://microsoft.github.io/genaiscript/blog/continuous-translations/)
 - [French](./README.fr.md)
 - [Spanish](./README.es.md)
+- [Arabic](./README.ar.md)
 
 ## How it work?
 
