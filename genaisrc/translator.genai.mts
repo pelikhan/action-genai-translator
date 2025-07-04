@@ -158,10 +158,13 @@ export default async function main() {
     env.files.map((f) => f.filename)
   );
   const files = env.files
-    .filter((f) => ignorer([f]).length)
+    .filter((f) => ignorer([f.filename]).length)
     // Filter files that match the ISO language code pattern in the filename
-    .filter(({ filename }) => !/\.\w\w(-\w\w\w?)?\.mdx?$/i.test(filename));
+    .filter(({ filename }) => !/\.\w\w(-\w\w\w?)?\.mdx?$/i.test(filename))
+    .filter(({ filename }) => !/\/\w\w(-\w\w\w?)?\//i.test(filename));
   if (!files.length) cancel("No files or not matching languages selected.");
+
+  files.forEach(({ filename }) => output.item(filename));
 
   for (const to of tos) {
     let lang = langs[to];
