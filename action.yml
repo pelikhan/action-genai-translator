@@ -21,12 +21,10 @@ inputs:
       injected in the translation prompt.
     required: false
   starlight_dir:
-    description: Root directory for the Astro Starlight documentation. Must specify
-      starlightBase as well.
+    description: Root directory for the Astro Starlight documentation.
     required: false
   starlight_base:
-    description: Base path for the Astro Starlight documentation. Used to patch
-      links in translations. Must specify starlightDir as well.
+    description: Base path for the Astro Starlight documentation.
     required: false
   force:
     description: Force translation even if the file has already been translated.
