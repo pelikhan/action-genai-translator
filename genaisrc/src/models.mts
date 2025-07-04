@@ -24,7 +24,7 @@ export const LANGS: Record<string, LangConfiguration> = {
     name: "Arabic",
     models: {
       translation: "github:openai/gpt-4o",
-      classify: "github:openai/gpt-4o",
+      classify: "core42/jais-30b-chat",
     },
   },
   hi: { name: "Hindi" },
