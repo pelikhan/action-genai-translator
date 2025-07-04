@@ -6,6 +6,7 @@ Esta acción utiliza la traducción incremental de documentos markdown usando [G
 * [Entrada de blog](https://microsoft.github.io/genaiscript/blog/continuous-translations/)
 * [Francés](./README.fr.md)
 * [Español](./README.es.md)
+* [Árabe](./README.ar.md)
 
 ## ¿Cómo funciona?
 
