@@ -22,6 +22,7 @@ This action uses [GenAIScript](https://microsoft.github.io/genaiscript/) to prog
 ## Inputs
 
 - `lang`: The iso-code target language for translation. (default: `fr`)
+- `source`: The iso-code source language for translation. (default: `en`)
 - `files`: Files to process, separated by semi columns. Default is `README.md`.
 - `instructions`: Extra instructions for the LLM to use when translating.
 - `instructions_file`: Path to a file containing extra instructions for the LLM to use when translating.
@@ -101,13 +102,6 @@ jobs:
           commit_message: "[cai] translated docs"
           commit_user_name: "genaiscript"
 ```
-
-## Astro Starlight
-
-The plugin supports translations Astro Starlight markdown or MDX files
-for a site using a **rooted** default locale and a **base** alias for the documentation.
-
-Configure the `starlight_dir` and `starlight_base` inputs to point to the root folder of your Astro Starlight documentation and the base alias for the documentation, respectively.
 
 ## Development
 

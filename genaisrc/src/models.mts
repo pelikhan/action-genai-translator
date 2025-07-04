@@ -10,6 +10,7 @@ export const DEFAULT_MODELS = {
   classify: "github:openai/gpt-4o",
 } as Required<LangConfiguration["models"]>;
 export const LANGS = Object.freeze({
+  en: { name: "English" },
   fr: { name: "French" },
   es: { name: "Spanish" },
   de: { name: "German" },

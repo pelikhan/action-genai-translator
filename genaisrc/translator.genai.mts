@@ -16,10 +16,7 @@ import { URL } from "url";
 import { xor } from "es-toolkit";
 import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx";
 import type { FrontmatterWithTranslator } from "./src/types.mts";
-import {
-  FrontmatterWithTranslatorSchema,
-  TranslatorConfigurationSchema,
-} from "./src/types.mts";
+import { FrontmatterWithTranslatorSchema } from "./src/types.mts";
 import { DEFAULT_MODELS, LANGS } from "./src/models.mts";
 
 script({
@@ -34,6 +31,12 @@ script({
       default: "fr",
       description:
         "The ISO code(s) of the target language(s) for translation (comma-separated values).",
+    },
+    source: {
+      type: "string",
+      default: "en",
+      description:
+        "The ISO code of the source language for translation. Defaults to 'en' (English).",
     },
     instructions: {
       type: "string",
@@ -103,8 +106,9 @@ export default async function main() {
   const dbge = host.logger(`script:text`);
   const dbgm = host.logger(`script:mdx`);
   const parameters = vars as {
-    lang: string;
-    force: boolean;
+    lang?: string;
+    source?: string;
+    force?: boolean;
     starlightDir?: string;
     starlightBase?: string;
     instructions?: string;
@@ -112,6 +116,9 @@ export default async function main() {
   };
   const { force } = parameters;
   let { instructions } = parameters;
+  const source = parameters.source;
+  const sourceInfo = LANGS[source];
+  if (!sourceInfo) cancel(`unsupported source language: ${source}`);
 
   const instructionsFile = parameters.instructionsFile
     ? MD.content(await workspace.readText(parameters.instructionsFile))
@@ -129,7 +136,6 @@ export default async function main() {
   const starlightBaseRx = starlightBase
     ? new RegExp(`^/${starlightBase}/`)
     : undefined;
-
   const langs = vars.lang
     .split(",")
     .map((s) => s.trim())
@@ -721,7 +727,9 @@ export default async function main() {
           const res = await classify(
             (ctx) => {
               ctx.$`You are an expert at judging the quality of translations. 
-          Your task is to determine the quality of the translation of a Markdown document from English to ${lang} (${to}).
+          Your task is to determine the quality of the translation of a Markdown document from ${
+            sourceInfo.name
+          } (${source}) to ${lang} (${to}).
           The original document is in ${ctx.def(
             "ORIGINAL",
             content

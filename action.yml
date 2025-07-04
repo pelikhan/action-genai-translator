@@ -7,6 +7,11 @@ inputs:
       (comma-separated values).
     required: false
     default: fr
+  source:
+    description: The ISO code of the source language for translation. Defaults to
+      'en' (English).
+    required: false
+    default: en
   instructions:
     description: Additional prompting instructions that will be injected in the
       translation prompt.
@@ -75,7 +80,10 @@ inputs:
     description: "GitHub token with `models: read` permission at least
       (https://microsoft.github.io/genaiscript/reference/github-actions/#github\
       -models-permissions)."
-    required: true
+    required: false
 runs:
   using: docker
   image: Dockerfile
+outputs:
+  text:
+    description: The generated text output.
