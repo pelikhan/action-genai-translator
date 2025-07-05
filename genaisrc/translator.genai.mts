@@ -120,6 +120,9 @@ export default async function main() {
     instructions?: string;
     instructionsFile?: string;
   };
+
+  output.heading(1, "Continous Translation");
+
   const { force } = parameters;
   let { instructions } = parameters;
   const source = parameters.source;
@@ -175,6 +178,8 @@ export default async function main() {
     output.heading(2, `Translating Markdown files to ${lang} (${to})`);
     const translationCacheFilename = `translations/${to.toLowerCase()}.json`;
     dbg(`cache: %s`, translationCacheFilename);
+    output.itemValue(`translation model`, translationModel);
+    output.itemValue(`validation model`, classifyModel);
     output.itemValue("cache", translationCacheFilename);
     // hash -> text translation
     const translationCache: Record<string, string> = force
@@ -281,6 +286,7 @@ export default async function main() {
 
         const llmHashes: Record<string, string> = {};
         const llmHashTodos = new Set<string>();
+        let nTranslatable = 0;
 
         // apply translations and mark untranslated nodes with id
         let translated = structuredClone(root);
@@ -290,6 +296,7 @@ export default async function main() {
           if (translation) {
             dbga(`translated: %s`, nhash);
             Object.assign(node, translation);
+            nTranslatable++;
           } else {
             // mark untranslated nodes with a unique identifier
             if (node.type === "text") {
@@ -304,6 +311,7 @@ export default async function main() {
                   .padStart(3, "0")}`;
                 llmHashes[llmHash] = nhash;
                 llmHashTodos.add(llmHash);
+                nTranslatable++;
                 node.value = `┌${llmHash}┐${node.value}└${llmHash}┘`;
               }
             } else if (node.type === "paragraph" || node.type === "heading") {
@@ -313,6 +321,7 @@ export default async function main() {
                 .padStart(3, "0")}`;
               llmHashes[llmHash] = nhash;
               llmHashTodos.add(llmHash);
+              nTranslatable++;
               node.children.unshift({
                 type: "text",
                 value: `┌${llmHash}┐`,
@@ -333,6 +342,7 @@ export default async function main() {
                         const nhash = hashNode(action.text);
                         const tr = translationCache[nhash];
                         dbg(`yaml hero.action: %s -> %s`, nhash, tr);
+                        nTranslatable++;
                         if (!tr) action.text = tr;
                         else {
                           const llmHash = `T${Object.keys(llmHashes)
@@ -353,6 +363,7 @@ export default async function main() {
                 if (data.hero && typeof data.hero.tagline === "string") {
                   const nhash = hashNode(data.hero.tagline);
                   const tr = translationCache[nhash];
+                  nTranslatable++;
                   if (tr) data.hero.tagline = tr;
                   else {
                     const llmHash = `T${Object.keys(llmHashes)
@@ -368,6 +379,7 @@ export default async function main() {
                 )) {
                   const nhash = hashNode(data[field]);
                   const tr = translationCache[nhash];
+                  nTranslatable++;
                   if (tr) data[field] = tr;
                   else {
                     const llmHash = `T${Object.keys(llmHashes)
@@ -400,8 +412,10 @@ export default async function main() {
               let title = attribute.value;
               const nhash = hashNode(title);
               const tr = translationCache[nhash];
-              if (tr) title = tr;
-              else {
+              nTranslatable++;
+              if (tr) {
+                title = tr;
+              } else {
                 const llmHash = `T${Object.keys(llmHashes)
                   .length.toString()
                   .padStart(3, "0")}`;
@@ -430,6 +444,7 @@ export default async function main() {
           dbgc(`translatable content: %s`, contentMix);
 
           // run prompt to generate translations
+          output.item(`validating translations`);
           const { fences, error } = await runPrompt(
             async (ctx) => {
               const originalRef = ctx.def("ORIGINAL", file.content, {
@@ -545,7 +560,7 @@ export default async function main() {
         translated = structuredClone(root);
 
         // apply translations
-        let unresolvedTranslations = 0;
+        const unresolvedTranslations = new Set<string>();
         visit(translated, nodeTypes, (node) => {
           if (node.type === "yaml") {
             const data = parsers.YAML(node.value);
@@ -571,7 +586,7 @@ export default async function main() {
                       const tr = translationCache[nhash];
                       dbgo(`yaml hero.action: %s -> %s`, nhash, tr);
                       if (tr) action.text = tr;
-                      else unresolvedTranslations++;
+                      else unresolvedTranslations.add(nhash);
                     }
                     if (action?.image?.file) {
                       action.image.file = patchFn(action.image.file);
@@ -588,7 +603,7 @@ export default async function main() {
                 const nhash = hashNode(data.hero.tagline);
                 const tr = translationCache[nhash];
                 if (tr) data.hero.tagline = tr;
-                else unresolvedTranslations++;
+                else unresolvedTranslations.add(nhash);
               }
               for (const field of STARLIGHT_FRONTMATTER_STRINGS.filter(
                 (field) => typeof data[field] === "string"
@@ -597,20 +612,20 @@ export default async function main() {
                 const tr = translationCache[nhash];
                 dbgo(`yaml %s: %s -> %s`, field, nhash, tr);
                 if (tr) data[field] = tr;
-                else unresolvedTranslations++;
+                else unresolvedTranslations.add(nhash);
               }
               node.value = YAML.stringify(data);
               return SKIP;
             }
           } else {
-            const hash = hashNode(node);
-            const translation = translationCache[hash];
+            const nhash = hashNode(node);
+            const translation = translationCache[nhash];
             if (translation) {
               if (node.type === "text") {
-                dbgo(`%s -> %s`, hash, translation);
+                dbgo(`%s -> %s`, nhash, translation);
                 node.value = translation;
               } else if (node.type === "paragraph" || node.type === "heading") {
-                dbgo(`%s: %s -> %s`, node.type, hash, translation);
+                dbgo(`%s: %s -> %s`, node.type, nhash, translation);
                 try {
                   const newNodes = parse(translation)
                     .children as PhrasingContent[];
@@ -624,7 +639,7 @@ export default async function main() {
               } else {
                 dbg(`untranslated node type: %s`, node.type);
               }
-            } else unresolvedTranslations++;
+            } else unresolvedTranslations.add(nhash);
           }
         });
 
@@ -655,12 +670,12 @@ export default async function main() {
               attribute.type === "mdxJsxAttribute" &&
               attribute.name === "title"
             ) {
-              const hash = hashNode(attribute.value);
-              const tr = translationCache[hash];
+              const nhash = hashNode(attribute.value);
+              const tr = translationCache[nhash];
               if (tr) {
-                dbgo(`%s -> %s`, hash, tr);
+                dbgo(`%s -> %s`, nhash, tr);
                 attribute.value = tr;
-              } else unresolvedTranslations++;
+              } else unresolvedTranslations.add(nhash);
             }
           }
         });
@@ -677,11 +692,18 @@ export default async function main() {
           });
         }
 
-        output.itemValue(`unresolved translations`, unresolvedTranslations);
+        if (unresolvedTranslations.size) {
+          output.itemValue(`unresolved translations`, unresolvedTranslations);
+          output.fence(
+            Array.from(unresolvedTranslations)
+              .map((t) => t)
+              .join("\n")
+          );
+        }
         const nTranslations = Object.keys(llmHashes).length;
         if (
-          unresolvedTranslations > 5 &&
-          (nTranslations - unresolvedTranslations) / nTranslations <
+          unresolvedTranslations.size > 5 &&
+          (nTranslations - unresolvedTranslations.size) / nTranslations <
             minTranslationsThreshold
         ) {
           output.warn(`not enough translations, try to translate more.`);
@@ -767,7 +789,7 @@ export default async function main() {
 
           output.resultItem(
             res.label === "ok",
-            `Translation quality: ${res.label}`
+            `translation validation: ${res.label}`
           );
           if (res.label !== "ok") {
             output.fence(res.answer);
@@ -784,6 +806,11 @@ export default async function main() {
         await workspace.writeText(
           translationCacheFilename,
           JSON.stringify(translationCache, null, 2)
+        );
+
+        output.resultItem(
+          true,
+          `translated chunks: ${nTranslatable}, untranslated: ${unresolvedTranslations.size}`
         );
       } catch (error) {
         output.error(error);

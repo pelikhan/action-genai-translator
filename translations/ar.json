@@ -274,5 +274,8 @@
   " in this repository\n": "في هذا المستودع",
   "Astro Link Validator\n": "مدقق الروابط أسترو",
   "If you use the \n": "إذا كنت تستخدم ",
-  " option in your \n": "الخيار في ملف "
+  " option in your \n": "الخيار في ملف ",
+  "!\n": "! الدعم المدمج لـ [Astro Starlight](https://starlight.astro.build/)",
+  "Arabic\n": "العربية",
+  "How does it work?\n": "كيف تعمل؟"
 }

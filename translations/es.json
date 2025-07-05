@@ -907,5 +907,7 @@
   " in this repository\n": "`docs/src/components` en este repositorio",
   "Astro Link Validator\n": "Validador de Enlaces de Astro",
   "If you use the \n": "Si utilizas el ",
-  " option in your \n": "opción `errorOnRelativeLinks` en tu "
+  " option in your \n": "opción `errorOnRelativeLinks` en tu ",
+  "!\n": "¡Soporte integrado para [Astro Starlight](https://starlight.astro.build/)!",
+  "How does it work?\n": "¿Cómo funciona?"
 }

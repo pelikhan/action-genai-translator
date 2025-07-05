@@ -38,7 +38,7 @@ const LANGS = Object.freeze({
     name: "Arabic",
     models: {
       translation: "github:openai/gpt-4o",
-      classify: "core42/jais-30b-chat",
+      classify: "github:core42/jais-30b-chat",
     },
   },
   hi: { name: "Hindi" },
