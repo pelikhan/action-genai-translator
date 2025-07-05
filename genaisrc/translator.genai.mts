@@ -205,8 +205,8 @@ export default async function main() {
         }
         const text =
           typeof node === "string"
-            ? node
-            : stringify({ type: "root", children: [node as any] });
+            ? node.trim()
+            : stringify({ type: "root", children: [node as any] }).trim();
         const chunkHash = hash("sha-256", JSON.stringify(text));
         if (text.length < HASH_TEXT_LENGTH) return text;
         else
