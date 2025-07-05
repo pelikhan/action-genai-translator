@@ -296,8 +296,21 @@ export default async function main() {
           const translation = translationCache[nhash];
           if (translation) {
             dbgo(`%s`, nhash);
-            Object.assign(node, translation);
             nTranslatable++;
+            if (node.type === "text") node.value = translation;
+            else if (node.type === "heading" || node.type === "paragraph") {
+              dbgo(`%s: %s -> %s`, node.type, nhash, translation);
+              try {
+                const newNodes = parse(translation)
+                  .children as PhrasingContent[];
+                node.children.splice(0, node.children.length, ...newNodes);
+                return SKIP; // don't process children of paragraphs
+              } catch (error) {
+                output.error(`error parsing paragraph translation`, error);
+                output.fence(node, "json");
+                output.fence(translation);
+              }
+            }
           } else {
             // mark untranslated nodes with a unique identifier
             if (node.type === "text") {
