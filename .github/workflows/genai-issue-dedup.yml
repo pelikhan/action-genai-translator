@@ -6,6 +6,9 @@ permissions:
   issues: write
   contents: read
   models: read
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
 jobs:
   dedup:
     runs-on: ubuntu-latest

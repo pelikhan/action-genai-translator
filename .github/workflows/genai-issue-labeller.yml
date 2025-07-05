@@ -5,6 +5,10 @@ on:
 permissions:
   issues: write
   contents: read
+  models: read
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
 jobs:
   label:
     runs-on: ubuntu-latest
