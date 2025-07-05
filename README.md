@@ -27,8 +27,8 @@ This action uses [GenAIScript](https://microsoft.github.io/genaiscript/) to prog
 - `files`: Files to process, separated by semi colons. Default is `README.md`.
 - `instructions`: Extra instructions for the LLM to use when translating.
 - `instructions_file`: Path to a file containing extra instructions for the LLM to use when translating.
-- `starlight_dir`: root folder of the Astro Starlight documentation.
-- `starlight_base`: base alias for the Starlight documentation.
+- `starlight_dir`: root folder of the Astro Starlight documentation. (only set when using Starlight)
+- `starlight_base`: base alias for the Starlight documentation. (optional, even when using Starlight)
 
 ### Diagnostics
 
