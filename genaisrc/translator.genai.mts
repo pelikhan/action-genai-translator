@@ -104,6 +104,7 @@ const hasMarker = (str: string): boolean => {
 
 export default async function main() {
   const { dbg, output, vars } = env;
+  const dbgn = host.logger(`ct:node`);
   const dbgc = host.logger(`ct:md`);
   const dbgo = host.logger(`ct:translated`);
   const dbgt = host.logger(`ct:tree`);
@@ -278,7 +279,7 @@ export default async function main() {
         const nodes: Record<string, NodeType> = {};
         visit(root, nodeTypes, (node) => {
           const hash = hashNode(node);
-          dbga(`node: %s -> %s`, node.type, hash);
+          dbgn(`%s -> %s`, node.type, hash);
           nodes[hash] = node as NodeType;
         });
 
@@ -294,7 +295,7 @@ export default async function main() {
           const nhash = hashNode(node);
           const translation = translationCache[nhash];
           if (translation) {
-            dbga(`translated: %s`, nhash);
+            dbgo(`%s`, nhash);
             Object.assign(node, translation);
             nTranslatable++;
           } else {
