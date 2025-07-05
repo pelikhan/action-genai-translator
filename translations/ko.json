@@ -52,5 +52,9 @@
   "To typecheck the scripts, run:\n": "스크립트를 타입체크하려면 다음 명령을 실행하십시오:",
   "To test the translator, run:\n": "번역기를 테스트하려면 다음 명령을 실행하십시오:",
   "## Upgrade\n": "업그레이드",
-  "The GenAIScript version is pinned in the `package.json` file. To upgrade it, run.DB260D26CB7923F4DFEA": "GenAIScript 버전은 `package.json` 파일에 고정되어 있습니다. 업그레이드하려면 다음 명령을 실행하십시오:"
+  "The GenAIScript version is pinned in the `package.json` file. To upgrade it, run.DB260D26CB7923F4DFEA": "GenAIScript 버전은 `package.json` 파일에 고정되어 있습니다. 업그레이드하려면 다음 명령을 실행하십시오:",
+  "This is a paragaraph.\n": "이것은 단락입니다.",
+  "This is a paragraph with **bold text** and *italic text*.\n": "이것은 **굵은 텍스트**와 *기울임 텍스트*가 포함된 단락입니다.",
+  "This is a paragraph with `inline code`.\n": "이것은 `인라인 코드`가 포함된 단락입니다.",
+  "This is a paragraph with a [link](https://example.com).\n": "이것은 [링크](https://example.com)가 포함된 단락입니다."
 }
