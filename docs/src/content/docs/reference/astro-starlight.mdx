@@ -8,7 +8,7 @@ sidebar:
 import { Steps } from "@astrojs/starlight/components";
 
 This action can be used to translation the content of a [Astro Starlight](https://starlight.astro.build/) documentation site.
-It requires a specific setup of Starlight as detailled below.
+It requires a specific setup of Starlight as detailed below.
 
 <Steps>
 
@@ -22,13 +22,14 @@ Follow the Starlight guide to use a [root locale](https://starlight.astro.build/
 
 <li>
 
-To enable the Starlight mode, you need to provide `starlight_dir` and `starlight_base` inputs in the action.
+To enable the Starlight mode, you need to provide the `starlight_dir` input in the action.
+If you have set the [Astro `base` option as well](https://docs.astro.build/en/reference/configuration-reference/#base), you need to provide the `starlight_base` input as well.
 
 ```yaml title=".github/workflows/ct.yml" "starlight_dir: ./docs" "starlight_base: my_repo_name"
 uses: pelikhan/action-continuous-translation@v0
 with:
   starlight_dir: ./docs
-  starlight_base: my_repo_name
+  starlight_base: astro_base_option
 ```
 
 </li>
