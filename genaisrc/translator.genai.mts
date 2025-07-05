@@ -177,7 +177,22 @@ export default async function main() {
     const translationModel = langInfo.models.translation;
     const classifyModel = langInfo.models.classify;
     output.heading(2, `Translating Markdown files to ${lang} (${to})`);
-    const translationCacheFilename = `translations/${to.toLowerCase()}.json`;
+
+    // Resolve the translation model from the host
+    const resolvedModel = await host.resolveLanguageModel(translationModel);
+    const modelId = resolvedModel?.modelId || translationModel;
+
+    dbg(`Using translation model: %s`, modelId);
+
+    // Sanitize language and model IDs for safe use in filenames
+    const sanitizedLangId = to.toLowerCase().replace(/[\/\\:*?"<>|]/g, '_');
+    const sanitizedModelId = modelId.toLowerCase().replace(/[\/\\:*?"<>|]/g, '_');
+
+    // Build safe filename for translation cache
+    const translationCacheFilename = `translations/${sanitizedLangId}/${sanitizedModelId}.json`;
+
+    dbg(`Resolved cache filename: %s`, translationCacheFilename);
+
     dbg(`cache: %s`, translationCacheFilename);
     output.itemValue(`translation model`, translationModel);
     output.itemValue(`validation model`, classifyModel);
