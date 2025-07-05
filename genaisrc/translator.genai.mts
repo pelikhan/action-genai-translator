@@ -816,10 +816,19 @@ export default async function main() {
         dbgc(`translated: %s`, contentTranslated);
         dbg(`writing translation to %s`, translationFn);
 
+        function trimTranslationCache(cache) {
+          return Object.fromEntries(
+            Object.entries(cache).map(([key, value]) => [
+              key.trim(),
+              typeof value === 'string' ? value.trim() : value
+            ])
+          );
+        }
+
         await workspace.writeText(translationFn, contentTranslated);
         await workspace.writeText(
           translationCacheFilename,
-          JSON.stringify(translationCache, null, 2)
+          JSON.stringify(trimTranslationCache(translationCache), null, 2)
         );
 
         output.resultItem(
