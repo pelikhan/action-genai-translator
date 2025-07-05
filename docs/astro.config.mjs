@@ -32,6 +32,7 @@ export default defineConfig({
         ar: {
           label: "Arabic",
           lang: "ar",
+          dir: 'rtl',
         },
         fr: {
           label: "French",
