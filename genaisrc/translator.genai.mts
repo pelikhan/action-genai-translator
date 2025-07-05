@@ -18,7 +18,7 @@ import { xor } from "es-toolkit";
 import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx";
 import type { FrontmatterWithTranslator } from "./src/types.mts";
 import { FrontmatterWithTranslatorSchema } from "./src/schemas.mts";
-import { DEFAULT_MODELS, LANGS } from "./src/models.mts";
+import { resolveModels } from "./src/models.mts";
 
 script({
   title: "Automatic Markdown Translations using GenAI",
@@ -123,9 +123,7 @@ export default async function main() {
   const { force } = parameters;
   let { instructions } = parameters;
   const source = parameters.source;
-  const sourceInfo = LANGS[source];
-  if (!sourceInfo) cancel(`unsupported source language: ${source}`);
-
+  const sourceInfo = resolveModels(source);
   const instructionsFile = parameters.instructionsFile
     ? MD.content(await workspace.readText(parameters.instructionsFile))
     : undefined;
@@ -148,11 +146,8 @@ export default async function main() {
     .split(",")
     .map((s) => s.trim())
     .filter(Boolean);
-  output.item(langs.join(", "));
-  if (langs.some((l) => !LANGS[l]))
-    cancel(
-      `unsupported languages: ${langs.filter((l) => !LANGS[l]).join(", ")}`
-    );
+  output.itemValue(`locales`, langs.join(", "));
+  langs.forEach((l) => resolveModels(l)); // validate languages
 
   const ignorer = await parsers.ignore(".ctignore");
   dbg(`ignorer: %s`, ignorer ? "loaded" : "no .ctignore found");
@@ -167,14 +162,16 @@ export default async function main() {
     .filter(({ filename }) => !/\/\w\w(-\w\w\w?)?\//i.test(filename));
   if (!files.length) cancel("No files or not matching languages selected.");
 
-  files.forEach(({ filename }) => output.item(filename));
+  for (const file of files) {
+    const tokens = await tokenizers.count(file.content);
+    output.itemValue(file.filename, tokens + "t");
+  }
 
   for (const to of langs) {
-    const langInfo = LANGS[to];
+    const langInfo = resolveModels(to);
     const lang = langInfo.name;
-    const translationModel =
-      langInfo.models?.translation || DEFAULT_MODELS.translation;
-    const classifyModel = langInfo.models?.classify || DEFAULT_MODELS.classify;
+    const translationModel = langInfo.models.translation;
+    const classifyModel = langInfo.models.classify;
     output.heading(2, `Translating Markdown files to ${lang} (${to})`);
     const translationCacheFilename = `translations/${to.toLowerCase()}.json`;
     dbg(`cache: %s`, translationCacheFilename);

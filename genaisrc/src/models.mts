@@ -1,3 +1,14 @@
+export function resolveModels(lang: string): LangConfiguration {
+  const config = LANGS[lang];
+  if (!config)
+    throw new Error(`Language configuration for "${lang}" not found.`);
+  const res = structuredClone(config);
+  if (!res.models) res.models = {};
+  res.models.translation ??= DEFAULT_MODELS.translation;
+  res.models.classify ??= DEFAULT_MODELS.classify;
+  return res;
+}
+
 export interface LangConfiguration {
   name: string;
   models?: {
@@ -5,11 +16,13 @@ export interface LangConfiguration {
     classify?: string;
   };
 }
-export const DEFAULT_MODELS = {
+
+const DEFAULT_MODELS = {
   translation: "github:openai/gpt-4o",
   classify: "github:openai/gpt-4o",
 } as Required<LangConfiguration["models"]>;
-export const LANGS = Object.freeze({
+
+const LANGS = Object.freeze({
   en: { name: "English" },
   fr: { name: "French" },
   es: { name: "Spanish" },
