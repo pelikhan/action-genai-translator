@@ -104,13 +104,13 @@ const hasMarker = (str: string): boolean => {
 
 export default async function main() {
   const { dbg, output, vars } = env;
-  const dbgc = host.logger(`script:md`);
-  const dbgo = host.logger(`script:translated`);
-  const dbgt = host.logger(`script:tree`);
-  const dbge = host.logger(`script:text`);
-  const dbgm = host.logger(`script:mdx`);
-  const dbga = host.logger(`script:translate`);
-  const dbgp = host.logger(`script:patch`);
+  const dbgc = host.logger(`ct:md`);
+  const dbgo = host.logger(`ct:translated`);
+  const dbgt = host.logger(`ct:tree`);
+  const dbge = host.logger(`ct:text`);
+  const dbgm = host.logger(`ct:mdx`);
+  const dbga = host.logger(`ct:translate`);
+  const dbgp = host.logger(`ct:patch`);
   const parameters = vars as {
     lang?: string;
     source?: string;
@@ -214,31 +214,31 @@ export default async function main() {
           );
       };
 
+      const starlight = starlightDir && filename.startsWith(starlightDir);
+      dbg(`starlight: %s`, starlight);
+      const translationFn = starlight
+        ? filename.replace(starlightDir, join(starlightDir, to.toLowerCase()))
+        : path.changeext(filename, `.${to.toLowerCase()}.md`);
+      dbg(`translation %s`, translationFn);
+
+      const patchFn = (fn: string, trailingSlash?: boolean) => {
+        if (typeof fn === "string" && /^\./.test(fn) && starlight) {
+          // given an local image path fn (like ./image.png) relative to the original file (filename),
+          // path it to the translation file (translationFn).
+          // Calculate the relative path from the translation file's directory to the original file's directory,
+          // then join it with the local image path to get the correct relative path for the translation
+          const originalDir = dirname(filename);
+          const translationDir = dirname(translationFn);
+          const relativeToOriginal = relative(translationDir, originalDir);
+          let r = join(relativeToOriginal, fn);
+          if (trailingSlash && !r.endsWith("/")) r += "/";
+          dbgp(`patching %s -> %s`, fn, r);
+          return r;
+        }
+        return fn;
+      };
+
       try {
-        const starlight = starlightDir && filename.startsWith(starlightDir);
-        dbg(`starlight: %s`, starlight);
-        const translationFn = starlight
-          ? filename.replace(starlightDir, join(starlightDir, to.toLowerCase()))
-          : path.changeext(filename, `.${to.toLowerCase()}.md`);
-        dbg(`translation %s`, translationFn);
-
-        const patchFn = (fn: string, trailingSlash?: boolean) => {
-          if (typeof fn === "string" && /^\./.test(fn) && starlight) {
-            // given an local image path fn (like ./image.png) relative to the original file (filename),
-            // path it to the translation file (translationFn).
-            // Calculate the relative path from the translation file's directory to the original file's directory,
-            // then join it with the local image path to get the correct relative path for the translation
-            const originalDir = dirname(filename);
-            const translationDir = dirname(translationFn);
-            const relativeToOriginal = relative(translationDir, originalDir);
-            let r = join(relativeToOriginal, fn);
-            if (trailingSlash && !r.endsWith("/")) r += "/";
-            dbgp(`patching %s -> %s`, fn, r);
-            return r;
-          }
-          return fn;
-        };
-
         let content = file.content;
         dbgc(`md: %s`, content);
 
